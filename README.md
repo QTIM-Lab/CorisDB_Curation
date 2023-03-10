@@ -49,16 +49,3 @@ docker run \
   --entrypoint sh \
   bbearce/vue:node
 ```
-
-
-
-
-
-```
-docker run \
-  --name vue-test \
-  -it \
-  --rm \
-  -v /home/bearceb/coris_db/vue/project:/project \
-  node:lts-alpine3.17
-```
