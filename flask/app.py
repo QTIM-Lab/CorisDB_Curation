@@ -6,7 +6,7 @@ DB = [{'name': 'Alice',
       {'name': 'Ben', 
       'email': 'ben@outlook.com'}]
 
-@app.route('/')
+@app.route('/api')
 def index():
     return jsonify(DB[0])
 
