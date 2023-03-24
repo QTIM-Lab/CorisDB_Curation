@@ -5,8 +5,8 @@ From ubuntu:22.10
 # set the working directory of the image filesystem 
 WORKDIR /flask
 
-# copy current directory to the working directory 
-ADD . /flask
+# copy requirements.txt
+COPY requirements.txt /flask
 
 # Install tools and python dependencies
 RUN apt update -y;
