@@ -44,7 +44,7 @@ Nginx is serving a prod build of the UI at ./vue/project/dist. However docker co
 ### What is happening?
 Port mappings at a glance (defined in docker-compose.yml):
 * Nginx (listening on port 80):
-  - matches "/" url patterns and sends to prod (./vue/project/dist)
+  - matches "/" url pattern and sends to prod (./vue/project/dist)
   - matches "/api" url pattern and sends to flask:8080
 * Dev Vuetify instance running on port 3000
 
