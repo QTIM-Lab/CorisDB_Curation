@@ -2,11 +2,12 @@
 Repo for organizing the db scheme of our coris_db
 
 ## Instructions
-Directly after clone, create node_modules folder:
+Directly after clone ```cd coris_db```, create node_modules folder:
+
 ```bash
 docker run \
   --rm \
-  -v /projects/coris_db/vue/project:/project \
+  -v $PWD/vue/project:/project \
   -w /project \
   node:lts-alpine3.17 npm i
 ```
