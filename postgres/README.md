@@ -1,6 +1,7 @@
 # CORIS DB
 
 ## DB
+### Make new DB
 ```sql
 -- Create a new DB
 CREATE DATABASE coris_db;
@@ -16,6 +17,12 @@ psql -U ophuser coris_db
 
 /*
 ```
+
+### Make new Scheme for new tables
+```sql
+CREATE SCHEMA IF NOT EXISTS glaucoma;
+```
+
 
 ## Source data (SOURCE)
 * John Finigan moved the data to my home dir: /home/bearceb. I need to move it to it's main spot /data/coris_db
