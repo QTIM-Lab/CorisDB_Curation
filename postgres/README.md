@@ -21,6 +21,8 @@ psql -U ophuser coris_db
 ### Make new Scheme for new tables
 ```sql
 CREATE SCHEMA IF NOT EXISTS glaucoma;
+CREATE SCHEMA IF NOT EXISTS amd;
+CREATE SCHEMA IF NOT EXISTS parkinsons;
 ```
 
 
