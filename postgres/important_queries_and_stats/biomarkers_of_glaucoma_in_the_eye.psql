@@ -1,9 +1,21 @@
+/* Glaucoma Queries */
 
+/* DANGER */
+-- tables are listed in reverse order of creation
+-- as later tables depend on earlier ones
+DROP VIEW IF EXISTS glaucoma.glaucoma_summary_stats;
+DROP VIEW IF EXISTS glaucoma.glaucoma_demographics;
+DROP VIEW IF EXISTS glaucoma.last_encounters;
+-- DROP TABLE IF EXISTS glaucoma.glaucoma_encounters;
+-- DROP TABLE IF EXISTS glaucoma.glaucoma_patients;
+-- DROP TABLE IF EXISTS glaucoma.glaucoma_counts;
+DROP VIEW IF EXISTS glaucoma.glaucoma_diagnosis_dx_ids;
+/* DANGER */
 
 /* [1] Count of unique patients in CORIS */
 
-select count (distinct pat_id) from public.ophthalmologypatients limit 2; -- 330,383
-select * from public.ophthalmologypatients limit 10;
+-- select count (distinct pat_id) from public.ophthalmologypatients limit 2; -- 330,383
+-- select * from public.ophthalmologypatients limit 10;
 
 /* [2] Count of unique patients in CORIS with a diagnosis for glaucoma disease */
 -- so need to look up the ICD 9 and 10 codes
@@ -13,26 +25,23 @@ select * from public.ophthalmologypatients limit 10;
 -- Additionally might want to look on the web for the appropriate codes
 -- Then need to find the patients that have that code
 
-select * from public.ophthalmologydiagnosesdm limit 10; -- has the code_type col with codes Jayashree is talking about.
-select * from public.ophthalmologyencounterdiagnoses limit 10; -- helpful
-select * from public.ophthalmologyencountervisit order by pat_id limit 10; -- helpful for visits but not diagnosis
-select * from public.ophthalmologypatientdiagnoses limit 10; -- helpful
+-- select * from public.ophthalmologydiagnosesdm limit 10; -- has the code_type col with codes Jayashree is talking about.
+-- select * from public.ophthalmologyencounterdiagnoses limit 10; -- helpful
+-- select * from public.ophthalmologyencountervisit order by pat_id limit 10; -- helpful for visits but not diagnosis
+-- select * from public.ophthalmologypatientdiagnoses limit 10; -- helpful
 
 
 -- make view to read from for glaucoma dx_id's
 DROP VIEW IF EXISTS glaucoma.glaucoma_diagnosis_dx_ids;
 CREATE VIEW glaucoma.glaucoma_diagnosis_dx_ids AS
-    select distinct dx_id --dx_name, code, code_type
+    select distinct dx_id--, dx_name, code, code_type
     from public.ophthalmologydiagnosesdm
     where dx_name like '%glaucoma%'
-    order by dx_id; -- 1579
+    order by dx_id; -- 1,579
 
-select * from glaucoma.glaucoma_diagnosis_dx_ids; -- 1579
-
--- select distinct dx_id -- 1370
-select count(*) -- 204,613
-from public.ophthalmologyencounterdiagnoses
-where dx_id in (select dx_id from glaucoma.glaucoma_diagnosis_dx_ids);
+-- select count(*) -- 204,613
+-- from public.ophthalmologyencounterdiagnoses
+-- where dx_id in (select dx_id from glaucoma.glaucoma_diagnosis_dx_ids);
 
 -- select dm_codes.dx_id, dm_codes.dx_name, dm_codes.code, dm_codes.code_type
 -- from public.ophthalmologydiagnosesdm as dm_codes
@@ -51,9 +60,13 @@ CREATE TABLE glaucoma.glaucoma_counts AS
     right join glaucoma.glaucoma_diagnosis_dx_ids as glaucoma_dx_ids
     on encounter_diagnoses.dx_id = glaucoma_dx_ids.dx_id
     where encounter_diagnoses.dx_id is not null -- 204,613
-    group by encounter_diagnoses.dx_id; -- 1370
+    group by encounter_diagnoses.dx_id; -- 1,370
 
-select count(distinct(dx_id)) from glaucoma.glaucoma_diagnosis_dx_ids; --4220 and distinct is 1579
+-- select
+-- count(distinct(dx_id)), -- 1,579
+-- count((dx_id)) -- 1,579
+-- from glaucoma.glaucoma_diagnosis_dx_ids;
+-- select count(distinct(dx_id)) from glaucoma.glaucoma_diagnosis_dx_ids; -- 1,579
 
 -- Need to include pat_id's from three tables to be sure we have as full a list as possible
 -- Make table to read from for glaucoma pat_id's
@@ -97,9 +110,9 @@ CREATE TABLE glaucoma.glaucoma_patients AS
     -- or    results_cmt like '%glaucoma%' -- 5
 
     order by pat_id
-    ) as glaucoma_pat_ids; -- 18120
+    ) as glaucoma_pat_ids; -- 18,120
 
-select count(pat_id) from glaucoma.glaucoma_patients; -- 18120
+-- select count(pat_id) from glaucoma.glaucoma_patients; -- 18,120
 
 /* [3] Get basic demographics for [1] and [2] from most recent visit*/
 -- Age
@@ -107,27 +120,27 @@ select count(pat_id) from glaucoma.glaucoma_patients; -- 18120
 -- Sex
 
 -- Grouping mechanism is for collecting all distinct pat_id's from encounter's tables. (optional)
-select distinct pat_id from (
-    -- Not enough to match glaucoma_pat_ids
-    -- select
-    -- distinct pat_id
-    -- from public.ophthalmologyencountervisit
-    -- where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 14,730
+-- select distinct pat_id from (
+--     -- Not enough to match glaucoma_pat_ids
+--     -- select
+--     -- distinct pat_id
+--     -- from public.ophthalmologyencountervisit
+--     -- where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 14,730
 
-    -- UNION ALL
-    -- Not enough to match glaucoma_pat_ids
-    -- select
-    -- distinct pat_id
-    -- from public.ophthalmologyencounterexam
-    -- where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 13,342
+--     -- UNION ALL
+--     -- Not enough to match glaucoma_pat_ids
+--     -- select
+--     -- distinct pat_id
+--     -- from public.ophthalmologyencounterexam
+--     -- where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 13,342
 
-    -- Matches glaucoma_pat_ids
-    select
-    distinct pat_id
-    from public.ophthalmologyencounters
-    where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 18,120
+--     -- Matches glaucoma_pat_ids
+--     select
+--     distinct pat_id
+--     from public.ophthalmologyencounters
+--     where pat_id in (select pat_id from glaucoma.glaucoma_patients) -- 18,120
 
-) as tmp -- 18,120
+-- ) as tmp -- 18,120
 
 DROP TABLE IF EXISTS glaucoma.glaucoma_encounters;
 CREATE TABLE glaucoma.glaucoma_encounters AS
@@ -136,7 +149,7 @@ CREATE TABLE glaucoma.glaucoma_encounters AS
     from public.ophthalmologyencounters
     where pat_id in (select pat_id from glaucoma.glaucoma_patients); -- 428,922
 
-select count(*) from glaucoma.glaucoma_encounters; -- 428,922
+-- select count(*) from glaucoma.glaucoma_encounters; -- 428,922
 
 DROP VIEW IF EXISTS glaucoma.last_encounters;
 CREATE VIEW glaucoma.last_encounters AS
@@ -148,9 +161,11 @@ CREATE VIEW glaucoma.last_encounters AS
     group by pat_id
     order by pat_id; -- 18,120
 
+-- select count(*) from glaucoma.last_encounters; -- 18,120
+
 -- Make view to read from for glaucoma pat_id's
-DROP VIEW IF EXISTS glaucoma.glaucoma_deomgraphics;
-CREATE VIEW glaucoma.glaucoma_deomgraphics AS
+DROP VIEW IF EXISTS glaucoma.glaucoma_demographics;
+CREATE VIEW glaucoma.glaucoma_demographics AS
     select
     op.pat_id,
     le.pat_age_at_enc,
@@ -167,12 +182,12 @@ CREATE VIEW glaucoma.glaucoma_deomgraphics AS
     -- where pat_id in (select pat_id from glaucoma.glaucoma_patients)
     order by op.pat_id; -- 1056
 
-select count(*) from glaucoma.glaucoma_deomgraphics; -- 18,120
-select * from glaucoma.glaucoma_deomgraphics limit 100;
+-- select count(*) from glaucoma.glaucoma_demographics; -- 18,120
+-- select * from glaucoma.glaucoma_demographics limit 100;
 
-select count(pat_sex) from glaucoma.glaucoma_deomgraphics where pat_sex = 'Female'; -- 10184
-select count(pat_sex) from glaucoma.glaucoma_deomgraphics where pat_sex = 'Male'; -- 7936
-select count(pat_sex) from glaucoma.glaucoma_deomgraphics where pat_sex != 'Male' and pat_sex != 'Female'; -- 0
+-- select count(pat_sex) from glaucoma.glaucoma_demographics where pat_sex = 'Female'; -- 10184
+-- select count(pat_sex) from glaucoma.glaucoma_demographics where pat_sex = 'Male'; -- 7936
+-- select count(pat_sex) from glaucoma.glaucoma_demographics where pat_sex != 'Male' and pat_sex != 'Female'; -- 0
 
 
 DROP VIEW IF EXISTS glaucoma.glaucoma_summary_stats;
@@ -180,35 +195,34 @@ CREATE VIEW glaucoma.glaucoma_summary_stats AS
     -- between is inclusive so <lower bound> <= x <= <upper bound> equates to true.
     select 'Total_Patients_In_Coris_DB' as age_and_other_bins, count(distinct pat_id) as patient_counts from public.ophthalmologypatients
     union (
-        select 'glaucoma_Patients' as age_and_other_bins, count(*) from glaucoma.glaucoma_deomgraphics)
+        select 'glaucoma_Patients' as age_and_other_bins, count(*) from glaucoma.glaucoma_demographics)
     union (
-    select 'Males' as age_and_other_bins, count(pat_sex) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select 'Males' as age_and_other_bins, count(pat_sex) as patient_counts from glaucoma.glaucoma_demographics
         where pat_sex = 'Male')
     union (
-    select 'Females' as age_and_other_bins, count(pat_sex) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select 'Females' as age_and_other_bins, count(pat_sex) as patient_counts from glaucoma.glaucoma_demographics
         where pat_sex = 'Female')
     union (
-    select '0-49' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '0-49' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
         where pat_age_at_enc between 0 and 49)
     union (
-    select '50-59' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '50-59' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
         where pat_age_at_enc between 50 and 59)
     union (
-    select '60-69' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '60-69' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
         where pat_age_at_enc between 60 and 69)
     union (
-    select '70-79' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '70-79' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
         where pat_age_at_enc between 70 and 79)
     union (
-    select '80-89' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '80-89' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
         where pat_age_at_enc between 80 and 89)
     union (
-    select '90+' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_deomgraphics
+    select '90+' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from glaucoma.glaucoma_demographics
                 where pat_age_at_enc >= 90)
     order by age_and_other_bins;
 
 select * from glaucoma.glaucoma_summary_stats order by age_and_other_bins;
-select * from glaucoma.glaucoma_summary_stats;
 
 -- age_and_other_bins (text)  | patient_counts (bigint)
 -- 0-49                        | 1899

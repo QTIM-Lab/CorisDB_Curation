@@ -23,6 +23,12 @@ psql -U ophuser coris_db
 CREATE SCHEMA IF NOT EXISTS glaucoma;
 CREATE SCHEMA IF NOT EXISTS amd;
 CREATE SCHEMA IF NOT EXISTS parkinsons;
+
+-- DROP SCHEMA IF EXISTS glaucoma;
+-- DROP SCHEMA IF EXISTS amd;
+-- DROP SCHEMA IF EXISTS parkinsons;
+
+
 ```
 
 
