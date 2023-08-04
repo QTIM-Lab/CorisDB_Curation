@@ -3,18 +3,18 @@
 /* DANGER */
 -- tables are listed in reverse order of creation
 -- as later tables depend on earlier ones
-DROP VIEW IF EXISTS amd.amd_summary_stats;
+DROP TABLE IF EXISTS amd.amd_summary_stats;
 DROP VIEW IF EXISTS amd.amd_demographics;
 DROP VIEW IF EXISTS amd.last_encounters;
--- DROP TABLE IF EXISTS amd.amd_encounters;
--- DROP TABLE IF EXISTS amd.amd_patients;
--- DROP TABLE IF EXISTS amd.amd_counts;
+DROP TABLE IF EXISTS amd.amd_encounters;
+DROP TABLE IF EXISTS amd.amd_patients;
+DROP TABLE IF EXISTS amd.amd_counts;
 DROP VIEW IF EXISTS amd.amd_diagnosis_dx_ids;
 /* DANGER */
 
 /* [1] Count of unique patients in CORIS */
 
--- select count (distinct pat_id) from public.ophthalmologypatients limit 2; -- 330,383
+-- select count (distinct pat_id) from public.ophthalmologypatients limit 2; -- 
 -- select * from public.ophthalmologypatients limit 10;
 
 /* [2] Count of unique patients in CORIS with a diagnosis for amd disease */
@@ -44,9 +44,9 @@ CREATE VIEW amd.amd_diagnosis_dx_ids AS
       ) or
       dx_name like '%Macular degeneration%' or
       dx_name like '%age-related macular%'
-    order by dx_id; -- 499
+    order by dx_id; -- 
 
--- select count(*) -- 132,752
+-- select count(*) -- 
 -- from public.ophthalmologyencounterdiagnoses
 -- where dx_id in (select dx_id from amd.amd_diagnosis_dx_ids);
 
@@ -66,12 +66,12 @@ CREATE TABLE amd.amd_counts AS
     from public.ophthalmologyencounterdiagnoses as encounter_diagnoses
     right join amd.amd_diagnosis_dx_ids as amd_dx_ids
     on encounter_diagnoses.dx_id = amd_dx_ids.dx_id
-    where encounter_diagnoses.dx_id is not null -- 132,752 -- without group by
-    group by encounter_diagnoses.dx_id; -- 202
+    where encounter_diagnoses.dx_id is not null -- 
+    group by encounter_diagnoses.dx_id; -- 
 
 -- select
--- count(distinct(dx_id)), -- 242
--- count((dx_id)) --242
+-- count(distinct(dx_id)), -- 
+-- count((dx_id)) --
 -- from amd.amd_diagnosis_dx_ids;
 
 -- Need to include pat_id's from three tables to be sure we have as full a list as possible
@@ -83,27 +83,27 @@ CREATE TABLE amd.amd_patients AS
     (select distinct pat_id
     from public.ophthalmologyencounterdiagnoses as oed
     inner join amd.amd_diagnosis_dx_ids as pddi
-    on oed.dx_id = pddi.dx_id -- 10,941
+    on oed.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
     from public.ophthalmologypatientdiagnoses as opd
     inner join amd.amd_diagnosis_dx_ids as pddi
-    on opd.dx_id = pddi.dx_id -- 12,449
+    on opd.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
     from public.ophthalmologyencounterproblemlist as oepl
     inner join amd.amd_diagnosis_dx_ids as pddi
-    on oepl.dx_id = pddi.dx_id -- 3556
+    on oepl.dx_id = pddi.dx_id -- 
 
     -- UNION ALL 
 
     -- select distinct pat_id
     -- from public.ophthalmologyencountervisit
-    -- where progress_note like '%amd%' -- 1029 --really inaccurate query
+    -- where progress_note like '%amd%' --  --really inaccurate query
 
     -- UNION ALL
 
@@ -113,12 +113,12 @@ CREATE TABLE amd.amd_patients AS
     -- or    result_flag like '%amd%'
     -- or    line_comment like '%amd%'
     -- or    results_comp_cmt like '%amd%'
-    -- or    results_cmt like '%amd%' -- 22 --really inaccurate query
+    -- or    results_cmt like '%amd%' --  --really inaccurate query
 
     order by pat_id
-    ) as amd_pat_ids; -- 13,297
+    ) as amd_pat_ids; -- 
 
--- select count(pat_id) from amd.amd_patients; -- 13,297
+-- select count(pat_id) from amd.amd_patients; -- 
 
 /* [3] Get basic demographics for [1] and [2] from most recent visit*/
 -- Age
@@ -131,31 +131,31 @@ CREATE TABLE amd.amd_patients AS
 --     -- select
 --     -- distinct pat_id
 --     -- from public.ophthalmologyencountervisit
---     -- where pat_id in (select pat_id from amd.amd_patients) -- 10,188
+--     -- where pat_id in (select pat_id from amd.amd_patients) -- 
 
 --     -- UNION ALL
 --     -- Not enough to match amd_pat_ids
 --     -- select
 --     -- distinct pat_id
 --     -- from public.ophthalmologyencounterexam
---     -- where pat_id in (select pat_id from amd.amd_patients) -- 8,761
+--     -- where pat_id in (select pat_id from amd.amd_patients) -- 
 
 --     -- Matches amd_pat_ids
 --     select
 --     distinct pat_id
 --     from public.ophthalmologyencounters
---     where pat_id in (select pat_id from amd.amd_patients) -- 13,297
+--     where pat_id in (select pat_id from amd.amd_patients) -- 
 
--- ) as tmp; -- 13,297
+-- ) as tmp; -- 
 
 DROP TABLE IF EXISTS amd.amd_encounters;
 CREATE TABLE amd.amd_encounters AS
     select
     pat_id, pat_age_at_enc, contact_date, enc_close_time
     from public.ophthalmologyencounters
-    where pat_id in (select pat_id from amd.amd_patients); -- 251,922
+    where pat_id in (select pat_id from amd.amd_patients); -- 
 
--- select count(*) from amd.amd_encounters; -- 251,922
+-- select count(*) from amd.amd_encounters; -- 
 
 DROP VIEW IF EXISTS amd.last_encounters;
 CREATE VIEW amd.last_encounters AS
@@ -165,9 +165,9 @@ CREATE VIEW amd.last_encounters AS
     max(pat_age_at_enc) as pat_age_at_enc
     from amd.amd_encounters
     group by pat_id
-    order by pat_id; -- 13,297
+    order by pat_id; -- 
 
--- select count(*) from amd.last_encounters; -- 13,297
+-- select count(*) from amd.last_encounters; --
 
 -- Make view to read from for amd pat_id's
 DROP VIEW IF EXISTS amd.amd_demographics;
@@ -186,18 +186,18 @@ CREATE VIEW amd.amd_demographics AS
     inner join amd.last_encounters as le
     on op.pat_id = le.pat_id
     -- where pat_id in (select pat_id from amd.amd_patients)
-    order by op.pat_id; -- 13,297
+    order by op.pat_id; -- 
 
--- select count(*) from amd.amd_demographics; -- 13,297
+-- select count(*) from amd.amd_demographics; -- 
 -- select * from amd.amd_demographics limit 100;
 
--- select count(pat_sex) from amd.amd_demographics where pat_sex = 'Female'; -- 8486
--- select count(pat_sex) from amd.amd_demographics where pat_sex = 'Male'; -- 4811
+-- select count(pat_sex) from amd.amd_demographics where pat_sex = 'Female'; -- 
+-- select count(pat_sex) from amd.amd_demographics where pat_sex = 'Male'; -- 
 -- select count(pat_sex) from amd.amd_demographics where pat_sex != 'Male' and pat_sex != 'Female'; -- 0
 
 
-DROP VIEW IF EXISTS amd.amd_summary_stats;
-CREATE VIEW amd.amd_summary_stats AS
+DROP TABLE IF EXISTS amd.amd_summary_stats;
+CREATE TABLE amd.amd_summary_stats AS
     -- between is inclusive so <lower bound> <= x <= <upper bound> equates to true.
     select 'Total_Patients_In_Coris_DB' as age_and_other_bins, count(distinct pat_id) as patient_counts from public.ophthalmologypatients
     union (
@@ -231,13 +231,13 @@ CREATE VIEW amd.amd_summary_stats AS
 select * from amd.amd_summary_stats order by age_and_other_bins;
 
 -- age_and_other_bins (text)  | patient_counts (bigint)
---0-49                         | 276
---50-59                        | 435
---60-69                        | 1636
---70-79                        | 3884
---80-89                        | 4754
---90+                          | 2312
---amd_Patients                 | 13297
---Females                      | 8486
---Males                        | 4811
---Total_Patients_In_Coris_DB   | 330383
+--0-49                         | 
+--50-59                        | 
+--60-69                        | 
+--70-79                        | 
+--80-89                        | 
+--90+                          | 
+--amd_Patients                 | 
+--Females                      | 
+--Males                        | 
+--Total_Patients_In_Coris_DB   | 

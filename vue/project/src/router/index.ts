@@ -21,6 +21,24 @@ const routes = [
         // this generates a separate chunk (about.[hash].js) for this route
         // which is lazy-loaded when the route is visited.
         component: () => import(/* webpackChunkName: "coris_db" */ '@/views/Coris_DB.vue'),
+        children: [
+          {
+            path: 'glaucoma',
+            name: 'glaucoma',
+            // route level code-splitting
+            // this generates a separate chunk (about.[hash].js) for this route
+            // which is lazy-loaded when the route is visited.
+            component: () => import(/* webpackChunkName: "glaucoma" */ '@/views/Glaucoma.vue'),
+          },
+          // {
+          //   path: 'amd',
+          //   name: 'amd',
+          //   // route level code-splitting
+          //   // this generates a separate chunk (about.[hash].js) for this route
+          //   // which is lazy-loaded when the route is visited.
+          //   component: () => import(/* webpackChunkName: "amd" */ '@/views/AMD.vue'),
+          // },  
+        ]
       },
     ],
   },

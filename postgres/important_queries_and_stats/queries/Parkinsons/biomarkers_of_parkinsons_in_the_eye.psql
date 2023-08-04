@@ -14,7 +14,7 @@ DROP VIEW IF EXISTS parkinsons.parkinsons_diagnosis_dx_ids;
 
 /* [1] Count of unique patients in CORIS */
 
--- select count (distinct pat_id) from ophthalmologypatients limit 2; -- 330,383
+-- select count (distinct pat_id) from ophthalmologypatients limit 2; -- 
 -- select * from ophthalmologypatients limit 10;
 
 /* [2] Count of unique patients in CORIS with a diagnosuis for parkinson's disease */
@@ -38,7 +38,7 @@ CREATE VIEW parkinsons.parkinsons_diagnosis_dx_ids AS
     from public.ophthalmologydiagnosesdm
     where dx_name like '%parkinson%';
 
--- select count(*) -- 400
+-- select count(*) -- 
 -- from public.ophthalmologyencounterdiagnoses
 -- where dx_id in (select dx_id from parkinsons.parkinsons_diagnosis_dx_ids);
 
@@ -58,12 +58,12 @@ CREATE TABLE parkinsons.parkinsons_counts AS
     from public.ophthalmologyencounterdiagnoses as encounter_diagnoses
     right join parkinsons.parkinsons_diagnosis_dx_ids as parkinsons_dx_ids
     on encounter_diagnoses.dx_id = parkinsons_dx_ids.dx_id
-    where encounter_diagnoses.dx_id is not null -- 204,613
-    group by encounter_diagnoses.dx_id; -- 1,370
+    where encounter_diagnoses.dx_id is not null -- 
+    group by encounter_diagnoses.dx_id; -- 
 
 -- select
--- count(distinct(dx_id)), -- 28
--- count((dx_id)) -- 28
+-- count(distinct(dx_id)), -- 
+-- count((dx_id)) -- 
 -- from parkinsons.parkinsons_diagnosis_dx_ids;
 -- select count(distinct(dx_id)) from parkinsons.parkinsons_diagnosis_dx_ids;
 
@@ -76,27 +76,27 @@ CREATE TABLE parkinsons.parkinsons_patients AS
     (select distinct pat_id
     from public.ophthalmologyencounterdiagnoses as oed
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
-    on oed.dx_id = pddi.dx_id -- 251
+    on oed.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
     from public.ophthalmologypatientdiagnoses as opd
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
-    on opd.dx_id = pddi.dx_id -- 1036
+    on opd.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
     from public.ophthalmologyencounterproblemlist as oepl
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
-    on oepl.dx_id = pddi.dx_id -- 14
+    on oepl.dx_id = pddi.dx_id -- 
 
     -- UNION ALL 
 
     -- select distinct pat_id
     -- from public.ophthalmologyencountervisit
-    -- where progress_note like '%parkin%' -- 2178
+    -- where progress_note like '%parkin%' -- 
 
     -- UNION ALL
 
@@ -106,12 +106,12 @@ CREATE TABLE parkinsons.parkinsons_patients AS
     -- or    result_flag like '%parkin%'
     -- or    line_comment like '%parkin%'
     -- or    results_comp_cmt like '%parkin%'
-    -- or    results_cmt like '%parkin%' -- 5
+    -- or    results_cmt like '%parkin%' -- 
 
     order by pat_id
-    ) as parkinsons_patients; -- 1056
+    ) as parkinsons_patients; -- 
 
--- select count(pat_id) from parkinsons.parkinsons_patients; -- 1056
+-- select count(pat_id) from parkinsons.parkinsons_patients; -- 
 
 /* [3] Get basic demographics for [1] and [2] from most recent visit*/
 -- Age
@@ -124,29 +124,29 @@ CREATE TABLE parkinsons.parkinsons_patients AS
 --     -- select
 --     -- distinct pat_id
 --     -- from public.ophthalmologyencountervisit
---     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 755
+--     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
 --     -- UNION ALL
 --     -- Not enough to match parkinsons_patients
 --     -- select
 --     -- distinct pat_id
 --     -- from public.ophthalmologyencounterexam
---     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 520
+--     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
 --     -- Matches parkinsons_patients
 --     select
 --     distinct pat_id
 --     from public.ophthalmologyencounters
---     where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 1056
+--     where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
--- ) as tmp -- 1056
+-- ) as tmp -- 
 
 DROP TABLE IF EXISTS parkinsons.parkinsons_encounters;
 CREATE TABLE parkinsons.parkinsons_encounters AS
     select
     pat_id, pat_age_at_enc, contact_date, enc_close_time
     from public.ophthalmologyencounters
-    where pat_id in (select pat_id from parkinsons.parkinsons_patients); -- 1056
+    where pat_id in (select pat_id from parkinsons.parkinsons_patients); -- 
 
 DROP VIEW IF EXISTS parkinsons.last_encounters;
 CREATE VIEW parkinsons.last_encounters AS
@@ -175,13 +175,13 @@ CREATE VIEW parkinsons.parkinsons_demographics AS
     inner join parkinsons.last_encounters as le
     on op.pat_id = le.pat_id
     -- where pat_id in (select pat_id from parkinsons_patients)
-    order by op.pat_id; -- 1056
+    order by op.pat_id; -- 
 
--- select count(*) from parkinsons.parkinsons_demographics; -- 1056
+-- select count(*) from parkinsons.parkinsons_demographics; -- 
 -- select * from parkinsons.parkinsons_demographics limit 100;
 
--- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Female'; -- 455
--- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Male'; -- 601
+-- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Female'; -- 
+-- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Male'; -- 
 -- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex != 'Male' and pat_sex != 'Female'; -- 0
 
 
@@ -220,13 +220,13 @@ CREATE VIEW parkinsons.parkinsons_summary_stats AS
 select * from parkinsons.parkinsons_summary_stats order by age_and_other_bins;
 
 -- age_and_other_bins (text)  | patient_counts (bigint)
--- 0-49                       | 42
--- 50-59                      | 85
--- 60-69                      | 241
--- 70-79                      | 426
--- 80-89                      | 234
--- 90+                        | 28
--- Females                    | 455
--- Males                      | 601
--- Parkinsons_Patients        | 1056
--- Total_Patients_In_Coris_DB | 330383
+-- 0-49                       | 
+-- 50-59                      | 
+-- 60-69                      | 
+-- 70-79                      | 
+-- 80-89                      | 
+-- 90+                        | 
+-- Females                    | 
+-- Males                      | 
+-- Parkinsons_Patients        | 
+-- Total_Patients_In_Coris_DB | 

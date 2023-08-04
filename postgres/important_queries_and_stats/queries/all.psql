@@ -1,0 +1,51 @@
+SELECT tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname = 'public';
+
+select count (*) from ophthalmologydiagnosesdm          
+select count (*) from ophthalmologyproviderall          
+select count (*) from ophthalmologyradiology            
+select count (*) from ophthalmologyencountervisit       
+select count (*) from ophthalmologyfamilyhistory        
+select count (*) from ophthalmologypatientdiagnoses     
+select count (*) from ophthalmologysurgeryall           
+select count (*) from ophthalmologyimplant              
+select count (*) from ophthalmologycurrentmedications   
+select count (*) from ophthalmologysupplydm             
+select count (*) from ophthalmologyimplantdm            
+select count (*) from ophthalmologysurgeryprocedure     
+select count (*) from ophthalmologyencountercharge      
+select count (*) from ophthalmologysurgerymedication    
+select count (*) from ophthalmologysurgerysurgeon       
+select count (*) from ophthalmologyencounterexam        
+select count (*) from ophthalmologyencounters           
+select count (*) from ophthalmologyvisitsummary         
+select count (*) from ophthalmologysurgery              
+select count (*) from ophthalmologyorders               
+select count (*) from ophthalmologymedicationdm         
+select count (*) from ophthalmologylaborder             
+select count (*) from ophthalmologymedications          
+select count (*) from ophthalmologysurgerybill          
+select count (*) from ophthalmologysupply               
+select count (*) from ophthalmologyproviderdm           
+select count (*) from ophthalmologyencounterproblemlist 
+select count (*) from ophthalmologylabs                 
+select count (*) from ophthalmologypatients             
+select count (*) from ophthalmologysurgerydm            
+select count (*) from ophthalmologyencounterdiagnoses   
+
+SELECT tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname = 'glaucoma';
+
+select count (*) from glaucoma.glaucoma_diagnosis_dx_ids;      
+
+-- patients can have multiple diagnoses
+select count (*) from glaucoma.diagnosis_and_patient;          
+select count (distinct pat_id) from glaucoma.diagnosis_and_patient;          
+
+select count (*) from glaucoma.glaucoma_patients;              
+select count (*) from glaucoma.glaucoma_encounter_visit_join;  
+select count (*) from glaucoma.glaucoma_visits;                
+select count (*) from glaucoma.glaucoma_encounters;            
+select count (*) from glaucoma.glaucoma_summary_stats;         

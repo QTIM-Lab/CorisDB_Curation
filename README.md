@@ -1,6 +1,7 @@
 # coris_db
 Repo for organizing the db scheme of our coris_db
 
+
 ## Instructions
 Directly after clone ```cd coris_db```, create node_modules folder:
 
@@ -74,6 +75,24 @@ ss -tulpn | grep :$port
 kill <PID from ss command>
 ```
 
+## Installing new npm packages
+```bash
+docker compose exec vue sh
+```
+This drops you here:
+```bash
+/project #
+```
+Then run the build command:
+```bash
+/project # npm install chart.js
+# PS: Note to self, had to stop because no internet to download with
+```
+
+
+
+
+
 ## Misc notes that helped me put this together
 NGINX and FLASK Deploy:
 This helped create a prod flask instance with nginx.
@@ -100,4 +119,38 @@ Once in container:
 / # yarn create vuetify
 / # cp -r /vuetify-project/* /project/
 / # exit
+```
+
+## PDM
+
+These are important:
+* pyproject.toml - highe level
+* .pdm.toml - venv path
+* pdm.lock - detailed library installed info
+
+Init:
+```bash
+pdm init
+```
+
+List venvs:
+```bash
+pdm venv list
+```
+
+If none, make one:
+```bash
+pdm venv create --name coris_db
+```
+
+> Note: Then init again.
+
+Activate venv:
+```bash
+eval $(pdm venv activate coris_db)
+```
+
+Add packages:
+```bash
+pdm add pandas pydicom python-dotenv
 ```

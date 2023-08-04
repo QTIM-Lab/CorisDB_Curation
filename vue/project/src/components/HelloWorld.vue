@@ -6,6 +6,7 @@
         height="300"
         src="@/assets/logo.svg"
       />
+      
 
       <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
 
