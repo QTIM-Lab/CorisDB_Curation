@@ -9,6 +9,8 @@ services:
         build: ./flask
         container_name:  flask
         restart: always
+        stdin_open: true
+        tty: true
         # set enviornemt variables
         environment: 
             - APP_NAME=FlaskApp

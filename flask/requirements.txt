@@ -1,4 +1,5 @@
 flask
 flask-cors
+python-dotenv
 uWSGI
 psycopg[binary,pool]
