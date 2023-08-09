@@ -3,8 +3,6 @@ SELECT table_name, column_name, data_type FROM information_schema.columns --limi
 WHERE table_name like '%glaucoma%';
 
 /* DANGER */
-DROP TABLE OphthalmologyProviderAll;
-
 DROP TABLE IF EXISTS glaucoma.glaucoma_summary_stats; -- Backed Up
 DROP VIEW IF EXISTS glaucoma.glaucoma_demographics; -- Backed Up
 DROP VIEW IF EXISTS glaucoma.last_encounters; -- Backed Up
@@ -23,7 +21,7 @@ DROP TABLE IF EXISTS glaucoma.glaucoma_encounter_visit_join; -- Backed Up
 -- select count (distinct pat_id) from public.ophthalmologypatients limit 2; -- 
 -- select * from public.ophthalmologypatients limit 10;
 
-/* [2] Count of unique patients in CORIS with a diagnosis for amd disease */
+/* [2] Count of unique patients in CORIS with a diagnosis for glaucoma disease */
 -- so need to look up the ICD 9 and 10 codes
 
 -- There is a table that matches the description of the code

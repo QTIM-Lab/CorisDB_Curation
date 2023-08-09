@@ -1,16 +1,12 @@
 -- Have to go to: 
 -- https://cwufjhr-qb78737.snowflakecomputing.com
 
-SELECT * 
-FROM patients limit 50;
+SELECT * FROM patients
+where ptid = '2163871'
+limit 50;
 
-SELECT * 
-FROM exams limit 5;
-
-SELECT * 
-FROM files
-where filepathnew is not null
-limit 5; -- Results_Snowflake_Queries/5_random_files.csv
+SELECT * FROM devices where devtype in ('OPTOS','Optos') limit 100;
+SELECT distinct devtype FROM devices limit 100;
 
 SELECT CURRENT_DATABASE(), CURRENT_SCHEMA();
 

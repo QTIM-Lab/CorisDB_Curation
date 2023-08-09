@@ -20,6 +20,7 @@ psql -U ophuser coris_db
 
 ### Make new Scheme for new tables
 ```sql
+CREATE SCHEMA IF NOT EXISTS axispacs_snowflake;
 CREATE SCHEMA IF NOT EXISTS glaucoma;
 CREATE SCHEMA IF NOT EXISTS amd;
 CREATE SCHEMA IF NOT EXISTS parkinsons;
@@ -27,6 +28,7 @@ CREATE SCHEMA IF NOT EXISTS parkinsons;
 -- DROP SCHEMA IF EXISTS glaucoma;
 -- DROP SCHEMA IF EXISTS amd;
 -- DROP SCHEMA IF EXISTS parkinsons;
+-- DROP SCHEMA IF EXISTS axispacs_snowflake
 
 
 ```

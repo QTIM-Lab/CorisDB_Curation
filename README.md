@@ -152,5 +152,5 @@ eval $(pdm venv activate coris_db)
 
 Add packages:
 ```bash
-pdm add pandas pydicom python-dotenv
+pdm add pandas pydicom python-dotenv snowflake-connector-python
 ```
