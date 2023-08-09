@@ -17,7 +17,7 @@ services:
         #  mount the volumes so we can change code and hot reload
         volumes:
             - './flask:/flask'
-        # network_mode: 'host'
+        network_mode: 'host'
         #  expose port on the container, only to other containers
         # You never touch this directly but rather via nginx at :80/api
         expose:
@@ -33,7 +33,7 @@ services:
             - './vue/project/dist:/etc/nginx/html'
         # port allows the host machine to link to container
         # pass 80 from host machine to 80 of the image filesystem
-        # network_mode: 'host'
+        network_mode: 'host'
         ports:
             - "80:80"
 
@@ -51,6 +51,6 @@ services:
         command: yarn dev -- --host
         # port allows the host machine to link to container
         # pass 3000 from host machine to 3000 of the image filesystem
-        # network_mode: 'host'
+        network_mode: 'host'
         ports:
             - "3000:3000"
