@@ -152,5 +152,25 @@ eval $(pdm venv activate coris_db)
 
 Add packages:
 ```bash
-pdm add pandas pydicom python-dotenv snowflake-connector-python
+pdm add pandas python-dotenv snowflake-connector-python Pillow
+pdm add pydicom
+pdm add python-gdcm
+pdm add pylibjpeg[all]
+pdm add PyPDF2
+pdm add PyMuPDF
+pdm add psycopg
+
+
+# pdm remove psycopg2-binary
+pdm remove pydicom
+pdm remove python-gdcm
+pdm remove pylibjpeg[all]
+pdm remove PyPDF2
+pdm remove PyMuPDF
+pdm remove psycopg
+
+# pip install pydicom[gdcm] pydicom[pylibjpeg]
+# pip install pydicom[gdcm,pylibjpeg]
+# pip install gdcm
+# pip install pylibjpeg
 ```

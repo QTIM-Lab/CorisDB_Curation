@@ -18,19 +18,21 @@ select
 -- Counts
 -- count(*)
 
+
 -- Key Columns
-sf_pat.ptid as sf_pat_ptid, g.pat_mrn as g_pat_mrn, -- join
-sf_pat.ptsrno as sf_pat_ptsrno, e.ptsrno as e_ptsrno, -- join
-e.exsrno as e_exsrno, f.exsrno as f_exsrno, -- join
-e.exdevtype, d.devsrno, -- join
-f.filepath as f_filepath,
-f.filename as f_filename,
-f.filepathnew as f_filepathnew,
-f.filenamenew as f_filenamenew,
-e.exdatetime as e_exdatetime,
-e.tmstamp as e_tmstamp,
-f.tmstamp as f_tmstamp,
-d.devtype, d.devname, devdescrition, d.devrender, d.devconfig
+distinct e.exsrno as e_exsrno
+-- sf_pat.ptid as sf_pat_ptid, g.pat_mrn as g_pat_mrn, -- join
+-- sf_pat.ptsrno as sf_pat_ptsrno, e.ptsrno as e_ptsrno, -- join
+-- e.exsrno as e_exsrno, f.exsrno as f_exsrno, -- join
+-- e.exdevtype, d.devsrno, -- join
+-- f.filepath as f_filepath,
+-- f.filename as f_filename,
+-- f.filepathnew as f_filepathnew,
+-- f.filenamenew as f_filenamenew,
+-- e.exdatetime as e_exdatetime,
+-- e.tmstamp as e_tmstamp,
+-- f.tmstamp as f_tmstamp,
+-- d.devtype, d.devname, devdescrition, d.devrender, d.devconfig
 
 -- All
 -- ,* -- To see literally all columns (~90)
@@ -50,6 +52,7 @@ inner join axispacs_snowflake.devices as d
 on e.exdevtype = d.devsrno
 
 where g.pat_mrn is not null and d.devname like '%Nidek%'
+) as tmp
 order by e_exdatetime asc;
 -- limit 10;
 
