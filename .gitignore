@@ -7,6 +7,15 @@ tmp_for_import
 .xlsx
 vue_original
 vue_original_copy
+*.png
+*.dcm
+*.jpg
+*.jpeg
+*.j2k
+*.pdf
+*.bin
+*.xml
+*.tff
 
 # data
 
@@ -35,4 +44,4 @@ vue_original_copy
 #   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
-.pdm.toml
+.pdm-python
