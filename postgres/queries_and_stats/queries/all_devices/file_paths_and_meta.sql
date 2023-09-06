@@ -13,9 +13,6 @@ from axispacs_snowflake.files as f limit 1000000
 -- from axispacs_snowflake.files as f
 -- limit 1000;
 
-
-
-
 DROP MATERIALIZED VIEW IF EXISTS axispacs_snowflake.file_paths_and_meta
 CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
 
@@ -26,6 +23,9 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
         when f.filenamenew like '%.j2k%'
         then '/data/PACS/VisupacImages/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
     end as file_path_coris
+    ,f.dicomseriesuid
+    ,f.dicomsopinstanceuid
+    ,f.dicomacquisitiondatetime
     ,e.exdevtype
     ,e.exdatetime
     ,e.exsrno
