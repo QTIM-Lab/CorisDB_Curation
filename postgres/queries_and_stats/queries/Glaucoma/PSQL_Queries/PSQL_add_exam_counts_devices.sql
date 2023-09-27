@@ -64,7 +64,7 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.devices_counts AS
     d.devguid,
     eca.exam_count_all_patients,
     ecg.exam_count_glaucoma,
-    fca.file_count_all_patients
+    fca.file_count_all_patients,
     fcg.file_count_glaucoma
     from axispacs_snowflake.devices as d
     

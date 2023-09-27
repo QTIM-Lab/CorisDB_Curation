@@ -1,0 +1,42 @@
+-- \copy OphthalmologyCurrentMedications FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyCurrentMedications_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyDiagnosesDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyDiagnosesDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounterDiagnoses FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounterDiagnoses_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounterProblemList FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounterProblemList_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounters FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounters_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounterVisit FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounterVisit_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounterExam FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounterExam_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyEncounterCharge FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyEncounterCharge_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyFamilyHistory FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyFamilyHistory_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyImplant FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyImplant_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyImplantDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyImplantDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyLabOrder FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyLabOrder_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyLabs FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyLabs_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyMedicationDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyMedicationDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyMedications FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyMedications_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyOrders FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyOrders_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyPatientDiagnoses FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyPatientDiagnoses_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyPatients FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyPatients_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyProviderAll FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyProviderAll_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologyProviderDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyProviderDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyRadiology FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyRadiology_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySupply FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySupply_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySupplyDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySupplyDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologySurgery FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgery_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgeryAll FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgeryAll_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgeryBill FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgeryBill_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgeryDm FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgeryDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgeryMedication FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgeryMedication_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgeryProcedure FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgeryProcedure_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+-- \copy OphthalmologySurgerySurgeon FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologySurgerySurgeon_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+
+-- \copy OphthalmologyVisitSummary FROM '/projects/CORIS_DB/tmp_for_import/OphthalmologyVisitSummary_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;

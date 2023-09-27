@@ -22,3 +22,4 @@ for file_name in all_devices_1_each['file_path_coris']:
 
 
 # list_of_not_found_images:
+# ['']

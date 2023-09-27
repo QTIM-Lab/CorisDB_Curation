@@ -1,0 +1,51 @@
+SELECT tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname = 'public';
+
+select count (*) from ophthalmologydiagnosesdm          -- rows
+select count (*) from ophthalmologyproviderall          -- rows
+select count (*) from ophthalmologyradiology            -- rows
+select count (*) from ophthalmologyencountervisit       -- rows
+select count (*) from ophthalmologyfamilyhistory        -- rows
+select count (*) from ophthalmologypatientdiagnoses     -- rows
+select count (*) from ophthalmologysurgeryall           -- rows
+select count (*) from ophthalmologyimplant              -- rows
+select count (*) from ophthalmologycurrentmedications   -- rows
+select count (*) from ophthalmologysupplydm             -- rows
+select count (*) from ophthalmologyimplantdm            -- rows
+select count (*) from ophthalmologysurgeryprocedure     -- rows
+select count (*) from ophthalmologyencountercharge      -- rows
+select count (*) from ophthalmologysurgerymedication    -- rows
+select count (*) from ophthalmologysurgerysurgeon       -- rows
+select count (*) from ophthalmologyencounterexam        -- rows
+select count (*) from ophthalmologyencounters           -- rows
+select count (*) from ophthalmologyvisitsummary         -- rows
+select count (*) from ophthalmologysurgery              -- rows
+select count (*) from ophthalmologyorders               -- rows
+select count (*) from ophthalmologymedicationdm         -- rows
+select count (*) from ophthalmologylaborder             -- rows
+select count (*) from ophthalmologymedications          -- rows
+select count (*) from ophthalmologysurgerybill          -- rows
+select count (*) from ophthalmologysupply               -- rows
+select count (*) from ophthalmologyproviderdm           -- rows
+select count (*) from ophthalmologyencounterproblemlist -- rows
+select count (*) from ophthalmologylabs                 -- rows
+select count (*) from ophthalmologypatients             -- rows
+select count (*) from ophthalmologysurgerydm            -- rows
+select count (*) from ophthalmologyencounterdiagnoses   -- rows
+
+SELECT tablename
+FROM pg_catalog.pg_tables
+WHERE schemaname = 'glaucoma';
+
+select count (*) from glaucoma.glaucoma_diagnosis_dx_ids;      --
+
+-- patients can have multiple diagnoses
+select count (*) from glaucoma.diagnosis_and_patient;          --
+select count (distinct pat_id) from glaucoma.diagnosis_and_patient;          --
+
+select count (*) from glaucoma.glaucoma_patients;              --
+select count (*) from glaucoma.glaucoma_encounter_visit_join;  --
+select count (*) from glaucoma.glaucoma_visits;                --
+select count (*) from glaucoma.glaucoma_encounters;            --
+select count (*) from glaucoma.glaucoma_summary_stats;         --
