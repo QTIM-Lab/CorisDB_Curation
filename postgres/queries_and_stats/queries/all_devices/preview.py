@@ -102,7 +102,7 @@ for file_path in all_devices_1_each['file_path_coris'][69:]:
             # pdb.set_trace()
             with open(os.path.join(OUT,"dcm_print_header_"+os.path.splitext(os.path.basename(file_path))[0]+".txt"), "w") as file: file.write(str(ds))
         else:
-            pdb.set_trace()
+            # pdb.set_trace()
             print("NOT Ophthalmic Photography 8 Bit Image Storage \nor \nSecondary Capture Image Storage \nor \nEncapsulated PDF Storage!")
             ds.get((0x0010, 0x0020)).value # patient
             ds.get((0x0008, 0x0060)).value # modality
@@ -151,26 +151,3 @@ for file_path in all_devices_1_each['file_path_coris'][69:]:
         draw.text((0, 800), devsrno_text, fill=text_color, font=font)
         image.save(os.path.join(OUT, os.path.splitext(os.path.basename(file_path))[0]+".png"))  # To save the image to a file (e.g., PNG format)
 
-
-
-# import pyopenjpeg
-# import numpy as np
-# from PIL import Image
-
-# def j2k_to_numpy(j2k_path):
-#     with open(j2k_path, 'rb') as f:
-#         j2k_data = f.read()
-    
-#     info = pyopenjpeg.get_header(j2k_data)
-#     image = pyopenjpeg.decode(j2k_data)
-#     return image, info
-
-# j2k_path = 'path_to_your_j2k_file.j2k'
-# image_data, image_info = j2k_to_numpy(j2k_path)
-
-# # Convert image data to a PIL Image for display
-# image_pil = Image.fromarray(image_data)
-# image_pil.show()
-
-    
-    

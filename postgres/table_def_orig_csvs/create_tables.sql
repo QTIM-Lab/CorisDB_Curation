@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS OphthalmologyDiagnosesDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyDiagnosesDm (
     DX_ID INTEGER,
     DX_NAME VARCHAR(500),
     LINE INTEGER,
@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyDiagnosesDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyProviderAll (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyProviderAll (
     PROV_ID VARCHAR(100),
     PROV_NAME VARCHAR(100),
     PROV_TYPE VARCHAR(100),
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyProviderAll (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyRadiology (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyRadiology (
     PAT_MRN VARCHAR(100),
     ACESSION_NUM BIGINT,
     MODALITY VARCHAR(100),
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyRadiology (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounterVisit (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounterVisit (
     PAT_ENC_CSN_ID INTEGER,
     PAT_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyEncounterVisit (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyFamilyHistory (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyFamilyHistory (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     RECENT_PAT_ENC_CSN_ID INTEGER,
@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyFamilyHistory (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyPatientDiagnoses (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyPatientDiagnoses (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     DX_ID INTEGER,
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyPatientDiagnoses (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgeryAll (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgeryAll (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     SURGERY_CSN_ID INTEGER,
@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgeryAll (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyImplant (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyImplant (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     LOG_ID VARCHAR(100),
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyImplant (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyCurrentMedications (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyCurrentMedications (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     PAT_ENC_CSN_ID INTEGER,
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyCurrentMedications (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySupplyDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySupplyDm (
     OR_SUPPLY_CAT INTEGER,
     LINE INTEGER,
     SUPPLY_ID VARCHAR(100),
@@ -204,7 +204,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySupplyDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyImplantDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyImplantDm (
     IMPLANT_ID VARCHAR(100),
     IMPLANT_NAME VARCHAR(100),
     IMPLANT_TYPE VARCHAR(100),
@@ -213,7 +213,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyImplantDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgeryProcedure (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgeryProcedure (
     CASE_ID VARCHAR(100),
     LOG_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
@@ -229,7 +229,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgeryProcedure (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounterCharge (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounterCharge (
     UCL_ID VARCHAR(100),
     PAT_ENC_CSN_ID INTEGER,
     PAT_ID VARCHAR(100),
@@ -251,7 +251,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyEncounterCharge (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgeryMedication (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgeryMedication (
     LOG_ID VARCHAR(100),
     CASE_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
@@ -284,7 +284,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgeryMedication (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgerySurgeon (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgerySurgeon (
     CASE_ID VARCHAR(100),
     LOG_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
@@ -304,7 +304,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgerySurgeon (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounterExam (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounterExam (
     CONCEPT_ID VARCHAR(100),
     CONCEPT_NAME VARCHAR(500),
     PAT_MRN VARCHAR(100),
@@ -319,7 +319,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyEncounterExam (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounters (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounters (
     PAT_ENC_CSN_ID INTEGER,
     PAT_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
@@ -407,7 +407,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyEncounters (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyVisitSummary (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyVisitSummary (
     PAT_ENC_CSN_ID INTEGER,
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
@@ -423,7 +423,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyVisitSummary (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgery (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgery (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     SURGERY_CSN_ID INTEGER,
@@ -541,7 +541,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgery (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyOrders (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyOrders (
     ORDER_ID INTEGER,
     PAT_ENC_CSN_ID INTEGER,
     PAT_MRN VARCHAR(100),
@@ -600,7 +600,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyOrders (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyMedicationDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyMedicationDm (
     MED_CAT VARCHAR(100),
     MED_SUBCAT VARCHAR(100),
     THERAPEUTIC_CLASS VARCHAR(100),
@@ -612,7 +612,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyMedicationDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyLabOrder (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyLabOrder (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     PAT_ENC_CSN_ID INTEGER,
@@ -641,7 +641,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyLabOrder (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyMedications (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyMedications (
     ORDER_MED_ID INTEGER,
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
@@ -690,7 +690,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyMedications (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgeryBill (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgeryBill (
     LOG_ID VARCHAR(100),
     UCL_ID VARCHAR(100),
     YearServiceDate VARCHAR(100),
@@ -711,7 +711,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgeryBill (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySupply (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySupply (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     LOG_ID VARCHAR(100),
@@ -727,7 +727,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySupply (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyProviderDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyProviderDm (
     PROV_ID VARCHAR(100),
     PROV_NAME VARCHAR(100),
     DEPARTMENT_ID TEXT,
@@ -737,7 +737,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyProviderDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounterProblemList (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounterProblemList (
     PROBLEM_LIST_ID INTEGER,
     PAT_ENC_CSN_ID INTEGER,
     PAT_MRN VARCHAR(100),
@@ -753,7 +753,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyEncounterProblemList (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyLabs (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyLabs (
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),
     ORDER_ID INTEGER,
@@ -775,7 +775,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyLabs (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyPatients (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyPatients (
     PAT_ID VARCHAR(100),
     PAT_MRN VARCHAR(100),
     PAT_SEX VARCHAR(100),
@@ -846,7 +846,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologyPatients (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologySurgeryDm (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologySurgeryDm (
     OR_CAT VARCHAR(100),
     OR_CAT_ID VARCHAR(100),
     OR_PROC_ID VARCHAR(100),
@@ -855,7 +855,7 @@ CREATE TABLE IF NOT EXISTS OphthalmologySurgeryDm (
     --table_constraints
     );
 
-CREATE TABLE IF NOT EXISTS OphthalmologyEncounterDiagnoses (
+CREATE TABLE IF NOT EXISTS ehr.OphthalmologyEncounterDiagnoses (
     PAT_ENC_CSN_ID INTEGER,
     PAT_MRN VARCHAR(100),
     PAT_ID VARCHAR(100),

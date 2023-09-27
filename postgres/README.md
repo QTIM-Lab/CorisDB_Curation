@@ -21,15 +21,54 @@ psql -U ophuser coris_db
 ### Make new Scheme for new tables
 ```sql
 CREATE SCHEMA IF NOT EXISTS axispacs_snowflake;
+CREATE SCHEMA IF NOT EXISTS axispacs_dscan;
+CREATE SCHEMA IF NOT EXISTS forum_dscan;
 CREATE SCHEMA IF NOT EXISTS glaucoma;
 CREATE SCHEMA IF NOT EXISTS amd;
 CREATE SCHEMA IF NOT EXISTS parkinsons;
+CREATE SCHEMA IF NOT EXISTS dashboard;
+CREATE SCHEMA IF NOT EXISTS compass;
+
+-- ALTER SCHEMA compass RENAME TO ehr;
+-- ALTER SCHEMA ehr RENAME TO compass;
 
 -- DROP SCHEMA IF EXISTS glaucoma;
 -- DROP SCHEMA IF EXISTS amd;
 -- DROP SCHEMA IF EXISTS parkinsons;
 -- DROP SCHEMA IF EXISTS axispacs_snowflake
+-- DROP SCHEMA IF EXISTS compass
 
+---- ALTER TABLE public.OphthalmologyDiagnosesDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyProviderAll SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyRadiology SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounterVisit SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyFamilyHistory SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyPatientDiagnoses SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgeryAll SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyImplant SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyCurrentMedications SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySupplyDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyImplantDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgeryProcedure SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounterCharge SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgeryMedication SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgerySurgeon SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounterExam SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounters SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyVisitSummary SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgery SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyOrders SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyMedicationDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyLabOrder SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyMedications SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgeryBill SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySupply SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyProviderDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounterProblemList SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyLabs SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyPatients SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologySurgeryDm SET SCHEMA compass;
+---- ALTER TABLE public.OphthalmologyEncounterDiagnoses SET SCHEMA compass;
 
 ```
 

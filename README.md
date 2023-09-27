@@ -159,6 +159,10 @@ pdm add pylibjpeg[all]
 pdm add PyPDF2
 pdm add PyMuPDF
 pdm add psycopg
+pdm add requests
+pdm add couchdb
+pdm add bypthon
+pdm add ipython
 
 
 # pdm remove psycopg2-binary

@@ -34,6 +34,7 @@ CREATE VIEW glaucoma.last_encounters AS
     group by pat_id, pat_mrn
     order by pat_id; -- 
 
+-- Why do we need if above is done (glaucoma.glaucoma_encounters)?
 DROP TABLE IF EXISTS glaucoma.glaucoma_encounter_visit_join;
 CREATE TABLE glaucoma.glaucoma_encounter_visit_join AS
     select

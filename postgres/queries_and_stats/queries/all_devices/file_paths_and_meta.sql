@@ -28,14 +28,22 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
     ,f.dicomacquisitiondatetime
     ,e.exdevtype
     ,e.exdatetime
+    ,EXTRACT(YEAR from e.exdatetime) as year 
+    ,EXTRACT(MONTH from e.exdatetime) as month
+    ,EXTRACT(DAY from e.exdatetime) as day
     ,e.exsrno
     ,p.ptsrno
+    ,p.ptid
     ,d.devname
     ,d.devdescription
     ,d.devtype
     ,d.devproc
     ,d.dicomaetitle
     ,d.devsrno
+    ,f.fileeye
+    ,f.filenote
+    ,f.filetype
+    ,f.filedata
     from axispacs_snowflake.files as f
     inner join axispacs_snowflake.exams as e
     on e.exsrno = f.exsrno
