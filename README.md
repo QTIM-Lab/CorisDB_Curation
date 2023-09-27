@@ -23,6 +23,17 @@ Check they are running:
 docker compose ps
 ```
 
+If issue with Vue dev service then run a new one to shell in:
+```bash
+docker compose build vue
+docker run \
+  -it \
+  --rm \
+  -w /project \
+  -v /home/bearceb/coris_db/vue/project:/project \
+  node:lts-alpine3.17 sh
+```
+
 ## Creating Front End Prod Updates
 As noted at vue/project/README.md the vue dev cli is running ```yarn dev```. We need to run ```yarn build``` to make an initial prod or a new prod version. Shell into vue service.
 
