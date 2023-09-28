@@ -1,5 +1,5 @@
 <template>
-  <Glaucoma ssh-port-forward="34851"/>
+  <Glaucoma/>
 </template>
 
 <script lang="ts" setup>
