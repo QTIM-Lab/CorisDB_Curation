@@ -6,7 +6,7 @@
         <!-- <v-autocomplete v-model="selectedPatientAutocomplete" :items="patients.map((patient) => patient.name + ' (' + patient.mrn + ')')" item-text="name" label="Search Patients" @input="searchPatients"></v-autocomplete> -->
         
         <v-text-field
-        label="Look up Patient in Database">
+        label="Look up Patient in Database (Not active..yet)">
         </v-text-field>
         <v-autocomplete 
           label="Recent Patients"
@@ -44,10 +44,10 @@
         <v-label>Gender</v-label>
         <p>{{ selectedPatient.gender }}</p>
       </v-col>
-      <v-col cols="1" v-if="selectedPatientAutocomplete">
+      <!-- <v-col cols="1" v-if="selectedPatientAutocomplete">
         <v-label>Test</v-label>
         <p>{{ selectedPatientAutocomplete }}</p>
-      </v-col>
+      </v-col> -->
     </v-row>
 
     <!-- EXAMPLE Carousel Raw-->
@@ -91,9 +91,14 @@
           <!-- Optic Disk Serial Photo -->
           <v-col cols="6">
 
+            <v-btn
+              color="#D0B97D"
+              @click="toggleOpticDiskSerialPhotoDialog"
+            >
+              Optic Disk Serial Photo
+            </v-btn>
             <!-- Small Carousel -->
-            <v-label>Optic Disk Serial Photo</v-label>
-            <v-carousel @mouseenter="toggleOpticDiskSerialPhotoDialog" progress="primary">
+            <v-carousel progress="#D0B97D">
               <v-carousel-item cover v-for="(item, index) in imageSet.NonMyds">
 
                 <v-row>
@@ -117,7 +122,7 @@
               <v-card>
                 <v-card-text>
                   <v-label>Optic Disk Serial Photo</v-label>
-                  <v-carousel height="100%" progress="primary" hide-delimiters @mouseleave="toggleOpticDiskSerialPhotoDialog">
+                  <v-carousel height="100%" progress="#D0B97D" hide-delimiters>
                     <v-carousel-item cover v-for="(item, index) in imageSet.NonMyds">
 
                       <v-row>
@@ -135,7 +140,7 @@
                   </v-carousel>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary" block @click="toggleOpticDiskSerialPhotoDialog">Close Dialog</v-btn>
+                  <v-btn color="#D0B97D" block @click="toggleOpticDiskSerialPhotoDialog">Close Dialog</v-btn>
                 </v-card-actions>
               </v-card>
 
@@ -146,9 +151,14 @@
 
           <!-- Visual Field -->
           <v-col cols="6">
+            <v-btn
+              color="#D0B97D"
+              @click="toggleVisualFieldDialog"
+            >
+              Visual Field
+            </v-btn>
             <!-- Small Carousel -->
-            <v-label>Visual Field</v-label>
-            <v-carousel @mouseenter="toggleVisualFieldDialog" progress="primary">
+            <v-carousel progress="#D0B97D">
               <v-carousel-item cover v-for="(item, index) in imageSet.HFA3s">
                 <v-row>
                   <v-col cols="6">
@@ -169,7 +179,7 @@
               <v-card>
                 <v-card-text>
                   <v-label>Visual Field</v-label>
-                  <v-carousel height="100%" progress="primary" hide-delimiters @mouseleave="toggleVisualFieldDialog">
+                  <v-carousel height="100%" progress="#D0B97D" hide-delimiters>
                     <v-carousel-item cover v-for="(item, index) in imageSet.HFA3s">
                       <v-row>
                         <v-col cols="6">
@@ -184,7 +194,7 @@
                   </v-carousel>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary" block @click="toggleVisualFieldDialog">Close Dialog</v-btn>
+                  <v-btn color="#D0B97D" block @click="toggleVisualFieldDialog">Close Dialog</v-btn>
                 </v-card-actions>
               </v-card>
 
@@ -200,8 +210,13 @@
           <!-- OCT GCC Report -->
           <v-col cols="6">
             <!-- Small Carousel -->
-            <v-label>OCT GCC Report</v-label>
-            <v-carousel @mouseenter="toggleOCTGCCReportDialog" progress="primary">
+            <v-btn
+              color="#D0B97D"
+              @click="toggleOCTGCCReportDialog"
+            >
+              OCT GCC Report
+            </v-btn>
+            <v-carousel progress="#D0B97D">
               <v-carousel-item v-for="(item, index) in imageSet.OCT_GCCs" :src="item.image" cover></v-carousel-item>
             </v-carousel>
 
@@ -212,12 +227,12 @@
               <v-card>
                 <v-card-text>
                   <v-label>OCT GCC Report</v-label>
-                  <v-carousel height="100%" progress="primary" hide-delimiters @mouseleave="toggleOCTGCCReportDialog">
+                  <v-carousel height="100%" progress="#D0B97D" hide-delimiters>
                     <v-carousel-item v-for="(item, index) in imageSet.OCT_GCCs" :src="item.image" cover></v-carousel-item>
                   </v-carousel>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary" block @click="toggleOCTGCCReportDialog">Close Dialog</v-btn>
+                  <v-btn color="#D0B97D" block @click="toggleOCTGCCReportDialog">Close Dialog</v-btn>
                 </v-card-actions>
               </v-card>
 
@@ -228,8 +243,13 @@
           <!-- OCT RNFL Report -->
           <v-col cols="6">
             <!-- Small Carousel -->
-            <v-label>OCT RNFL Report</v-label>
-            <v-carousel @mouseenter="toggleOCTRNFLReportDialog" progress="primary">
+            <v-btn
+              color="#D0B97D"
+              @click="toggleOCTRNFLReportDialog"
+            >
+              OCT RNFL Report
+            </v-btn>
+            <v-carousel @click="toggleOCTRNFLReportDialog" progress="#D0B97D">
               <v-carousel-item v-for="(item, index) in imageSet.OCT_RNFLs" :src="item.image" cover></v-carousel-item>
             </v-carousel>
 
@@ -240,14 +260,14 @@
               <v-card>
                 <v-card-text>
                   <v-label>OCT RNFL Report</v-label>
-                  <v-carousel height="100%" progress="primary" hide-delimiters @mouseleave="toggleOCTRNFLReportDialog">
+                  <v-carousel height="100%" progress="#D0B97D" hide-delimiters>
                     <v-carousel-item v-for="(item, index) in imageSet.OCT_RNFLs" :src="item.image"
                       cover></v-carousel-item>
 
                   </v-carousel>
                 </v-card-text>
                 <v-card-actions>
-                  <v-btn color="primary" block @click="toggleOCTRNFLReportDialog">Close Dialog</v-btn>
+                  <v-btn color="#D0B97D" block @click="toggleOCTRNFLReportDialog">Close Dialog</v-btn>
                 </v-card-actions>
               </v-card>
 
@@ -358,7 +378,7 @@ export default { // for drawer re-lookup vue code
             image_right: "/chosen_ones/HFA3x/right/pdf_1.2.276.0.75.2.5.80.25.3.191211083203099.345051356800.1860673788/page_1.png"
           },
           {
-            image_left: "/projects/coris_db//chosen_ones/HFA3x/left/pdf_1.2.276.0.75.2.5.80.25.3.201012095444155.345051356800.2015915086/page_1.png",
+            image_left: "/chosen_ones/HFA3x/left/pdf_1.2.276.0.75.2.5.80.25.3.201012095444155.345051356800.2015915086/page_1.png",
             image_right: "/chosen_ones/HFA3x/right/pdf_1.2.276.0.75.2.2.30.2.7.20220207070758.860.18611/page_1.png"
           },
         ],
@@ -399,7 +419,7 @@ export default { // for drawer re-lookup vue code
             image_left: "/chosen_ones/HFA3x/right/pdf_1.2.276.0.75.2.5.80.25.3.191211083203099.345051356800.1860673788/page_1.png"
           },
           {
-            image_right: "/projects/coris_db//chosen_ones/HFA3x/left/pdf_1.2.276.0.75.2.5.80.25.3.201012095444155.345051356800.2015915086/page_1.png",
+            image_right: "/chosen_ones/HFA3x/left/pdf_1.2.276.0.75.2.5.80.25.3.201012095444155.345051356800.2015915086/page_1.png",
             image_left: "/chosen_ones/HFA3x/right/pdf_1.2.276.0.75.2.2.30.2.7.20220207070758.860.18611/page_1.png"
           },
         ],
