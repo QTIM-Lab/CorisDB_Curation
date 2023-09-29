@@ -3,7 +3,7 @@
     <v-row>
       <v-col cols="5">
         <!-- <v-autocomplete v-model="selectedPatientAutocomplete" :items="patients.map((patient) => patient.name + ' (' + patient.mrn + ')')" item-text="name" label="Search Patients" @input="searchPatients"></v-autocomplete> -->
-        
+        <TemplateComponent></TemplateComponent>
         <v-text-field
         label="Look up Patient in Database (Not active..yet)">
         </v-text-field>
@@ -283,7 +283,12 @@
 
 <script lang="ts">
 
-export default { // for drawer re-lookup vue code
+import TemplateComponent from '@/components/General_Components/TemplateComponent.vue'
+
+export default {
+  components: {
+    TemplateComponent
+  },
   data: () => ({
     // drawer: false,
     group: null,
