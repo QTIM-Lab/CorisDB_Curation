@@ -3,7 +3,6 @@
     <v-row>
       <v-col cols="5">
         <!-- <v-autocomplete v-model="selectedPatientAutocomplete" :items="patients.map((patient) => patient.name + ' (' + patient.mrn + ')')" item-text="name" label="Search Patients" @input="searchPatients"></v-autocomplete> -->
-        <TemplateComponent></TemplateComponent>
         <v-text-field
         label="Look up Patient in Database (Not active..yet)">
         </v-text-field>
@@ -283,14 +282,14 @@
 
 <script lang="ts">
 
-import TemplateComponent from '@/components/General_Components/TemplateComponent.vue'
+// import MRNSearch from '@/components/General_Components/MRNSearch.vue'
 
 export default {
-  components: {
-    TemplateComponent
-  },
+  name:"GlaucomaView",
+  // components: {
+  //   MRNSearch
+  // },
   data: () => ({
-    // drawer: false,
     group: null,
     opticDiskSerialPhotoDialog: false,
     visualFieldDialog: false,
