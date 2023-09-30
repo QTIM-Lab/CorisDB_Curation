@@ -1,8 +1,8 @@
 <template>
   <v-alert
     v-model="showAlert"
-    title="Template Component"
-    text="This is an alert component lodged in the TemplateComponent component"
+    title="Epic Flow Sheet Data"
+    text="This is an alert component lodged in the EpicFlowSheetData component"
   ></v-alert>
 </template>
 
@@ -12,12 +12,12 @@ export default {
     showAlert: true,
   }),
   mounted() {
-    console.log("Template component mounted!");
+    console.log("EpicFlowSheetData mounted!");
     this.test();
   },
   methods: {
     test: function () {
-      console.log("Template Component loaded successfully!");
+      console.log("Loaded EpicFlowSheetData successfully!");
     },
     toggleAlert() {
       this.showAlert = !this.showAlert;
