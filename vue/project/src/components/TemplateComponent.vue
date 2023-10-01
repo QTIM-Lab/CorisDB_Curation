@@ -1,7 +1,7 @@
 <template>
   <v-alert
     v-model="showAlert"
-    title="Template Component"
+    title="TemplateComponent"
     text="This is an alert component lodged in the TemplateComponent component"
   ></v-alert>
 </template>
@@ -12,12 +12,12 @@ export default {
     showAlert: true,
   }),
   mounted() {
-    console.log("Template component mounted!");
+    console.log("TemplateComponent mounted!");
     this.test();
   },
   methods: {
     test: function () {
-      console.log("Template Component loaded successfully!");
+      console.log("TemplateComponent loaded successfully!");
     },
     toggleAlert() {
       this.showAlert = !this.showAlert;

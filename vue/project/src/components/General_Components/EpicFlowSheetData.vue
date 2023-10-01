@@ -1,15 +1,18 @@
 <template>
-  <v-alert
-    v-model="showAlert"
-    title="Epic Flow Sheet Data"
-    text="This is an alert component lodged in the EpicFlowSheetData component"
-  ></v-alert>
+  <v-container>
+    <h2 class="text-center">Epic Flowsheet Data</h2>
+    <h3 class="text-center">(Tabular Data)</h3>
+    <p class="mt-16 text-center">Visual Activity</p>
+    <p class="mt-16 text-center">Corneal Thickness</p>
+    <p class="mt-16 text-center">IOP</p>
+    <p class="mt-16 text-center">C/D Ratio</p>
+    <p class="mt-16 text-center">Previous Assessment/Plan?</p>
+  </v-container>
 </template>
 
 <script lang="ts">
 export default {
   data: () => ({
-    showAlert: true,
   }),
   mounted() {
     console.log("EpicFlowSheetData mounted!");
@@ -18,9 +21,6 @@ export default {
   methods: {
     test: function () {
       console.log("Loaded EpicFlowSheetData successfully!");
-    },
-    toggleAlert() {
-      this.showAlert = !this.showAlert;
     },
   },
 };
