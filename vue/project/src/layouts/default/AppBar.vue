@@ -10,15 +10,15 @@
           <!-- <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"></v-app-bar-nav-icon> -->
           <v-toolbar-title>CU Anschutz Dept. of Ophthalmology</v-toolbar-title>
           <v-spacer></v-spacer>
-          <v-btn variant="text" href="/coris_db/glaucoma">
+          <!-- <v-btn variant="text" href="/coris_db/glaucoma">
             Glaucoma
           </v-btn>
           <v-btn variant="text" href="/coris_db/amd">
             AMD
-          </v-btn>
-          <v-app-bar-nav-icon class="mr-4">
+          </v-btn> -->
+          <!-- <v-app-bar-nav-icon class="mr-4">
             <v-icon>mdi-bell</v-icon>
-          </v-app-bar-nav-icon>
+          </v-app-bar-nav-icon> -->
           <v-app-bar-nav-icon>
             <v-icon>mdi-account-circle</v-icon>
           </v-app-bar-nav-icon>

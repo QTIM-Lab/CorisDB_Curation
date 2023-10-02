@@ -45,3 +45,8 @@ vue_original_copy
 #   in version control.
 #   https://pdm.fming.dev/#use-with-ide
 .pdm-python
+
+# User data and helpful scripts
+.vscode
+INVESTIGATION.sh
+settings.json
