@@ -63,16 +63,16 @@ export default {
       mrn:0,
       NonMyds: [
           {
-            image_left: "/chosen_ones/NonMyd/left/axis01_2718_287449_201906120816228504c88b713b03a6df0.png",
-            image_right: "/chosen_ones/NonMyd/right/axis01_2718_287449_20190612081622678981e820ee30f1d26.png"
+            image_left: "03a6df0.png",
+            image_right: "e30f1d26.png"
           },
           {
-            image_left: "/chosen_ones/NonMyd/left/axis01_2718_350677_20200610084935917b13100e8705fb78.png",
-            image_right: "/chosen_ones/NonMyd/right/axis01_2718_350677_20200610084935854a8defbb98c1f9880.png"
+            image_left: "705fb78.png",
+            image_right: "8c1f9880.png"
           },
           {
-            image_left: "/chosen_ones/NonMyd/left/axis01_2718_419438_20210412084929850ff8a454d5aec54cd.png",
-            image_right: "/chosen_ones/NonMyd/right/axis01_2718_419438_20210412084929928d65ec55b1d686de8.png"
+            image_left: "aec54cd.png",
+            image_right: "1d686de8.png"
           },
         ],
     },
