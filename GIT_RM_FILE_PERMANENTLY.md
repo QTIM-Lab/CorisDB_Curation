@@ -8,7 +8,7 @@
 ## Use the filter-branch command
 To remove a specific file from the entire history, you can use the filter-branch command. Here's how:
 ```bash
-# I manually ran one after another
+# Files
 PATH_TO_FILE=vue/project/src/views/Glaucoma.vue
 PATH_TO_FILE=vue/project/src/views/AMD.vue
 PATH_TO_FILE=vue/project/src/components/Glaucoma.vue
@@ -16,10 +16,16 @@ PATH_TO_FILE=vue/project/src/components/GlaucomaBB.vue
 PATH_TO_FILE=vue/project/src/components/GlaucomaClick.vue
 PATH_TO_FILE=vue/project/src/components/GlaucomaHover.vue
 PATH_TO_FILE=vue/project/src/components/AMD.vue
-# DIR? (Added -r...look closely)
+
+# Remove File
+git filter-branch --force --index-filter "git rm --cached --ignore-unmatch $PATH_TO_FILE" --prune-empty --tag-name-filter cat -- --all
+
+
+# Directories
 PATH_TO_FILE=postgres
 
-git filter-branch --force --index-filter "git rm -r --cached --ignore-unmatch $PATH_TO_FILE" --prune-empty --tag-name-filter cat -- --all
+# Remove Directory (Added -r...look closely)
+# git filter-branch --force --index-filter "git rm -r --cached --ignore-unmatch $PATH_TO_FILE" --prune-empty --tag-name-filter cat -- --all
 ```
 
 ```bash
