@@ -174,7 +174,7 @@ pdm add requests
 pdm add couchdb
 pdm add bypthon
 pdm add ipython
-
+pdm add orthanc-api-client
 
 # pdm remove psycopg2-binary
 pdm remove pydicom
@@ -183,6 +183,7 @@ pdm remove pylibjpeg[all]
 pdm remove PyPDF2
 pdm remove PyMuPDF
 pdm remove psycopg
+
 
 # pip install pydicom[gdcm] pydicom[pylibjpeg]
 # pip install pydicom[gdcm,pylibjpeg]

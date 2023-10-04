@@ -3,7 +3,7 @@ name = ""
 version = ""
 description = ""
 authors = [
-    {name = "bbearce", email = "bbearce@gmail.com"},
+    {name = "Benjamin Bearce",email = "bbearce@gmail.com"},
 ]
 dependencies = [
     "pandas>=2.1.0",
@@ -24,5 +24,6 @@ dependencies = [
 ]
 requires-python = ">=3.10"
 license = {text = "MIT"}
+readme = "README.md"
 
 
