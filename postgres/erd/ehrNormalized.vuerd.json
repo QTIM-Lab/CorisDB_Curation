@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 3100,
     "height": 3100,
-    "scrollTop": -942.8333347638364,
-    "scrollLeft": -496.0031231117244,
-    "zoomLevel": 0.4,
+    "scrollTop": 0,
+    "scrollLeft": -575.203125,
+    "zoomLevel": 1,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -141,9 +141,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1817,
-          "top": 1861.1,
-          "zIndex": 9,
+          "left": 1716.2,
+          "top": 2420.9,
+          "zIndex": 20,
           "widthName": 162.16017150878906,
           "widthComment": 60
         },
@@ -249,9 +249,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1176.2,
-          "top": 2162,
-          "zIndex": 7,
+          "left": 2389.4,
+          "top": 1508.1329,
+          "zIndex": 8,
           "widthName": 162.108154296875,
           "widthComment": 60
         },
@@ -276,7 +276,7 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 92.75308227539062,
               "widthComment": 60,
@@ -288,29 +288,6 @@
           {
             "id": "a893dd3d-6116-4281-97c7-c9481aba5c61",
             "name": "pat_id",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "id": "acad44a4-e048-4868-ac13-0fd89a85c3c8",
-            "name": "pat_mrn",
             "comment": "",
             "dataType": "character",
             "default": "",
@@ -380,12 +357,12 @@
         ],
         "ui": {
           "active": false,
-          "left": 1014.7111,
-          "top": 93.2,
-          "zIndex": 33,
+          "left": 1015.9111,
+          "top": 90.8,
+          "zIndex": 23,
           "widthName": 182.29718017578125,
           "widthComment": 60,
-          "color": "#38FF00"
+          "color": "#38FF0000"
         },
         "visible": true,
         "id": "ca621e58-ebf4-4fa1-9141-501b4c288ceb"
@@ -402,13 +379,13 @@
             "default": "",
             "option": {
               "autoIncrement": false,
-              "primaryKey": false,
+              "primaryKey": true,
               "unique": false,
-              "notNull": false
+              "notNull": true
             },
             "ui": {
               "active": false,
-              "pk": false,
+              "pk": true,
               "fk": false,
               "pfk": false,
               "widthName": 60,
@@ -512,9 +489,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1185.4,
-          "top": 2154.8,
-          "zIndex": 8,
+          "left": 1024.6,
+          "top": 2054,
+          "zIndex": 21,
           "widthName": 166.3851776123047,
           "widthComment": 60
         },
@@ -643,9 +620,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 985.5557,
-          "top": 1677.289,
-          "zIndex": 32,
+          "left": 13.3609,
+          "top": 2654.4,
+          "zIndex": 5,
           "widthName": 155.5171661376953,
           "widthComment": 60
         },
@@ -820,9 +797,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1251.8,
-          "top": 1657.6,
-          "zIndex": 26,
+          "left": 2721.8,
+          "top": 233.2,
+          "zIndex": 15,
           "widthName": 177.6041717529297,
           "widthComment": 60
         },
@@ -997,9 +974,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1309,
-          "top": 1992.1,
-          "zIndex": 28,
+          "left": 2284.4655,
+          "top": 52.6327,
+          "zIndex": 34,
           "widthName": 183.59718322753906,
           "widthComment": 60
         },
@@ -1174,9 +1151,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 984.3,
-          "top": 2375.8,
-          "zIndex": 23,
+          "left": 2705.1,
+          "top": 19,
+          "zIndex": 3,
           "widthName": 200.8481903076172,
           "widthComment": 60
         },
@@ -1420,9 +1397,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2220.2,
-          "top": 1924.3,
-          "zIndex": 10,
+          "left": 1013,
+          "top": 1283.5,
+          "zIndex": 2,
           "widthName": 191.20217895507812,
           "widthComment": 60
         },
@@ -1451,29 +1428,6 @@
               "fk": false,
               "pfk": false,
               "widthName": 92.75308227539062,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "id": "fdcea3f5-9d13-4a3d-bde0-f3b7a414287e",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -1689,8 +1643,8 @@
         ],
         "ui": {
           "active": false,
-          "left": 2379.2,
-          "top": 1773.1,
+          "left": 1006.9332,
+          "top": 970.1664,
           "zIndex": 11,
           "widthName": 220.12721252441406,
           "widthComment": 60
@@ -1726,7 +1680,6 @@
             }
           },
           {
-            "id": "31751b52-8297-4b9e-85a9-44d0259e2940",
             "name": "pat_enc_csn_id",
             "comment": "",
             "dataType": "integer",
@@ -1735,7 +1688,7 @@
               "autoIncrement": false,
               "primaryKey": false,
               "unique": false,
-              "notNull": false
+              "notNull": true
             },
             "ui": {
               "active": false,
@@ -1746,30 +1699,8 @@
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
-            }
-          },
-          {
-            "id": "c60cced2-b177-4e86-85d1-caaedaf73d5f",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
             },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
+            "id": "7e4baec9-3a32-43da-82a5-24c2e3a800bc"
           },
           {
             "id": "68c2bd45-fd39-423d-b9fe-c5e37f012f2b",
@@ -1958,9 +1889,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1181.3,
-          "top": 1067.1,
-          "zIndex": 24,
+          "left": 1009.1,
+          "top": 258.4,
+          "zIndex": 22,
           "widthName": 227.49822998046875,
           "widthComment": 60
         },
@@ -2227,9 +2158,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 87.8,
-          "top": 2272.8,
-          "zIndex": 20,
+          "left": 1835.6,
+          "top": 2539.2,
+          "zIndex": 19,
           "widthName": 142.01014709472656,
           "widthComment": 60
         },
@@ -2496,9 +2427,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1590.8,
-          "top": 2071.2,
-          "zIndex": 14,
+          "left": 141.2,
+          "top": 2757.6,
+          "zIndex": 6,
           "widthName": 135.3671417236328,
           "widthComment": 60
         },
@@ -2765,9 +2696,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1687.8,
-          "top": 1965.6,
-          "zIndex": 12,
+          "left": 2381.4,
+          "top": 2673.6,
+          "zIndex": 10,
           "widthName": 204.9691925048828,
           "widthComment": 60
         },
@@ -3034,9 +2965,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2098.4,
-          "top": 1915.2,
-          "zIndex": 13,
+          "left": 1028,
+          "top": 1569.6,
+          "zIndex": 4,
           "widthName": 177.2271728515625,
           "widthComment": 60
         },
@@ -3326,9 +3257,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 656.6,
-          "top": 2020.4,
-          "zIndex": 25,
+          "left": 15.8,
+          "top": 1922,
+          "zIndex": 28,
           "widthName": 174.56216430664062,
           "widthComment": 60
         },
@@ -3339,29 +3270,6 @@
         "name": "ophthalmologyradiology",
         "comment": "",
         "columns": [
-          {
-            "id": "2b089406-25c9-403c-bcc8-ff0fce179247",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
           {
             "id": "554c1121-55c6-45a3-8cb6-194b8888f0cc",
             "name": "acession_num",
@@ -3380,6 +3288,29 @@
               "fk": false,
               "pfk": false,
               "widthName": 88.56707763671875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "2b089406-25c9-403c-bcc8-ff0fce179247",
+            "name": "pat_mrn",
+            "comment": "",
+            "dataType": "character",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -3687,9 +3618,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 920.6,
-          "top": 2482.1,
-          "zIndex": 22,
+          "left": 18.0662,
+          "top": 1534.58,
+          "zIndex": 30,
           "widthName": 152.59214782714844,
           "widthComment": 60
         },
@@ -4048,8 +3979,8 @@
         ],
         "ui": {
           "active": false,
-          "left": 1796,
-          "top": 2206.1,
+          "left": 2396,
+          "top": 1121.3,
           "zIndex": 16,
           "widthName": 192.68417358398438,
           "widthComment": 60
@@ -4061,29 +3992,6 @@
         "name": "ophthalmologycurrentmedications",
         "comment": "",
         "columns": [
-          {
-            "id": "3f5ac295-f1e4-47d7-9a2e-03fc5f207704",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
           {
             "id": "c7b73065-5ba6-4e6d-9ee0-efa71ea6cd64",
             "name": "pat_id",
@@ -4431,10 +4339,10 @@
           }
         ],
         "ui": {
-          "active": false,
-          "left": 1595,
-          "top": 1994.9,
-          "zIndex": 17,
+          "active": true,
+          "left": 2281.4001,
+          "top": 258.3666,
+          "zIndex": 35,
           "widthName": 214.48521423339844,
           "widthComment": 60
         },
@@ -4816,9 +4724,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2338,
-          "top": 1008.5,
-          "zIndex": 1,
+          "left": 2386,
+          "top": 1670.9,
+          "zIndex": 17,
           "widthName": 160.01515197753906,
           "widthComment": 60
         },
@@ -4878,29 +4786,6 @@
           {
             "id": "46f9b2bd-87cd-4b5e-8dcd-0bef7f9c5d06",
             "name": "pat_id",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "id": "8c48a0d7-9160-411d-969d-1cb3b3f0dc11",
-            "name": "pat_mrn",
             "comment": "",
             "dataType": "character",
             "default": "",
@@ -5014,29 +4899,6 @@
             }
           },
           {
-            "id": "70b18cf0-7018-4e61-8ea7-3c8fcc3ab4e7",
-            "name": "modifier",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
             "id": "68edaac1-1667-4d85-8095-b71ad5a92586",
             "name": "quantity",
             "comment": "",
@@ -5062,6 +4924,29 @@
           {
             "id": "6a9b2a96-314e-4ca7-8d58-bfc3194ced00",
             "name": "bill_area",
+            "comment": "",
+            "dataType": "character",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "70b18cf0-7018-4e61-8ea7-3c8fcc3ab4e7",
+            "name": "modifier",
             "comment": "",
             "dataType": "character",
             "default": "",
@@ -5223,9 +5108,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 592.7,
-          "top": 2630.7,
-          "zIndex": 21,
+          "left": 1015.82,
+          "top": 560.94,
+          "zIndex": 1,
           "widthName": 199.9381866455078,
           "widthComment": 60
         },
@@ -5630,9 +5515,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1840.6,
-          "top": 2352.3,
-          "zIndex": 15,
+          "left": 818.2,
+          "top": 2631.9,
+          "zIndex": 27,
           "widthName": 120.00111389160156,
           "widthComment": 60
         },
@@ -6198,9 +6083,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1734,
-          "top": 890.7,
-          "zIndex": 19,
+          "left": 644.4129,
+          "top": 2323,
+          "zIndex": 32,
           "widthName": 147.4441375732422,
           "widthComment": 60
         },
@@ -6766,9 +6651,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1831,
-          "top": 1471.5,
-          "zIndex": 5,
+          "left": 1207,
+          "top": 2155.5,
+          "zIndex": 7,
           "widthName": 160.2361602783203,
           "widthComment": 60
         },
@@ -7426,9 +7311,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2418,
-          "top": 1471.5,
-          "zIndex": 3,
+          "left": 2384.4,
+          "top": 2083.5,
+          "zIndex": 9,
           "widthName": 210.273193359375,
           "widthComment": 60
         },
@@ -8360,29 +8245,6 @@
             }
           },
           {
-            "id": "a400201a-5889-43b9-b180-46701d568376",
-            "name": "ext_copay_id",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 79.55805969238281,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
             "id": "2d585429-9f12-421c-83d8-d4ee9918a12f",
             "name": "ext_pharmacy_type",
             "comment": "",
@@ -8400,6 +8262,29 @@
               "fk": false,
               "pfk": false,
               "widthName": 119.8450927734375,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "a400201a-5889-43b9-b180-46701d568376",
+            "name": "ext_copay_id",
+            "comment": "",
+            "dataType": "character",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 79.55805969238281,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -8454,9 +8339,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1217,
-          "top": 1824.5,
-          "zIndex": 27,
+          "left": 1871.4,
+          "top": 80.5,
+          "zIndex": 33,
           "widthName": 169.67416381835938,
           "widthComment": 60
         },
@@ -8508,29 +8393,6 @@
               "fk": false,
               "pfk": false,
               "widthName": 92.75308227539062,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "id": "39323d13-1f0e-41d1-99ae-d6c0646535dd",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
               "widthComment": 60,
               "widthDataType": 60,
               "widthDefault": 60
@@ -9712,9 +9574,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 687,
-          "top": 1924,
-          "zIndex": 2,
+          "left": 1404.6,
+          "top": 90.4,
+          "zIndex": 29,
           "widthName": 135.0291290283203,
           "widthComment": 60
         },
@@ -9725,52 +9587,6 @@
         "name": "ophthalmologysurgeryall",
         "comment": "",
         "columns": [
-          {
-            "id": "54c32d36-a2b5-4bac-8d30-10303758ddb5",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
-          {
-            "id": "20cbacd1-084d-4140-a584-23afe55f3175",
-            "name": "pat_id",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
-          },
           {
             "id": "0c08e4f2-867f-43ea-9897-99ea55ffdb00",
             "name": "surgery_csn_id",
@@ -9818,6 +9634,29 @@
             }
           },
           {
+            "id": "20cbacd1-084d-4140-a584-23afe55f3175",
+            "name": "pat_id",
+            "comment": "",
+            "dataType": "character",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
             "id": "48b829a2-40c8-477d-afef-063dcfffe6fd",
             "name": "case_id",
             "comment": "",
@@ -9843,6 +9682,29 @@
           {
             "id": "e6240bec-6374-4c72-9492-7b0ec0e3c867",
             "name": "log_id",
+            "comment": "",
+            "dataType": "character",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            }
+          },
+          {
+            "id": "54c32d36-a2b5-4bac-8d30-10303758ddb5",
+            "name": "pat_mrn",
             "comment": "",
             "dataType": "character",
             "default": "",
@@ -10970,9 +10832,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2194.4,
-          "top": 1852,
-          "zIndex": 6,
+          "left": 1911.2,
+          "top": 1120,
+          "zIndex": 18,
           "widthName": 155.95913696289062,
           "widthComment": 60
         },
@@ -11020,7 +10882,7 @@
             "ui": {
               "active": false,
               "pk": false,
-              "fk": true,
+              "fk": false,
               "pfk": false,
               "widthName": 60,
               "widthComment": 60,
@@ -11028,29 +10890,6 @@
               "widthDefault": 60
             },
             "id": "d2865b81-52af-42a3-9480-13f571812436"
-          },
-          {
-            "id": "fa8feac0-ef1f-4d29-b7a2-24834d780f52",
-            "name": "pat_mrn",
-            "comment": "",
-            "dataType": "character",
-            "default": "",
-            "option": {
-              "autoIncrement": false,
-              "primaryKey": false,
-              "unique": false,
-              "notNull": false
-            },
-            "ui": {
-              "active": false,
-              "pk": false,
-              "fk": false,
-              "pfk": false,
-              "widthName": 60,
-              "widthComment": 60,
-              "widthDataType": 60,
-              "widthDefault": 60
-            }
           },
           {
             "id": "1c075611-a42d-4046-91a5-fb5a1811d8d5",
@@ -12895,12 +12734,12 @@
         ],
         "ui": {
           "active": false,
-          "left": 534.7,
-          "top": 92.3,
-          "zIndex": 31,
+          "left": 533.9,
+          "top": 91.5,
+          "zIndex": 24,
           "widthName": 164.2921600341797,
           "widthComment": 60,
-          "color": "#55FF00"
+          "color": "#4CAF5000"
         },
         "visible": true,
         "id": "c92addb9-69e0-4f3f-b354-6e8a537b6a76"
@@ -15511,9 +15350,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 2572.6,
-          "top": 649.7,
-          "zIndex": 18,
+          "left": 2626.6,
+          "top": 673.7,
+          "zIndex": 31,
           "widthName": 141.9581298828125,
           "widthComment": 60
         },
@@ -17047,10 +16886,10 @@
           "active": false,
           "left": 38.6,
           "top": 94,
-          "zIndex": 29,
+          "zIndex": 25,
           "widthName": 144.75314331054688,
           "widthComment": 60,
-          "color": "#FF9800"
+          "color": "#FF980000"
         },
         "visible": true,
         "id": "7f21d5b7-2dad-48c8-b9ef-940ba47d4743"
@@ -17059,87 +16898,9 @@
     "indexes": []
   },
   "memo": {
-    "memos": [
-      {
-        "value": "log_id is a maybe.\nh",
-        "ui": {
-          "active": false,
-          "left": 2269.6900254608086,
-          "top": 1503.4418491180413,
-          "zIndex": 4,
-          "width": 127,
-          "height": 100
-        },
-        "id": "60e3bc14-84e9-49f2-ab53-dc2d5febfcd5"
-      },
-      {
-        "value": "In order to get to at least the 3rd normal form we need to stop duplicating pat_mrn across tables...as an example",
-        "ui": {
-          "active": false,
-          "left": 999.200030487062,
-          "top": 318.88000834960945,
-          "zIndex": 30,
-          "width": 127,
-          "height": 130.2400011535645
-        },
-        "id": "c940835b-209c-46de-99b0-13f431dff611"
-      }
-    ]
+    "memos": []
   },
   "relationship": {
-    "relationships": [
-      {
-        "identification": false,
-        "relationshipType": "ZeroN",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "7f21d5b7-2dad-48c8-b9ef-940ba47d4743",
-          "columnIds": [
-            "47c8bdb0-889d-4897-b192-dcc12df4e3d6"
-          ],
-          "x": 490.23621520996096,
-          "y": 805,
-          "direction": "right"
-        },
-        "end": {
-          "tableId": "c92addb9-69e0-4f3f-b354-6e8a537b6a76",
-          "columnIds": [
-            "d2865b81-52af-42a3-9480-13f571812436"
-          ],
-          "x": 534.7,
-          "y": 977.55,
-          "direction": "left"
-        },
-        "constraintName": "fk_ophthalmologypatients_to_ophthalmologyencounters",
-        "visible": true,
-        "id": "ef53eb58-3e40-4301-8e27-ea7d62a6a24a"
-      },
-      {
-        "identification": false,
-        "relationshipType": "OneOnly",
-        "startRelationshipType": "Dash",
-        "start": {
-          "tableId": "c92addb9-69e0-4f3f-b354-6e8a537b6a76",
-          "columnIds": [
-            "48b96da6-ac40-45c7-879d-db0ab4c18fd6"
-          ],
-          "x": 758.7501022338868,
-          "y": 92.3,
-          "direction": "top"
-        },
-        "end": {
-          "tableId": "ca621e58-ebf4-4fa1-9141-501b4c288ceb",
-          "columnIds": [
-            "c66c50a0-c3af-4c09-8285-7d5d535fadf0"
-          ],
-          "x": 1014.7111,
-          "y": 178.95,
-          "direction": "left"
-        },
-        "constraintName": "fk_ophthalmologyencounters_to_ophthalmologyencountervisit",
-        "visible": true,
-        "id": "2d1cd6ed-a530-4608-b97c-1c88794a7d01"
-      }
-    ]
+    "relationships": []
   }
 }
