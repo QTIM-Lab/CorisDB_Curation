@@ -1,17 +1,19 @@
 -- Codes: https://www.icd10data.com/
 
 /* MRNs from csv */
-create table from amd.raw_mrns_from_csv
+drop table amd.raw_mrns_from_csv;
 CREATE TABLE IF NOT EXISTS amd.raw_mrns_from_csv (
-    pat_mrn VARCHAR(100)
+    pat_mrn INT,
+    can_use FLOAT
 )
 
-\copy amd.raw_mrns_from_csv FROM '/projects/coris_db/postgres/queries_and_stats/queries/AMD/Indexed_Images/09_14_2023_mrn_to_reports_and_images/AMDDatabaseLogitudin_DATA_2023_08_17 MRNs.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+\copy amd.raw_mrns_from_csv FROM '/projects/coris_db/AMD/Indexed_Images/AMDDatabaseLogitudin_DATA_2023_08_17 MRNs.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 
 -- AMD MRNs not in ehr
 select pat_id, pat_mrn from ehr.ophthalmologypatients
 where pat_mrn not in (select pat_mrn from amd.raw_mrns_from_csv)
 
+select pat_mrn, can_use from amd.raw_mrns_from_csv
 
 -- AMD MRN duplicates
 select pat_mrn, count(pat_mrn) from amd.raw_mrns_from_csv
@@ -24,7 +26,7 @@ DROP TABLE IF EXISTS amd.amd_patients;
 CREATE TABLE amd.amd_patients AS
     select pat_id, pat_mrn
     from ehr.ophthalmologypatients
-    where pat_mrn in (select pat_mrn from amd.raw_mrns_from_csv)
+    where CAST(pat_mrn as INT) in (select pat_mrn from amd.raw_mrns_from_csv)
 
 
 

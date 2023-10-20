@@ -2,25 +2,25 @@ import os, pandas as pd, pydicom, pdb, numpy, json
 from PIL import Image, ImageDraw, ImageFont
 from PyPDF2 import PdfReader
 
-os.chdir("/projects/coris_db/postgres/queries_and_stats/queries/AMD/amd_dashboard_demo")
+os.chdir("/home/bearceb/coris_db/postgres/queries_and_stats/queries/AMD/amd_dashboard_demo")
 os.getcwd()
 from pdf_to_png import pdf_to_png
 
 FONT_DIR="/projects/coris_db/postgres/queries_and_stats/queries/all_devices/Roboto/Roboto-Black.ttf"
-IN_Spectralis_OCT="/projects/coris_db/postgres/queries_and_stats/queries/AMD/amd_dashboard_demo/preview/raw/Spectralis_OCT"
-OUT_Spectralis_OCT="/projects/coris_db/postgres/queries_and_stats/queries/AMD/amd_dashboard_demo/preview/out/Spectralis_OCT"
+IN_Spectralis_AF="/projects/coris_db/AMD/Auto-Fluorescences"
+OUT_Spectralis_AF="/projects/coris_db/AMD/Auto-Fluorescences"
 
 
-file_names_Spectralis_OCT = ['preview/raw/Spectralis_OCT/'+i for i in list(os.listdir(IN_Spectralis_OCT))]
+file_names_Spectralis_AF = [i for i in list(os.listdir(IN_Spectralis_AF))]
 
 
 def preview(file_names, IN, OUT):
-    for file_path in file_names_Spectralis_OCT:
+    for file_path in file_names_Spectralis_AF:
     # for file_path in file_names_###:
         print(file_path)
         if file_path.find('.dcm') != -1:
             try:
-                ds = pydicom.dcmread(os.path.join(os.getcwd(), file_path))
+                ds = pydicom.dcmread(os.path.join(IN_Spectralis_AF, file_path))
             except:
                 pdb.set_trace()
             # Tags
@@ -107,8 +107,8 @@ def preview(file_names, IN, OUT):
                 # ds.pixel_array
         elif file_path.find('.j2k') != -1: # J2K
             try:
-                # pdb.set_trace()
-                image = Image.open(os.path.join(os.getcwd(), file_path))
+                pdb.set_trace()
+                image = Image.open(os.path.join(IN_Spectralis_AF, file_path))
             except:
                 print(f"missing {file_path}")
                 # pdb.set_trace()
@@ -146,4 +146,4 @@ def preview(file_names, IN, OUT):
             image.save(os.path.join(OUT, os.path.splitext(os.path.basename(file_path))[0]+".png"))  # To save the image to a file (e.g., PNG format)
 
 
-preview(file_names_Spectralis_OCT, IN_Spectralis_OCT, OUT_Spectralis_OCT)
+preview(file_names_Spectralis_AF, IN_Spectralis_AF, OUT_Spectralis_AF)

@@ -59,3 +59,14 @@ select count (pat_mrn) from amd.raw_mrns_from_csv
 select devname, devsrno, count(distinct file_path_coris) from amd.files
 group by devname, devsrno
 order by count(distinct file_path_coris) desc
+
+
+CREATE TEMP TABLE IF NOT EXISTS encounters_mrns_contact_dates as
+      -- select * from ehr.ophthalmologyencountervisit where pat_mrn in ('') order by pat_mrn, contact_date, pat_enc_csn_id;
+      select 
+      EXTRACT(YEAR from contact_date) as year,
+      EXTRACT(MONTH from contact_date) as month,
+      EXTRACT(DAY from contact_date) as day,
+      * 
+      from ehr.ophthalmologyencountervisit where pat_mrn in (SELECT pat_mrn FROM amd.amd_patients) order by pat_mrn, contact_date, pat_enc_csn_id;
+
