@@ -4,10 +4,11 @@
 drop table amd.raw_mrns_from_csv;
 CREATE TABLE IF NOT EXISTS amd.raw_mrns_from_csv (
     pat_mrn INT,
-    can_use FLOAT
+    can_use FLOAT,
+    ferris VARCHAR
 )
 
-\copy amd.raw_mrns_from_csv FROM '/projects/coris_db/AMD/Indexed_Images/AMDDatabaseLogitudin_DATA_2023_08_17 MRNs.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+\copy amd.raw_mrns_from_csv FROM '/projects/coris_db/AMD/Indexed_Images/AMDDatabaseLogitudin_DATA_GA.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 
 -- AMD MRNs not in ehr
 select pat_id, pat_mrn from ehr.ophthalmologypatients
