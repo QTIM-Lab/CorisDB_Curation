@@ -23,6 +23,7 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
         when f.filenamenew like '%.j2k%'
         then '/data/PACS/VisupacImages/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
     end as file_path_coris
+    ,f.dicomstudyuid
     ,f.dicomseriesuid
     ,f.dicomsopinstanceuid
     ,f.dicomacquisitiondatetime
@@ -43,6 +44,7 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
     ,f.fileeye
     ,f.filenote
     ,f.filetype
+    ,f.tmstamp
     ,f.filedata
     from axispacs_snowflake.files as f
     inner join axispacs_snowflake.exams as e
