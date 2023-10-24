@@ -1,4 +1,12 @@
 /* 10/19/2023 */
+
+-- Breakdown of Epidemiology Cohort by 'Ferris Classification (Beckman)'
+SELECT ferris, COUNT(*) AS Ferris_Classification
+FROM amd.raw_mrns_from_csv	
+GROUP BY ferris
+ORDER BY Ferris_Classification DESC;
+
+
 -- So how many unique patients have CFP, OCT, AF etc
 
 /*
@@ -13,8 +21,8 @@ select devtype_AF, count(distinct ptid) from (
 	inner join amd.raw_mrns_from_csv amd
 	on f.ptid = CAST(amd.pat_mrn as VARCHAR) -- AMD Patients only
 	-- Tags Spectralis OCT (Scans) with filenote as "(######) Single" from axispacs_snowflake.file_paths_and_meta as Auto Fluorescenses
-	-- where devsrno = 9 and filenote like '%Single%' -- This is AF
-	where devsrno = 9 and filenote not like '%Single%'-- Ths is non AF
+	where ferris like'%GA AMD%'and devsrno = 9 and filenote like '%Single%' -- This is AF
+	-- where ferris like '%GA AMD%' and devsrno = 9 and filenote not like '%Single%'-- Ths is non AF
 ) as AF
 group by devtype_AF
 limit 100;
@@ -31,6 +39,9 @@ limit 100;
 select f.devname, count(distinct f.ptid) from axispacs_snowflake.file_paths_and_meta f
 inner join amd.raw_mrns_from_csv amd
 on f.ptid = CAST(amd.pat_mrn as VARCHAR)
-where f.devname in ('NonMyd', 'Photos', 'Nidek','Optos', 'Topcon', 'Eidon')
+where ferris like '%GA AMD%' and f.devname in ('NonMyd', 'Photos', 'Nidek', 'Optos', 'Topcon', 'Eidon')
 group by f.devname
--- limit 10;
+limit 10;
+
+select count(distinct amd.pat_mrn) from amd.raw_mrns_from_csv amd
+where ferris like '%GA AMD%';
