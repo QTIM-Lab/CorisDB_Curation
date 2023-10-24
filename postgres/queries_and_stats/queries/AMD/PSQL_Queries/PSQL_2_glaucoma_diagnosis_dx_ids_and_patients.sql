@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS amd.raw_mrns_from_csv (
     sex INT
 );
 
-COPY amd.raw_mrns_from_csv FROM '/projects/coris_db/AMD/Indexed_Images/AMDDatabaseLogitudin_DATA_AMD_Epi_Cohort.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+\COPY amd.raw_mrns_from_csv FROM '/projects/coris_db/AMD/Indexed_Images/AMDDatabaseLogitudin_DATA_AMD_Epi_Cohort.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 
 -- AMD MRNs not in ehr
 select pat_id, pat_mrn from ehr.ophthalmologypatients

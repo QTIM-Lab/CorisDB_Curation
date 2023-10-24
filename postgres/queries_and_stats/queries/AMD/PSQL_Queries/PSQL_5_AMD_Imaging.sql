@@ -45,3 +45,28 @@ limit 10;
 
 select count(distinct amd.pat_mrn) from amd.raw_mrns_from_csv amd
 where ferris like '%GA AMD%';
+
+
+	select * from axispacs_snowflake.file_paths_and_meta f
+	inner join amd.raw_mrns_from_csv amd
+	on f.ptid = CAST(amd.pat_mrn as VARCHAR) -- AMD Patients only
+	-- Tags Spectralis OCT (Scans) with filenote as "(######) Single" from axispacs_snowflake.file_paths_and_meta as Auto Fluorescenses
+	where ferris like'%GA AMD%'and devsrno = 9 and filenote like '%Single%' -- This is AF
+	-- where ferris like '%GA AMD%' and devsrno = 9 and filenote not like '%Single%'-- Ths is non AF
+
+select * from axispacs_snowflake.file_paths_and_meta f
+inner join amd.raw_mrns_from_csv amd
+on f.ptid = CAST(amd.pat_mrn as VARCHAR)
+where ferris like '%GA AMD%' and amd.can_use = 1 and f.devname in ('Eidon')
+order by pat_mrn
+limit 1000;
+
+select * from axispacs_snowflake.file_paths_and_meta f
+inner join amd.raw_mrns_from_csv amd
+on f.ptid = CAST(amd.pat_mrn as VARCHAR)
+where ferris like '%GA AMD%' and amd.can_use = 1 and f.devname in ('Topcon')
+order by pat_mrn, exsrno
+limit 200;
+
+
+
