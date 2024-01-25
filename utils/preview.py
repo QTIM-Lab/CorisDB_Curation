@@ -2,12 +2,13 @@ import os, pandas as pd, pydicom, pdb, numpy, json
 from PIL import Image, ImageDraw, ImageFont
 from PyPDF2 import PdfReader
 
-from coris_db.utils.pdf_to_png import pdf_to_png
+# from coris_db.utils.pdf_to_png -- *NEED TO DEBUG THIS LINE*
+import pdf_to_png
 
 FONT_DIR=os.path.join( os.path.expanduser("~"), '/coris_db/utils/Roboto/Roboto-Black.ttf')
-# This is for Autofluoresences
-IN="/projects/coris_db/AMD/Auto-Fluorescences"
-OUT="/projects/coris_db/AMD/Auto-Fluorescences/Auto-Fluorescences_PNG"
+
+IN="/projects/coris_db/Image_Conversion/INPUT"
+OUT="/projects/coris_db/Image_Conversion/OUTPUT"
 
 
 file_names = [i for i in list(os.listdir(IN))]
