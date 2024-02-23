@@ -62,11 +62,6 @@ FROM patient_visit_counts;
 
 
 -- Ratio of Male to Female Glaucoma Patients:
-SELECT count(DISTINCT pat_mrn), pat_sex 
-FROM glaucoma.glaucoma_demographics
-LIMIT 1000;
-
-
 SELECT
     pat_sex,
     COUNT(DISTINCT pat_mrn) AS patient_count,
@@ -115,4 +110,19 @@ or devdescription like '%Photos%'
 or devdescription like '%Cirrus OCT%'
 or devdescription like '%Visual Field%')
 GROUP BY extract(YEAR from exdatetime), devdescription_ONHP
+limit 1000;
+
+--  -Number of types of images (fundus photos (Non-Myd, Photos, Nidek), Cirrus OCTs, HVF)
+SELECT devdescription_ONHP, count(DISTINCT exsrno) from 
+(select *, CASE WHEN devdescription like '%Nidek%'
+                    or devdescription like '%NonMyd%'
+                    or devdescription like '%Photos%' THEN 'ONH Photos' else devdescription END AS devdescription_ONHP
+FROM axispacs_snowflake.file_paths_and_meta) as temp
+where ptid in (SELECT pat_mrn FROM glaucoma.glaucoma_patients)
+and (devdescription like '%Nidek%'
+or devdescription like '%NonMyd%'
+or devdescription like '%Photos%'
+or devdescription like '%Cirrus OCT%'
+or devdescription like '%Visual Field%')
+group by devdescription_ONHP
 limit 1000;

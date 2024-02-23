@@ -66,7 +66,13 @@ inner join amd.raw_mrns_from_csv amd
 on f.ptid = CAST(amd.pat_mrn as VARCHAR)
 where ferris like '%GA AMD%' and amd.can_use = 1 and f.devname in ('Topcon')
 order by pat_mrn, exsrno
-limit 200;
+limit 1000;
 
 
-
+select * from axispacs_snowflake.file_paths_and_meta f
+inner join amd.raw_mrns_from_csv amd
+on f.ptid = CAST(amd.pat_mrn as VARCHAR) -- AMD Patients only
+-- Tags Spectralis OCT (Scans) with filenote as "(######) Single" from axispacs_snowflake.file_paths_and_meta as Auto Fluorescenses
+where ferris like'%GA AMD%'and devsrno = 9 and filenote like '%Single%' and amd.can_use = 1 and ptid = '2088720'
+ORDER BY pat_mrn, exsrno 
+-- where ferris like '%GA AMD%' and devsrno = 9 and filenote not like '%Single%'-- Ths is non AF

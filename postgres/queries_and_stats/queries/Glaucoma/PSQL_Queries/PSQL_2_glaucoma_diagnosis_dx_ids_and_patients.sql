@@ -51,7 +51,7 @@ CREATE VIEW glaucoma.glaucoma_diagnosis_dx_ids AS
     -- select distinct dx_id
     from ehr.ophthalmologydiagnosesdm
     where dx_name like '%glaucoma%'
-    -- where dx_name like '%glaucoma%' and (code like '%H40.11%' or code like '%365.11%')
+    -- where dx_name like '%glaucoma%' and (code like '%H40%' for ICD-10 or code like '%365%' for ICD-9)
     order by dx_id; -- 1,579
 -- select count(*)
 -- from ehr.ophthalmologyencounterdiagnoses -- 

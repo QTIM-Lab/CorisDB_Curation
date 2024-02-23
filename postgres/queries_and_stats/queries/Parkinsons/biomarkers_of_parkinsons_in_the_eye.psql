@@ -34,16 +34,17 @@ DROP VIEW IF EXISTS parkinsons.parkinsons_diagnosis_dx_ids;
 -- make view to read from for parkinsons's dx_id's
 DROP VIEW IF EXISTS parkinsons.parkinsons_diagnosis_dx_ids;
 CREATE VIEW parkinsons.parkinsons_diagnosis_dx_ids AS
-    select distinct dx_id--, dx_name, code, code_type
-    from public.ophthalmologydiagnosesdm
+    select distinct dx_id, dx_name, code, code_type
+    from ehr.ophthalmologydiagnosesdm
     where dx_name like '%parkinson%';
+    
 
 -- select count(*) -- 
--- from public.ophthalmologyencounterdiagnoses
+-- from ehr.ophthalmologyencounterdiagnoses
 -- where dx_id in (select dx_id from parkinsons.parkinsons_diagnosis_dx_ids);
 
 -- select dm_codes.dx_id, dm_codes.dx_name, dm_codes.code, dm_codes.code_type
--- from public.ophthalmologydiagnosesdm as dm_codes
+-- from ehr.ophthalmologydiagnosesdm as dm_codes
 -- right join parkinsons.parkinsons_diagnosis_dx_ids as parkinsons_dx_ids
 -- on dm_codes.dx_id = parkinsons_dx_ids.dx_id
 -- order by dm_codes.dx_id
@@ -55,7 +56,7 @@ CREATE TABLE parkinsons.parkinsons_counts AS
     encounter_diagnoses.dx_id as dx_id,
     --count(pat_id) as pat_id,
     count(distinct pat_id) as distinct_pat_id_counts
-    from public.ophthalmologyencounterdiagnoses as encounter_diagnoses
+    from ehr.ophthalmologyencounterdiagnoses as encounter_diagnoses
     right join parkinsons.parkinsons_diagnosis_dx_ids as parkinsons_dx_ids
     on encounter_diagnoses.dx_id = parkinsons_dx_ids.dx_id
     where encounter_diagnoses.dx_id is not null -- 
@@ -74,34 +75,34 @@ CREATE TABLE parkinsons.parkinsons_patients AS
     select distinct pat_id
     from
     (select distinct pat_id
-    from public.ophthalmologyencounterdiagnoses as oed
+    from ehr.ophthalmologyencounterdiagnoses as oed
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
     on oed.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
-    from public.ophthalmologypatientdiagnoses as opd
+    from ehr.ophthalmologypatientdiagnoses as opd
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
     on opd.dx_id = pddi.dx_id -- 
 
     UNION ALL
 
     select distinct pat_id
-    from public.ophthalmologyencounterproblemlist as oepl
+    from ehr.ophthalmologyencounterproblemlist as oepl
     inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
     on oepl.dx_id = pddi.dx_id -- 
 
     -- UNION ALL 
 
     -- select distinct pat_id
-    -- from public.ophthalmologyencountervisit
+    -- from ehr.ophthalmologyencountervisit
     -- where progress_note like '%parkin%' -- 
 
     -- UNION ALL
 
     -- select distinct pat_id
-    -- from public.ophthalmologylabs
+    -- from ehr.ophthalmologylabs
     -- where component_name like '%parkin%'
     -- or    result_flag like '%parkin%'
     -- or    line_comment like '%parkin%'
@@ -123,20 +124,20 @@ CREATE TABLE parkinsons.parkinsons_patients AS
 --     -- Not enough to match parkinsons_patients
 --     -- select
 --     -- distinct pat_id
---     -- from public.ophthalmologyencountervisit
+--     -- from ehr.ophthalmologyencountervisit
 --     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
 --     -- UNION ALL
 --     -- Not enough to match parkinsons_patients
 --     -- select
 --     -- distinct pat_id
---     -- from public.ophthalmologyencounterexam
+--     -- from ehr.ophthalmologyencounterexam
 --     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
 --     -- Matches parkinsons_patients
 --     select
 --     distinct pat_id
---     from public.ophthalmologyencounters
+--     from ehr.ophthalmologyencounters
 --     where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
 
 -- ) as tmp -- 
@@ -145,7 +146,7 @@ DROP TABLE IF EXISTS parkinsons.parkinsons_encounters;
 CREATE TABLE parkinsons.parkinsons_encounters AS
     select
     pat_id, pat_age_at_enc, contact_date, enc_close_time
-    from public.ophthalmologyencounters
+    from ehr.ophthalmologyencounters
     where pat_id in (select pat_id from parkinsons.parkinsons_patients); -- 
 
 DROP VIEW IF EXISTS parkinsons.last_encounters;
@@ -169,7 +170,7 @@ CREATE VIEW parkinsons.parkinsons_demographics AS
     -- DATE_PART('year', AGE(le.last_contact_date::date, op.birth_date::date)) AS calc_age_years,
     op.race,
     op.pat_sex
-    from public.ophthalmologypatients as op
+    from ehr.ophthalmologypatients as op
     inner join parkinsons.parkinsons_patients as ppi
     on op.pat_id = ppi.pat_id 
     inner join parkinsons.last_encounters as le
@@ -188,7 +189,7 @@ CREATE VIEW parkinsons.parkinsons_demographics AS
 DROP VIEW IF EXISTS parkinsons.parkinsons_summary_stats;
 CREATE VIEW parkinsons.parkinsons_summary_stats AS
     -- between is inclusive so <lower bound> <= x <= <upper bound> equates to true.
-    select 'Total_Patients_In_Coris_DB' as age_and_other_bins, count(distinct pat_id) as patient_counts from public.ophthalmologypatients
+    select 'Total_Patients_In_Coris_DB' as age_and_other_bins, count(distinct pat_id) as patient_counts from ehr.ophthalmologypatients
     union (
         select 'Parkinsons_Patients' as age_and_other_bins, count(*) from parkinsons.parkinsons_demographics)
     union (
