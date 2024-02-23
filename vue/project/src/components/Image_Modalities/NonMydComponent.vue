@@ -63,8 +63,8 @@ export default {
       mrn:0,
       NonMyds: [
           {
-            image_left: "03a6df0.png",
-            image_right: "e30f1d26.png"
+            image_left: "https://upload.wikimedia.org/wikipedia/commons/7/7f/Retinography.jpg",
+            image_right: "https://upload.wikimedia.org/wikipedia/commons/7/7f/Retinography.jpg"
           },
           {
             image_left: "705fb78.png",

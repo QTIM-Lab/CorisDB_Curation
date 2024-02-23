@@ -1,29 +1,27 @@
-[project]
-name = ""
-version = ""
+[tool.poetry]
+name = "coris-db"
+version = "0.1.0"
 description = ""
-authors = [
-    {name = "Benjamin Bearce",email = "bbearce@gmail.com"},
-]
-dependencies = [
-    "pandas>=2.1.0",
-    "python-dotenv>=1.0.0",
-    "snowflake-connector-python>=3.2.0",
-    "Pillow>=10.0.1",
-    "python-gdcm>=3.0.22",
-    "pydicom>=2.4.3",
-    "pylibjpeg[all]>=1.4.0",
-    "PyPDF2>=3.0.1",
-    "PyMuPDF>=1.23.2",
-    "psycopg>=3.1.10",
-    "requests>=2.31.0",
-    "couchdb>=1.2",
-    "bpython>=0.24",
-    "ipython>=8.15.0",
-    "exif>=1.6.0",
-]
-requires-python = ">=3.10"
-license = {text = "MIT"}
+authors = ["Benjamin Bearce <bbearce@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.dependencies]
+python = "^3.10"
+pandas = "^2.2.0"
+python-dotenv = "^1.0.1"
+pillow = "^10.2.0"
+python-gdcm = "^3.0.23"
+pydicom = "^2.4.4"
+pypdf2 = "^3.0.1"
+pymupdf = "^1.23.22"
+psycopg = "^3.1.18"
+requests = "^2.31.0"
+couchdb = "^1.2"
+bpython = "^0.24"
+ipython = "^8.21.0"
+exif = "^1.6.0"
 
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

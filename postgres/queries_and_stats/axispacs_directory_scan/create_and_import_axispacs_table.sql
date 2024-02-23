@@ -1,6 +1,7 @@
 /* Create */
 
-DROP TABLE IF EXISTS axispacs_dscan.dicom_headers;
+-- DROP TABLE IF EXISTS axispacs_dscan.dicom_headers;
+-- CREATE TABLE IF NOT EXISTS axispacs_dscan.cdr (
 CREATE TABLE IF NOT EXISTS axispacs_dscan.dicom_headers (
     FILENAMEPATH VARCHAR(150),
     PATIENTMRN VARCHAR(50),
@@ -24,7 +25,13 @@ CREATE TABLE IF NOT EXISTS axispacs_dscan.dicom_headers (
     SERIESDESCRIPTION VARCHAR(50),
     STUDYDATE VARCHAR(50),
     STUDYTIME VARCHAR(50),
-    DOCTYPE_NON_STANDARD_TAG VARCHAR(50)
+    DOCTYPE_NON_STANDARD_TAG VARCHAR(50),
+    AverageRNFLThickness_micrometers VARCHAR(50),
+    OpticCupVolume_mm_squared VARCHAR(50),
+    OpticDiskArea_mm_squared VARCHAR(50),
+    RimArea_mm_squared VARCHAR(50),
+    AvgCDR VARCHAR(50),
+    VerticalCD VARCHAR(50)
 );
 
 /* Login */
@@ -32,9 +39,9 @@ psql -U ophuser coris_db;
 OOOppphhhP4$$
 
 /* Import */
-\copy axispacs_dscan.dicom_headers FROM '/projects/coris_db/postgres/queries_and_stats/axispacs_directory_scan/axispacs_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_dscan.dicom_headers FROM '/projects/coris_db/axispacs_dir_scan/axispacs_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
-vim /projects/coris_db/postgres/queries_and_stats/axispacs_dscan_directory_scan/axispacs_dscan_dicom_headers_parsed.csv
+vim /projects/coris_db/axispacs_dir_scan/axispacs_dscan_dicom_headers_parsed.csv
 
 /* Delete */
 delete from axispacs_dscan.dicom_headers;

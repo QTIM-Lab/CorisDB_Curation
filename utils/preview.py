@@ -2,17 +2,21 @@ import os, pandas as pd, pydicom, pdb, numpy, json
 from PIL import Image, ImageDraw, ImageFont
 from PyPDF2 import PdfReader
 
-# from coris_db.utils.pdf_to_png -- *NEED TO DEBUG THIS LINE*
+# from coris_db.utils.pdf_to_png import pdf_to_png
+# from utils.pdf_to_png import pdf_to_png
 import pdf_to_png
 
-FONT_DIR=os.path.join( os.path.expanduser("~"), '/coris_db/utils/Roboto/Roboto-Black.ttf')
 
+FONT_DIR=os.path.join( os.path.expanduser("~"), '/coris_db/utils/Roboto/Roboto-Black.ttf')
+# Axispacs
 IN="/projects/coris_db/Image_Conversion/INPUT"
 OUT="/projects/coris_db/Image_Conversion/OUTPUT"
+# Forum
+# IN="/projects/coris_db/Glaucoma/OCT_bb_12_19_2023/forum"
+# OUT="/projects/coris_db/Glaucoma/OCT_bb_12_19_2023/preview_forum"
 
 
 file_names = [i for i in list(os.listdir(IN))]
-
 
 def preview(file_names, IN, OUT):
     for file_path in file_names:
@@ -95,7 +99,7 @@ def preview(file_names, IN, OUT):
                 # pdb.set_trace()
                 with open(os.path.join(OUT,"dcm_print_header_"+os.path.splitext(os.path.basename(file_path))[0]+".txt"), "w") as file: file.write(str(ds))
             else:
-                pdb.set_trace()
+                # pdb.set_trace()
                 print("NOT Ophthalmic Photography 8 Bit Image Storage \nor \nSecondary Capture Image Storage \nor \nEncapsulated PDF Storage!")
                 ds.get((0x0010, 0x0020)).value # patient
                 ds.get((0x0008, 0x0060)).value # modality
@@ -105,6 +109,7 @@ def preview(file_names, IN, OUT):
                 ds.get((0x0020, 0x000e)).value # series_instance_uid
                 ds.get((0x0008, 0x0018)).value # sop_instance_uid
                 # ds.pixel_array
+                with open(os.path.join(OUT,"dcm_print_header_"+os.path.splitext(os.path.basename(file_path))[0]+".txt"), "w") as file: file.write(str(ds))
         elif file_path.find('.j2k') != -1: # J2K
             try:
                 # pdb.set_trace()

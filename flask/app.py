@@ -1,4 +1,5 @@
 import os, pdb
+from decimal import Decimal
 from flask import Flask, jsonify
 from flask_cors import CORS
 import psycopg, json, json, datetime
@@ -7,7 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)
+# CORS(app, origins=["*"])
+CORS(app, origins=["http://localhost:3000"])
 
 # DB talking to postgres
 HOST = os.getenv("HOST")
@@ -22,6 +24,15 @@ conn = psycopg.connect(dbname=DBNAME,
                        host=HOST,
                        port=DB_PORT)
 
+# with conn.cursor() as cur:
+#     cur.execute("SET CLIENT_ENCODING TO 'UTF8'")
+
+def handle_non_serializable(obj):
+    if isinstance(obj, Decimal):
+        return float(obj)
+    elif isinstance(obj, datetime.datetime):
+        return obj.isoformat()
+    raise TypeError(f"Object of type {type(obj).__name__} is not JSON serializable")
 
 # Test route
 @app.route('/api')
@@ -33,6 +44,35 @@ def test():
 
     return jsonify(DB[0])
 
+@app.route('/api/search_for_patient/<mrn>', methods=['GET'])
+def search_for_patient(mrn):
+    print(mrn)
+    # Open a cursor to perform database operations
+    with conn.cursor() as cur:
+        cur.execute("""
+        SELECT
+        column_name
+        FROM information_schema.columns
+        WHERE table_schema = 'dashboard'
+        AND table_name = 'encounters';        
+        """)
+        cols = [i[0] for i in cur.fetchall()]
+        cols_indexed = {cols[i]:i for i in range(len(cols))}
+        # rows = cur.fetchall()
+        # for row in rows: print(str(row).encode('utf-8', errors='replace').decode('utf-8'))
+        # Execute a command: this creates a new table
+    print(cols)
+    with conn.cursor() as cur:
+        cur.execute("select * from dashboard.encounters where pat_mrn = '6498721';")
+        data = cur.fetchall()
+        data_list = []
+        progress_note_index = cols_indexed['progress_note']
+        for row in data:
+            row_dict = {cols[i]:row[i] if i != progress_note_index else str(row[i].encode('utf-8')) for i in range(len(cols)) }
+            data_list.append(row_dict)
+    return_json = json.dumps(data_list, default=handle_non_serializable)
+    print(return_json)
+    return return_json
 
 @app.route('/api/glaucoma_summary_stats')
 def glaucoma_summary_stats():

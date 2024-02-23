@@ -1,13 +1,14 @@
 import os, shutil, pdb, pandas as pd
 
-SOURCE_directory="/home/bearceb/SOURCE"
-tmp_for_import="/projects/CORIS_DB/tmp_for_import"
+SOURCE_directory="/data/SOURCE"
+tmp_for_import="/data/SOURCE/tmp_for_import"
 table_def_orig_csvs="table_def_orig_csvs"
 
 type_key={
     "INTEGER":"Int64",
     "STRING":"object",
     "LONG_STRING":"object",
+    "TEXT":"object",
     "DATETIME":"datetime64",
     "TIMESTAMP":"datetime64",
     "DATE":"datetime64",
@@ -24,6 +25,8 @@ if not os.path.isdir(tmp_for_import):
 
 # Above for loop explicit
 csvs = [
+        # Ongoing
+        "C3304_T11_Notes_20240207.csv",
         # Done commented
         # "OphthalmologyCurrentMedications_20230217.csv",
         # "OphthalmologyDiagnosesDm_20230222.csv",
@@ -42,7 +45,7 @@ csvs = [
         # "OphthalmologyMedications_20230217.csv",
         # "OphthalmologyOrders_20230217.csv",
         # "OphthalmologyPatientDiagnoses_20230217.csv",
-        "OphthalmologyPatients_20230217.csv",
+        # "OphthalmologyPatients_20230217.csv",
         # "OphthalmologyProviderAll_20230217.csv",
         # "OphthalmologyProviderDm_20230222.csv",
         # "OphthalmologyRadiology_20230217.csv",
@@ -59,8 +62,8 @@ csvs = [
         ]
 for csv in csvs:
     print(csv)
-    # pdb.set_trace()
-    types = pd.read_csv(os.path.join(table_def_orig_csvs, csv.split("_")[0]+".csv"))
+    types = pd.read_csv(os.path.join(table_def_orig_csvs, csv))
+    pdb.set_trace()
     types['Type_pandas'] = types['Type'].apply(lambda x: type_key[x])
     new_types = dict(zip(types['Field name'], types['Type_pandas']))
     tmp = pd.read_csv(os.path.join(SOURCE_directory, csv), dtype=object)

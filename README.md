@@ -176,6 +176,18 @@ pdm add bypthon
 pdm add ipython
 pdm add orthanc-api-client
 
+
+pip install pydicom
+pip install python-gdcm
+pip install pylibjpeg[all]
+pip install PyPDF2
+pip install PyMuPDF
+pip install psycopg
+pip install requests
+pip install couchdb
+pip install ipython
+pip install Pillow
+
 # pdm remove psycopg2-binary
 pdm remove pydicom
 pdm remove python-gdcm

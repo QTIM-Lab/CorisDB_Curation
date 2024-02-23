@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <h2 class="text-center">Epic Flowsheet Data</h2>
+    <h2 class="text-center">Ophthalmology Smart Data</h2>
     <h3 class="text-center">(Tabular Data)</h3>
     <p class="mt-16 text-center">Visual Activity</p>
     <p class="mt-16 text-center">Corneal Thickness</p>
