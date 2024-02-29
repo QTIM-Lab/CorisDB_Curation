@@ -6,9 +6,11 @@ table_def_orig_csvs="table_def_orig_csvs"
 
 type_key={
     "INTEGER":"Int64",
+    "BIGINT": "Int64",
     "STRING":"object",
     "LONG_STRING":"object",
     "TEXT":"object",
+    "TIME":"datetime64",
     "DATETIME":"datetime64",
     "TIMESTAMP":"datetime64",
     "DATE":"datetime64",
@@ -26,7 +28,8 @@ if not os.path.isdir(tmp_for_import):
 # Above for loop explicit
 csvs = [
         # Ongoing
-        "C3304_T11_Notes_20240207.csv",
+        # "C3304_T11_Notes_20240207.csv",
+        "C3304_2_CORIS_to_SOURCE_20240228.csv"
         # Done commented
         # "OphthalmologyCurrentMedications_20230217.csv",
         # "OphthalmologyDiagnosesDm_20230222.csv",
