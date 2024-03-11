@@ -10,8 +10,8 @@ import pdf_to_png
 
 FONT_DIR=os.path.join( os.path.expanduser("~"), '/coris_db/utils/Roboto/Roboto-Black.ttf')
 # Axispacs
-IN="/projects/coris_db/Image_Conversion/INPUT"
-OUT="/projects/coris_db/Image_Conversion/OUTPUT"
+IN="/projects/coris_db_subsets/Image_Conversion/INPUT"
+OUT="/projects/coris_db_subsets/Image_Conversion/OUTPUT"
 
 
 def preview(index, file_path):
