@@ -1,15 +1,14 @@
 \copy ehr.OphthalmologyDiagnosesDm FROM '/data/SOURCE/tmp_for_import/OphthalmologyDiagnosesDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyProviderAll FROM '/data/SOURCE/tmp_for_import/OphthalmologyProviderAll_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyRadiology FROM '/data/SOURCE/tmp_for_import/OphthalmologyRadiology_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
-\copy ehr.OphthalmologyEncounterVisit FROM '/data/SOURCE/tmp_for_import/OphthalmologyEncounterVisit_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyFamilyHistory FROM '/data/SOURCE/tmp_for_import/OphthalmologyFamilyHistory_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyPatientDiagnoses FROM '/data/SOURCE/tmp_for_import/OphthalmologyPatientDiagnoses_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
-\copy ehr.OphthalmologySurgeryAll FROM '/data/SOURCE/tmp_for_import/OphthalmologySurgery_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyImplant FROM '/data/SOURCE/tmp_for_import/OphthalmologyImplant_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyCurrentMedications FROM '/data/SOURCE/tmp_for_import/OphthalmologyCurrentMedications_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologySupplyDm FROM '/data/SOURCE/tmp_for_import/OphthalmologySupplyDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyImplantDm FROM '/data/SOURCE/tmp_for_import/OphthalmologyImplantDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologySurgeryProcedure FROM '/data/SOURCE/tmp_for_import/OphthalmologySurgeryProcedure_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
+\copy ehr.C3304_2_CORIS_to_SOURCE FROM '/data/SOURCE/tmp_for_import/C3304_2_CORIS_to_SOURCE_20240228.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyEncounterCharge FROM '/data/SOURCE/tmp_for_import/OphthalmologyEncounterCharge_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologySurgeryMedication FROM '/data/SOURCE/tmp_for_import/OphthalmologySurgeryMedication_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologySurgerySurgeon FROM '/data/SOURCE/tmp_for_import/OphthalmologySurgerySurgeon_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
@@ -17,7 +16,6 @@
 \copy ehr.OphthalmologyEncounters FROM '/data/SOURCE/tmp_for_import/OphthalmologyEncounters_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyVisitSummary FROM '/data/SOURCE/tmp_for_import/OphthalmologyVisitSummary_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologySurgery FROM '/data/SOURCE/tmp_for_import/OphthalmologySurgeryBill_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
-\copy ehr.OphthalmologyOrders FROM '/data/SOURCE/tmp_for_import/OphthalmologyOrders_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.C3304_T11_Notes FROM '/data/SOURCE/tmp_for_import/C3304_T11_Notes_20240207.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyMedicationDm FROM '/data/SOURCE/tmp_for_import/OphthalmologyMedicationDm_20230222.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
 \copy ehr.OphthalmologyLabOrder FROM '/data/SOURCE/tmp_for_import/OphthalmologyLabOrder_20230217.csv' DELIMITERS ',' NULL AS 'NULL' CSV QUOTE '''' HEADER;
