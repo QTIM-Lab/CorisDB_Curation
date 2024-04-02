@@ -2,7 +2,7 @@
 Repo for organizing the db scheme of our coris_db
 
 
-## Instructions
+## Iinstructions
 Directly after clone ```cd coris_db```, create node_modules folder:
 
 ```bash
