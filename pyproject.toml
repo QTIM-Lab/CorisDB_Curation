@@ -18,6 +18,13 @@ requests = "^2.31.0"
 couchdb = "^1.2"
 exif = "^1.6.0"
 google-cloud-bigquery = "^3.20.1"
+fitz = "^0.0.1.dev2"
+frontend = "^0.0.3"
+opencv-python = "^4.9.0.80"
+jupyter = "^1.0.0"
+matplotlib = "^3.8.4"
+torch = "^2.2.2"
+torchvision = "^0.17.2"
 
 
 [build-system]

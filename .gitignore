@@ -17,3 +17,8 @@ venv.bak/
 # VSCODE
 .vscode/
 *.code-workspace
+
+# misc
+__pycache__
+.ipynb_checkpoints
+coris_db_subsets
