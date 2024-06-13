@@ -9,11 +9,14 @@ CREATE DATABASE coris_registry;
 ### Compass Electronic Health Records (SOURCE)
 ```sql
 CREATE DATABASE source;
+DROP DATABASE source;
+
 ```
 
 ### Axispacs Viewer Database (from Snowflake in Azure)
 ```sql
 CREATE DATABASE axispacs;
+DROP DATABASE axispacs;
 ```
   * snowflake schema
   * dscan scheme
@@ -21,15 +24,22 @@ CREATE DATABASE axispacs;
 ### Forum Images Scanned
 ```sql
 CREATE DATABASE forum;
+DROP DATABASE forum;
 ```
   * dscan scheme
 
 ### Hyex Images Scanned
 ```sql
 CREATE DATABASE heyex;
+DROP DATABASE heyex;
 ```
   * dscan scheme
 
+### Dashboard Database
+```sql
+CREATE DATABASE dashboard;
+DROP DATABASE dashboard;
+```
 
 ## Schemes
 ### Coris Registry from Google Big Query
