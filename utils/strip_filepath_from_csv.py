@@ -3,7 +3,7 @@ import os
 from shutil import copy2
 
 # Step 1: Read the CSV file
-csv_file_path = '/projects/coris_db_subsets/AMD/Fundus_Auto_Fluorescence/OptimEYES_Prospective/OptimEYES_Prospective_GA_Cohort.csv'  # Replace with your CSV file path
+csv_file_path = '/projects/coris_db_subsets/AMD/Fundus_Auto_Fluorescence/OptimEYES_Prospective/OptimEYES_Prospective_GA_ICD_Code_Cohort_good_quality_only_new_SM.csv'  # Replace with your CSV file path
 df = pd.read_csv(csv_file_path)
 
 # Column name that contains the file paths

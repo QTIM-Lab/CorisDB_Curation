@@ -1,0 +1,233 @@
+/* Parkinson's Queries */
+
+/* DANGER */
+-- tables are listed in reverse order of creation
+-- as later tables depend on earlier ones
+DROP VIEW IF EXISTS parkinsons.parkinsons_summary_stats;
+DROP VIEW IF EXISTS parkinsons.parkinsons_demographics;
+DROP VIEW IF EXISTS parkinsons.last_encounters;
+-- DROP TABLE IF EXISTS parkinsons.parkinsons_encounters;
+-- DROP TABLE IF EXISTS parkinsons.parkinsons_patients;
+-- DROP TABLE IF EXISTS parkinsons.parkinsons_counts;
+DROP VIEW IF EXISTS parkinsons.parkinsons_diagnosis_dx_ids;
+/* DANGER */
+
+/* [1] Count of unique patients in CORIS */
+
+-- select count (distinct pat_id) from ophthalmologypatients limit 2; -- 
+-- select * from ophthalmologypatients limit 10;
+
+/* [2] Count of unique patients in CORIS with a diagnosuis for parkinson's disease */
+-- so need to look up the ICD 9 and 10 codes
+
+-- There is a table that matches the description of the code
+-- and the code itself that would be a good place to start.
+-- Additionally might want to look on the web for the appropriate codes
+-- Then need to find the patients that have that code
+
+-- select * from ophthalmologydiagnosesdm limit 10; -- has the code_type col with codes Jayashree is talking about.
+-- select * from ophthalmologyencounterdiagnoses limit 10; -- helpful
+-- select * from ophthalmologyencountervisit order by pat_id limit 10; -- helpful for visits but not diagnosis
+-- select * from ophthalmologypatientdiagnoses limit 10; -- helpful
+
+
+-- make view to read from for parkinsons's dx_id's
+DROP VIEW IF EXISTS parkinsons.parkinsons_diagnosis_dx_ids;
+CREATE VIEW parkinsons.parkinsons_diagnosis_dx_ids AS
+    select distinct dx_id, dx_name, code, code_type
+    from ehr.ophthalmologydiagnosesdm
+    where dx_name like '%parkinson%';
+    
+
+-- select count(*) -- 
+-- from ehr.ophthalmologyencounterdiagnoses
+-- where dx_id in (select dx_id from parkinsons.parkinsons_diagnosis_dx_ids);
+
+-- select dm_codes.dx_id, dm_codes.dx_name, dm_codes.code, dm_codes.code_type
+-- from ehr.ophthalmologydiagnosesdm as dm_codes
+-- right join parkinsons.parkinsons_diagnosis_dx_ids as parkinsons_dx_ids
+-- on dm_codes.dx_id = parkinsons_dx_ids.dx_id
+-- order by dm_codes.dx_id
+
+-- make table of counts of patients by parkinsons code from dm table
+DROP TABLE IF EXISTS parkinsons.parkinsons_counts;
+CREATE TABLE parkinsons.parkinsons_counts AS
+    select
+    encounter_diagnoses.dx_id as dx_id,
+    --count(pat_id) as pat_id,
+    count(distinct pat_id) as distinct_pat_id_counts
+    from ehr.ophthalmologyencounterdiagnoses as encounter_diagnoses
+    right join parkinsons.parkinsons_diagnosis_dx_ids as parkinsons_dx_ids
+    on encounter_diagnoses.dx_id = parkinsons_dx_ids.dx_id
+    where encounter_diagnoses.dx_id is not null -- 
+    group by encounter_diagnoses.dx_id; -- 
+
+-- select
+-- count(distinct(dx_id)), -- 
+-- count((dx_id)) -- 
+-- from parkinsons.parkinsons_diagnosis_dx_ids;
+-- select count(distinct(dx_id)) from parkinsons.parkinsons_diagnosis_dx_ids;
+
+-- Need to include pat_id's from three tables to be sure we have as full a list as pg_opclass_is_visible
+-- Make view to read from for parkinsons's pat_id's
+DROP TABLE IF EXISTS parkinsons.parkinsons_patients;
+CREATE TABLE parkinsons.parkinsons_patients AS
+    select distinct pat_id
+    from
+    (select distinct pat_id
+    from ehr.ophthalmologyencounterdiagnoses as oed
+    inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
+    on oed.dx_id = pddi.dx_id -- 
+
+    UNION ALL
+
+    select distinct pat_id
+    from ehr.ophthalmologypatientdiagnoses as opd
+    inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
+    on opd.dx_id = pddi.dx_id -- 
+
+    UNION ALL
+
+    select distinct pat_id
+    from ehr.ophthalmologyencounterproblemlist as oepl
+    inner join parkinsons.parkinsons_diagnosis_dx_ids as pddi
+    on oepl.dx_id = pddi.dx_id -- 
+
+    -- UNION ALL 
+
+    -- select distinct pat_id
+    -- from ehr.ophthalmologyencountervisit
+    -- where progress_note like '%parkin%' -- 
+
+    -- UNION ALL
+
+    -- select distinct pat_id
+    -- from ehr.ophthalmologylabs
+    -- where component_name like '%parkin%'
+    -- or    result_flag like '%parkin%'
+    -- or    line_comment like '%parkin%'
+    -- or    results_comp_cmt like '%parkin%'
+    -- or    results_cmt like '%parkin%' -- 
+
+    order by pat_id
+    ) as parkinsons_patients; -- 
+
+-- select count(pat_id) from parkinsons.parkinsons_patients; -- 
+
+/* [3] Get basic demographics for [1] and [2] from most recent visit*/
+-- Age
+-- Race\Ethnicity
+-- Sex
+
+-- Grouping mechanism is for collecting all distinct pat_id's from encounter's tables. (optional)
+-- select distinct pat_id from (
+--     -- Not enough to match parkinsons_patients
+--     -- select
+--     -- distinct pat_id
+--     -- from ehr.ophthalmologyencountervisit
+--     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
+
+--     -- UNION ALL
+--     -- Not enough to match parkinsons_patients
+--     -- select
+--     -- distinct pat_id
+--     -- from ehr.ophthalmologyencounterexam
+--     -- where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
+
+--     -- Matches parkinsons_patients
+--     select
+--     distinct pat_id
+--     from ehr.ophthalmologyencounters
+--     where pat_id in (select pat_id from parkinsons.parkinsons_patients) -- 
+
+-- ) as tmp -- 
+
+DROP TABLE IF EXISTS parkinsons.parkinsons_encounters;
+CREATE TABLE parkinsons.parkinsons_encounters AS
+    select
+    pat_id, pat_age_at_enc, contact_date, enc_close_time
+    from ehr.ophthalmologyencounters
+    where pat_id in (select pat_id from parkinsons.parkinsons_patients); -- 
+
+DROP VIEW IF EXISTS parkinsons.last_encounters;
+CREATE VIEW parkinsons.last_encounters AS
+    select 
+    pat_id,
+    max(contact_date) as last_contact_date,
+    max(pat_age_at_enc) as pat_age_at_enc
+    from parkinsons.parkinsons_encounters
+    group by pat_id
+    order by pat_id;
+
+-- Make view to read from for parkinsons's pat_id's
+DROP VIEW IF EXISTS parkinsons.parkinsons_demographics;
+CREATE VIEW parkinsons.parkinsons_demographics AS
+    select
+    op.pat_id,
+    le.pat_age_at_enc,
+    op.birth_date,
+    le.last_contact_date,
+    -- DATE_PART('year', AGE(le.last_contact_date::date, op.birth_date::date)) AS calc_age_years,
+    op.race,
+    op.pat_sex
+    from ehr.ophthalmologypatients as op
+    inner join parkinsons.parkinsons_patients as ppi
+    on op.pat_id = ppi.pat_id 
+    inner join parkinsons.last_encounters as le
+    on op.pat_id = le.pat_id
+    -- where pat_id in (select pat_id from parkinsons_patients)
+    order by op.pat_id; -- 
+
+-- select count(*) from parkinsons.parkinsons_demographics; -- 
+-- select * from parkinsons.parkinsons_demographics limit 100;
+
+-- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Female'; -- 
+-- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex = 'Male'; -- 
+-- select count(pat_sex) from parkinsons.parkinsons_demographics where pat_sex != 'Male' and pat_sex != 'Female'; -- 0
+
+
+DROP VIEW IF EXISTS parkinsons.parkinsons_summary_stats;
+CREATE VIEW parkinsons.parkinsons_summary_stats AS
+    -- between is inclusive so <lower bound> <= x <= <upper bound> equates to true.
+    select 'Total_Patients_In_Coris_DB' as age_and_other_bins, count(distinct pat_id) as patient_counts from ehr.ophthalmologypatients
+    union (
+        select 'Parkinsons_Patients' as age_and_other_bins, count(*) from parkinsons.parkinsons_demographics)
+    union (
+    select 'Males' as age_and_other_bins, count(pat_sex) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_sex = 'Male')
+    union (
+    select 'Females' as age_and_other_bins, count(pat_sex) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_sex = 'Female')
+    union (
+    select '0-49' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_age_at_enc between 0 and 49)
+    union (
+    select '50-59' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_age_at_enc between 50 and 59)
+    union (
+    select '60-69' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_age_at_enc between 60 and 69)
+    union (
+    select '70-79' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_age_at_enc between 70 and 79)
+    union (
+    select '80-89' as age_and_other_bins,count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+        where pat_age_at_enc between 80 and 89)
+    union (
+    select '90+' as age_and_other_bins, count(pat_age_at_enc) as patient_counts from parkinsons.parkinsons_demographics
+                where pat_age_at_enc >= 90)
+    order by age_and_other_bins;
+
+select * from parkinsons.parkinsons_summary_stats order by age_and_other_bins;
+
+-- age_and_other_bins (text)  | patient_counts (bigint)
+-- 0-49                       | 
+-- 50-59                      | 
+-- 60-69                      | 
+-- 70-79                      | 
+-- 80-89                      | 
+-- 90+                        | 
+-- Females                    | 
+-- Males                      | 
+-- Parkinsons_Patients        | 
+-- Total_Patients_In_Coris_DB | 

@@ -1,0 +1,10 @@
+Greetings,
+
+To whom this may concern,
+
+all_raw.csv is the csv. the column fileeye has OS, OD, and U. if it is U, it is stereoscopic. This is the raw output from all. Maybe you can also get fancy and find a way to just get the ground truth fileeye?
+
+otherwise, just drop all of the rows with U and work with the OS/OD and see if you can get something, and I will get you a proper one later
+
+(the reason is because we changes the YOLO model and now needed to recrop, and then need to run stereoscopic laterality predictor and never got around to it among the littany of other
+things that still need to be done for the seg paper)
