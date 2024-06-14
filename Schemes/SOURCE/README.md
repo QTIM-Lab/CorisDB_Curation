@@ -4,6 +4,7 @@
 ### Coris Registry from Google Big Query
 ```sql
 CREATE DATABASE coris_registry;
+DROP DATABASE coris_registry;
 ```
 
 ### Compass Electronic Health Records (SOURCE)

@@ -1,19 +1,20 @@
 ```bash
-source ~/.bashrc; pyenv activate coris_db; python
+source ~/.bashrc; pyenv activate corisdb_curation; python
 
 ````
 
-import json
+import json, os
 import pandas as pd
 import pdb
 from google.cloud import bigquery
+import math
 
 # Initialize a BigQuery client
 client = bigquery.Client()
 
 tables = [
-#   "C3304_GBQ_T19_MYC_Messages_20240523",
-  "C3304_GBQ_T20_BillingCode_20240610",
+  "C3304_GBQ_T19_MYC_Messages_20240531",
+# "C3304_GBQ_T20_BillingCode_20240610",
 # "C3304_GBQ_T15_Referral_20240207",
 # "C3304_GBQ_T4_Proc_OrderedEMR_20240207",
 # "C3304_T1_Person_20231222",
@@ -40,25 +41,86 @@ tables = [
 
 len(tables)
 
+# special case for billing as it is so large
 
-def get_table(table):
-    # Run a query
-    query = f"""select * from `coris_registry.{table}`"""; query_job = client.query(query)
-    # Fetch results
-    results = query_job.result()
-    # Convert results to list of dictionaries
-    results = [dict(row.items()) for row in results]
-    # Create a Pandas DataFrame
-    df = pd.DataFrame(results)
-    path = f"/data/linking_various_systems/coris_db_gbq/{table}.csv"
-    df.to_csv(path, index=None)
+pieces = 10000
+rows = 406177872
+limit = math.floor(rows / pieces)
+left_over = rows % pieces
+# limit*pieces + left_over
+wheres = []
+for piece in range(pieces):
+    left_limit = piece * limit + 1
+    right_limit = (piece+1) * limit + 1
+    wheres.append(f"where row_num >= {left_limit} and row_num < {right_limit} order by row_num")
+
+if left_over != 0:
+    wheres.append(f"where row_num >= {right_limit} and row_num <= {406177872} order by row_num")
+
+
+query = """
+select * from (
+  select
+  (row_number() 
+    over (
+      order by 
+          Arb_Person_ID ASC, 
+          Arb_Encounter_Id ASC, 
+          ICD_Code ASC, 
+          Billing_Code ASC, 
+          CPT_Code ASC, 
+          Loinc_Code ASC, 
+          SNOMED_Code ASC
+      )
+  ) as row_num
+  ,*
+  from `coris_registry.C3304_GBQ_T20_BillingCode_20240610`
+  order by 
+          Arb_Person_ID ASC, 
+          Arb_Encounter_Id ASC, 
+          ICD_Code ASC, 
+          Billing_Code ASC, 
+          CPT_Code ASC, 
+          Loinc_Code ASC, 
+          SNOMED_Code ASC
+)
+"""
+
+def get_table(table, query=None, wheres=None):
+    if query is None:
+        # Run a query
+        query = f"""select * from `coris_registry.{table}`"""; query_job = client.query(query)
+        # Fetch results
+        results = query_job.result()
+        # Convert results to list of dictionaries
+        results = [dict(row.items()) for row in results]
+        # Create a Pandas DataFrame
+        df = pd.DataFrame(results)
+        path = f"/data/linking_various_systems/coris_db_gbq/{table}.csv"
+        df.to_csv(path, index=None)
+    else:
+        for i, where in enumerate(wheres):
+            print(f"On range: {where}")
+            q = f"{query} {where}"; query_job = client.query(q)
+            # Fetch results
+            results = query_job.result()
+            # Convert results to list of dictionaries
+            results = [dict(row.items()) for row in results]
+            # Create a Pandas DataFrame
+            df = pd.DataFrame(results)
+            path = f"/data/linking_various_systems/coris_db_gbq/{table}.csv"
+            if not os.path.exists(path) or i == 0:
+                df[[col for col in df.columns if col != 'row_num']].to_csv(path, index=None, mode='w')
+            else:
+                df[[col for col in df.columns if col != 'row_num']].to_csv(path, index=None, mode='a', header=False)
+            # pdb.set_trace()
 
 
 
 # Can loop through tables but it takes a while.
 # Do in parallel in tmux instead
-# get_table("C3304_GBQ_T19_MYC_Messages_20240523") # done
-get_table("C3304_GBQ_T20_BillingCode_20240610") # done
+# get_table("C3304_lGBQ_T19_MYC_Messages_20240531") # done
+get_table("C3304_GBQ_T20_BillingCode_20240610", query=query, wheres=wheres) # done
 # get_table("C3304_GBQ_T15_Referral_20240207") # done
 # get_table("C3304_GBQ_T4_Proc_OrderedEMR_20240207") # done
 # get_table("C3304_T1_Person_20231222") # done
@@ -110,7 +172,7 @@ def get_create_table_statements():
         mode = "a"
         if i == 0:
             mode = "w"
-        with open("/projects/coris_db/postgres/gbq_corisdb/create_tables.sql", mode) as file:
+        with open("/projects/CorisDB_Curation/Schemes/CORISDB_REGISTRY/gbq_corisdb/create_tables.sql", mode) as file:
             r = result['ddl'].replace('hdcdmcoris.', '')
             # Postgres types and formatting
             ## remove db server in GBQ
