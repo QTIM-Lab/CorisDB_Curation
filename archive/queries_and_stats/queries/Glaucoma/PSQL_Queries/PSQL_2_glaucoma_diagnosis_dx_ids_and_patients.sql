@@ -81,6 +81,7 @@ select dx_id, count(pat_id) as distinct_pat_id_counts from glaucoma.diagnosis_an
 group by dx_id -- 
 order by dx_id
 ;
+
 select distinct pat_id, pat_mrn
     from ehr.ophthalmologyencounterdiagnoses as oed
     inner join glaucoma.glaucoma_diagnosis_dx_ids as pddi
