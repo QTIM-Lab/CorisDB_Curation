@@ -127,14 +127,14 @@ class Table:
             "FLOAT":"float64",
         }
         scheme['Type_pandas'] = scheme['data_type'].apply(lambda x: type_key[x])
-        pdb.set_trace()
         new_types = dict(zip(scheme['column_name'], scheme['Type_pandas']))
-        tmp = pd.read_csv(os.path.join(self.tmp_working_area, f"{self.table_name}.csv"), dtype=object)
+        tmp = pd.read_csv(os.path.join(self.tmp_working_area, f"{self.table_name}.csv"), quotechar='"', dtype=object)
+        tmp = tmp.astype(new_types)
         tmp = tmp.fillna("NULL")
-        tmp.astype(new_types)
+        # pdb.set_trace()
         if not os.path.exists(os.path.join(self.tmp_working_area,"tmp_for_import")):
             os.mkdir(os.path.join(self.tmp_working_area,"tmp_for_import"))
-        tmp.to_csv(os.path.join(self.tmp_working_area,"tmp_for_import", f"{self.table_name}.csv"), index=None, quotechar="'", lineterminator="\n")
+        tmp.to_csv(os.path.join(self.tmp_working_area,"tmp_for_import", f"{self.table_name}.csv"), index=None, quotechar='"', lineterminator="\n")
 
 
 
@@ -178,7 +178,7 @@ class Table:
                 r = r.replace('`', '')
                 ## data types conversion
                 r = r.replace('INT64,', 'INTEGER,')
-                r = r.replace('INT64,\n', 'INTEGER,\n')
+                r = r.replace('INT64,\n', 'INTEGER\n')
                 r = r.replace('FLOAT64,', 'NUMERIC,')
                 r = r.replace('FLOAT64\n', 'NUMERIC\n')
                 r = r.replace('STRING,', 'VARCHAR,')

@@ -1,8 +1,11 @@
 # CorisDB Curation
 
 ```bash
+pyenv install 3.11.1
 pyenv virtualenv 3.11.1 corisdb_curation
 pyenv activate corisdb_curation
+# poetry config virtualenvs.create false
+# poetry config virtualenvs.in-project false
 # poetry init # first time only
 poetry install
 ```
