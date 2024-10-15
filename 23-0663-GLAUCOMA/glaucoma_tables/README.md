@@ -1,5 +1,4 @@
 # Making Glaucoma Tables
-
 Make tables in this order:
 
 0. Look in CorisDB_Curation/23-0284-CORIS folder for `coris_registry.bb_gbq_diagnosis_20240925.sql`.
