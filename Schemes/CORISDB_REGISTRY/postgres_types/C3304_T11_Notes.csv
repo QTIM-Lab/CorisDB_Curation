@@ -1,0 +1,9 @@
+Field name,PostgresType
+Arb_Person_Id,BIGINT
+Arb_Encounter_Id,BIGINT
+NoteEpicId,BIGINT
+NoteType,VARCHAR(100)
+NoteText,TEXT
+NoteProvider,VARCHAR(100)
+DateOfNote,TIMESTAMP WITH TIME ZONE
+TimeOfNote,TIME

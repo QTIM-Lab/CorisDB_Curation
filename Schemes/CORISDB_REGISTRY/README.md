@@ -110,11 +110,11 @@ Encounter_table = Table(table_name="C3304_GBQ_T2_Encounter", \
                  gbq_table_name="C3304_GBQ_T2_Encounter_20240925", \
                  tmp_working_area="/data/CorisDB_Curation")
 Encounter_table.get_table() # Will be in tmp_working_dir
-#Encounter_table.get_table(limit=100) # Will be in tmp_working_dir
+# Encounter_table.get_table(limit=100) # Will be in tmp_working_dir
 Encounter_table.make_postgres_importable_file() # Will be in tmp_working_dir
 #may not need to re-create these two
-Encounter_table.get_create_table_statement(postgres_types=False) # Will be in postgres_queries
-# Encounter_table.get_create_table_statement(postgres_types=True) # Will be in postgres_queries
+# Encounter_table.get_create_table_statement(postgres_types=False) # Will be in postgres_queries
+Encounter_table.get_create_table_statement(postgres_types=True) # Will be in postgres_queries
 Encounter_table.get_create_insert_statement() # Will be in postgres_queries
 
 Encounter_table.get_scheme()

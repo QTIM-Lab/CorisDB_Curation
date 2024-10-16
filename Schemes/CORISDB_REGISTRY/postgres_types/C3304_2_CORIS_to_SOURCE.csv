@@ -1,0 +1,3 @@
+Field name,PostgresType
+SOURCEid,VARCHAR(100)
+CORISid,BIGINT

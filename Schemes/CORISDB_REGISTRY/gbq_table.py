@@ -121,20 +121,35 @@ class Table:
             "INT64":"Int64",
             "STRING":"object",
             "TIME":"timedelta64[ns]",
-            "DATETIME":"datetime64[ns]",
-            "TIMESTAMP":"datetime64[ns]",
-            "DATE":"datetime64[ns]",
+            "DATETIME":"object",
+            # "DATETIME":"datetime64[ns]",
+            "TIMESTAMP":"object",
+            # "TIMESTAMP":"datetime64[ns]",
+            "DATE":"object",
+            # "DATE":"datetime64[ns]",
             "FLOAT":"float64",
+            "NUMERIC":"Int64"
         }
         scheme['Type_pandas'] = scheme['data_type'].apply(lambda x: type_key[x])
         new_types = dict(zip(scheme['column_name'], scheme['Type_pandas']))
         tmp = pd.read_csv(os.path.join(self.tmp_working_area, f"{self.table_name}.csv"), quotechar='"', dtype=object)
-        tmp = tmp.astype(new_types)
-        tmp = tmp.fillna("NULL")
-        # pdb.set_trace()
+        
+        # Convert datetime columns separately
+        for col, dtype in new_types.items():
+            if dtype == 'object' and col in tmp.columns:
+                if scheme[scheme['column_name'] == col]['data_type'].iloc[0] in ['DATETIME', 'TIMESTAMP', 'DATE']:
+                    # pdb.set_trace()
+                    tmp[col] = pd.to_datetime(tmp[col], format='%Y-%m-%d %H:%M:%S%z', errors='coerce')
+            elif dtype == 'Int64' or dtype == 'numeric':
+                tmp[col] = pd.to_numeric(tmp[col], errors='coerce')
+                tmp[col] = tmp[col].astype(dtype)
+            else:
+                pdb.set_trace()
+                tmp[col] = tmp[col].astype(dtype)
+
         if not os.path.exists(os.path.join(self.tmp_working_area,"tmp_for_import")):
             os.mkdir(os.path.join(self.tmp_working_area,"tmp_for_import"))
-        tmp.to_csv(os.path.join(self.tmp_working_area,"tmp_for_import", f"{self.table_name}.csv"), index=None, quotechar='"', lineterminator="\n")
+        tmp.to_csv(os.path.join(self.tmp_working_area,"tmp_for_import", f"{self.table_name}.csv"), na_rep='', index=None, quotechar='"', lineterminator="\n")
 
 
 
@@ -145,14 +160,16 @@ class Table:
         """
         if postgres_types:
             postgres_types_df = pd.read_csv(os.path.join("postgres_types", f"{self.table_name}.csv"))
+            # pdb.set_trace()
             with open(os.path.join("postgres_queries", f"create_table_{self.table_name}.sql"), mode='w') as file:
+                file.write(f"DROP TABLE IF EXISTS {Table.server}.{self.gbq_table_name};\n")
                 create_table_statement = f"CREATE TABLE IF NOT EXISTS {Table.server}.{self.gbq_table_name} (\n"
                 col_and_type_definition_block = ""
                 for index, (col, type) in enumerate(zip(postgres_types_df['Field name'], postgres_types_df['PostgresType'])):
                     if postgres_types_df.shape[0] != index+1:
                         col_and_type_definition_block += f"    {col} {type},\n"
                     else:
-                        col_and_type_definition_block += f"    {col} {type}\n"
+                        col_and_type_definition_block += f"    {col} {type}"
                 create_table_statement += col_and_type_definition_block 
                 create_table_statement += """
                 );\n\n"""

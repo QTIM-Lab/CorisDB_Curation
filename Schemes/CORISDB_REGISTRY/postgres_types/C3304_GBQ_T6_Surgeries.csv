@@ -1,0 +1,20 @@
+Field name,PostgresType
+Arb_Person_ID,BIGINT
+Arb_Encounter_Id,BIGINT
+Arb_SurgeryEncounter_Id,BIGINT
+SurgicalCaseEpicId,VARCHAR(100)
+SurgeryProcedureID,VARCHAR(100)
+ProcedureName,VARCHAR(100)
+PatientFriendlyName,VARCHAR(100)
+DisplayName,VARCHAR(100)
+DateOfProcedure,DATE
+TimeOfProcedure,TIME
+DepartmentName,VARCHAR(100)
+TeamType,VARCHAR(100)
+LogStatus,VARCHAR(100)
+PrimaryProviderName,VARCHAR(100)
+PrimaryProviderType,VARCHAR(100)
+SecondProvName,VARCHAR(100)
+SecondProvType,VARCHAR(100)
+ThirdProvName,VARCHAR(100)
+ThirdProvType,VARCHAR(100)
