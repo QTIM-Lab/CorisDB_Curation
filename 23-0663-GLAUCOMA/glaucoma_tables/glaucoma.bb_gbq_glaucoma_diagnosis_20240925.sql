@@ -2,8 +2,8 @@
 /* Glaucoma Diagnosis ICD Codes from coris_registry.bb_gbq_t3_diagnosis_<date> */
 
 -- | diagnosis_pk | diagnosiscodetype | diagnosiscode | diagnosisdescription | provenance |
-drop table if exists glaucoma.bb_gbq_glaucoma_diagnosis_20240925;
-create table glaucoma.bb_gbq_glaucoma_diagnosis_20240925 as 
+drop table if exists glaucoma.bb_gbq_diagnosis_20240925;
+create table glaucoma.bb_gbq_diagnosis_20240925 as 
     select 
     diagnosis_pk,
     diagnosiscodetype, 

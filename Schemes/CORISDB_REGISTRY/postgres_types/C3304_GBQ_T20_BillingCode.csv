@@ -1,9 +1,6 @@
 Field name,PostgresType
 Arb_Person_ID,BIGINT
 Arb_Encounter_Id,BIGINT
-CPT_Code,VARCHAR(100)
-Modifier1,VARCHAR(100)
-Modifier2,VARCHAR(100)
-Modifier3,VARCHAR(100)
-Modifier4,VARCHAR(100)
-Billing_Code,VARCHAR(100)
+cptcode,VARCHAR(100)
+modifiercode,VARCHAR(100)
+modifiername,VARCHAR(100)

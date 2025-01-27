@@ -1,22 +1,23 @@
+import sys
 import os, pandas as pd, pydicom, pdb, numpy, json
 from PIL import Image, ImageDraw, ImageFont
 from PyPDF2 import PdfReader
 
+
 # from coris_db.utils.pdf_to_png import pdf_to_png
 # from utils.pdf_to_png import pdf_to_png
-import pdf_to_png
+from pdf_to_png import pdf_to_png
 
 
-FONT_DIR=os.path.join( os.path.expanduser("~"), '/coris_db/utils/Roboto/Roboto-Black.ttf')
 # Axispacs
-IN="/projects/coris_db/Image_Conversion/INPUT"
-OUT="/projects/coris_db/Image_Conversion/OUTPUT"
+# IN="/projects/coris_db/Image_Conversion/INPUT"
+# OUT="/projects/coris_db/Image_Conversion/OUTPUT"
 # Forum
 # IN="/projects/coris_db/Glaucoma/OCT_bb_12_19_2023/forum"
 # OUT="/projects/coris_db/Glaucoma/OCT_bb_12_19_2023/preview_forum"
 
 
-file_names = [i for i in list(os.listdir(IN))]
+# file_names = [i for i in list(os.listdir(IN))]
 
 def preview(file_names, IN, OUT):
     for file_path in file_names:
@@ -69,13 +70,13 @@ def preview(file_names, IN, OUT):
                         text_color = (255, 255, 255)  # White color
                 ## text_color = "white"  # White color
                 # Write the text onto the image
-                draw.text((0, 0), patient_text, fill=text_color, font=font)
-                draw.text((0, 100), modality_text, fill=text_color, font=font)
-                draw.text((0, 200), sop_class_uid_text, fill=text_color, font=font)
-                draw.text((0, 300), sop_class_desc_text, fill=text_color, font=font)
-                draw.text((0, 400), study_instance_uid_text, fill=text_color, font=font)
-                draw.text((0, 500), series_instance_uid_text, fill=text_color, font=font)
-                draw.text((0, 600), sop_instance_uid_text, fill=text_color, font=font)
+                # draw.text((0, 0), patient_text, fill=text_color, font=font)
+                # draw.text((0, 100), modality_text, fill=text_color, font=font)
+                # draw.text((0, 200), sop_class_uid_text, fill=text_color, font=font)
+                # draw.text((0, 300), sop_class_desc_text, fill=text_color, font=font)
+                # draw.text((0, 400), study_instance_uid_text, fill=text_color, font=font)
+                # draw.text((0, 500), series_instance_uid_text, fill=text_color, font=font)
+                # draw.text((0, 600), sop_instance_uid_text, fill=text_color, font=font)
                 ## image.show()
                 image.save(os.path.join(OUT, os.path.splitext(os.path.basename(file_path))[0]+".png"))  # To save the image to a file (e.g., PNG format)
             elif sop_class_desc == "Encapsulated PDF Storage":
@@ -151,4 +152,16 @@ def preview(file_names, IN, OUT):
             image.save(os.path.join(OUT, os.path.splitext(os.path.basename(file_path))[0]+".png"))  # To save the image to a file (e.g., PNG format)
 
 
-preview(file_names, IN, OUT)
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 3:
+        print("Usage: python preview.py <input_directory> <output_directory>")
+        sys.exit(1)
+    
+    IN = sys.argv[1]
+    OUT = sys.argv[2]
+    FONT_DIR=os.path.join( 'Roboto/Roboto-Black.ttf')
+
+    file_names = [i for i in list(os.listdir(IN))]
+    preview(file_names, IN, OUT)

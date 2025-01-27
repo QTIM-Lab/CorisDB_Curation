@@ -3,6 +3,7 @@ import pandas as pd
 import pdb
 from google.cloud import bigquery
 import math
+#from datetime import datetime
 
 class Table:
     # Class attribute
@@ -117,18 +118,15 @@ class Table:
     def make_postgres_importable_file(self):
         # We need the Table Scheme
         scheme = self.get_scheme()
-        type_key={
-            "INT64":"Int64",
-            "STRING":"object",
-            "TIME":"timedelta64[ns]",
-            "DATETIME":"object",
-            # "DATETIME":"datetime64[ns]",
-            "TIMESTAMP":"object",
-            # "TIMESTAMP":"datetime64[ns]",
-            "DATE":"object",
-            # "DATE":"datetime64[ns]",
-            "FLOAT":"float64",
-            "NUMERIC":"Int64"
+        type_key = {
+            "INT64": "int", 
+            "STRING": "str",
+            "TIME": "object", 
+            "DATETIME": "object",  
+            "TIMESTAMP": "object",  
+            "DATE": "object",  
+            "FLOAT64": "float",  
+            "NUMERIC": "float"  
         }
         scheme['Type_pandas'] = scheme['data_type'].apply(lambda x: type_key[x])
         new_types = dict(zip(scheme['column_name'], scheme['Type_pandas']))
@@ -144,7 +142,7 @@ class Table:
                 tmp[col] = pd.to_numeric(tmp[col], errors='coerce')
                 tmp[col] = tmp[col].astype(dtype)
             else:
-                pdb.set_trace()
+                # pdb.set_trace()
                 tmp[col] = tmp[col].astype(dtype)
 
         if not os.path.exists(os.path.join(self.tmp_working_area,"tmp_for_import")):
@@ -194,18 +192,20 @@ class Table:
                 ## remove "`"
                 r = r.replace('`', '')
                 ## data types conversion
-                r = r.replace('INT64,', 'INTEGER,')
-                r = r.replace('INT64,\n', 'INTEGER\n')
-                r = r.replace('FLOAT64,', 'NUMERIC,')
-                r = r.replace('FLOAT64\n', 'NUMERIC\n')
-                r = r.replace('STRING,', 'VARCHAR,')
-                r = r.replace('STRING\n', 'VARCHAR\n')
-                r = r.replace('TIME,', 'TIME WITHOUT TIME ZONE,')
-                r = r.replace('TIME\n', 'TIME WITHOUT TIME ZONE\n')
-                r = r.replace('TIMESTAMP,', 'TIMESTAMP WITH TIME ZONE,')
-                r = r.replace('TIMESTAMP\n', 'TIMESTAMP WITH TIME ZONE\n')
-                r = r.replace('DATE,', 'TIMESTAMP WITHOUT TIME ZONE,')
-                r = r.replace('DATE\n', 'TIMESTAMP WITHOUT TIME ZONE\n')
+                r = r.replace('INT,', 'BIGINT,')  # Change INT64 to BIGINT
+                r = r.replace('INT,\n', 'BIGINT\n')
+                r = r.replace('INT64,', 'BIGINT,')  # Change INT64 to BIGINT
+                r = r.replace('INT64,\n', 'BIGINT\n')
+                r = r.replace('FLOAT64,', 'FLOAT8,')  # Use FLOAT8 instead of NUMERIC
+                r = r.replace('FLOAT64\n', 'FLOAT8\n')
+                r = r.replace('STRING,', 'TEXT,')  # Use TEXT for variable-length
+                r = r.replace('STRING\n', 'TEXT\n')
+                r = r.replace('TIME,', 'TIME,')
+                r = r.replace('TIME\n', 'TIME\n')
+                r = r.replace('TIMESTAMP,', 'TIMESTAMP,')
+                r = r.replace('TIMESTAMP\n', 'TIMESTAMP\n')
+                r = r.replace('DATE,', 'DATE,')  # DATE remains DATE
+                r = r.replace('DATE\n', 'DATE\n')
                 file.write(f"DROP TABLE IF EXISTS {Table.server}.{results[0]['table_name']};\n")
                 file.write(r)
                 file.write("\n\n")      

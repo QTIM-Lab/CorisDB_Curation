@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import pymupdf  # PyMuPDF
 from PIL import Image, ImageDraw, ImageFont
 import os, pdb
 
@@ -7,11 +7,12 @@ def pdf_to_png(pdf_path, output_folder, key_fields, FONT_DIR =  os.path.join( os
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
     
-    pdf_document = fitz.open(pdf_path)
+    pdf_document = pymupdf.open(pdf_path)
     
     for page_number in range(pdf_document.page_count):
         page = pdf_document[page_number]
         pixmap = page.get_pixmap()
+        print(page.get_text())
         image = Image.frombytes("RGB", [pixmap.width, pixmap.height], pixmap.samples)
         
         # # Draw key_fields
