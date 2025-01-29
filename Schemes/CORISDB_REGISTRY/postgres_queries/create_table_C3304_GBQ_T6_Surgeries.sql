@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS coris_registry.C3304_GBQ_T6_Surgeries_20240925;
-CREATE TABLE IF NOT EXISTS coris_registry.C3304_GBQ_T6_Surgeries_20240925 (
+DROP TABLE IF EXISTS coris_registry.C3304_GBQ_T6_Surgeries;
+CREATE TABLE IF NOT EXISTS coris_registry.C3304_GBQ_T6_Surgeries (
     Arb_Person_ID BIGINT,
     Arb_Encounter_Id BIGINT,
     Arb_SurgeryEncounter_Id BIGINT,

@@ -1,63 +1,8 @@
 # SOURCE
 
-## DBs
-### Coris Registry from Google Big Query
+## SCHEMA
 ```sql
-CREATE DATABASE coris_registry;
-DROP DATABASE coris_registry;
-```
-
-### Compass Electronic Health Records (SOURCE)
-```sql
-CREATE DATABASE source;
-DROP DATABASE source;
-
-```
-
-### Axispacs Viewer Database (from Snowflake in Azure)
-```sql
-CREATE DATABASE axispacs;
-DROP DATABASE axispacs;
-```
-  * snowflake schema
-  * dscan scheme
-
-### Forum Images Scanned
-```sql
-CREATE DATABASE forum;
-DROP DATABASE forum;
-```
-  * dscan scheme
-
-### Hyex Images Scanned
-```sql
-CREATE DATABASE heyex;
-DROP DATABASE heyex;
-```
-  * dscan scheme
-
-### Dashboard Database
-```sql
-CREATE DATABASE dashboard;
-DROP DATABASE dashboard;
-```
-
-## Schemes
-### Coris Registry from Google Big Query
-To Do...
-
-### Compass Electronic Health Records (SOURCE)
-```sql
-CREATE SCHEMA IF NOT EXISTS axispacs_snowflake;
-CREATE SCHEMA IF NOT EXISTS axispacs_dscan;
-CREATE SCHEMA IF NOT EXISTS forum_dscan;
-CREATE SCHEMA IF NOT EXISTS glaucoma;
-CREATE SCHEMA IF NOT EXISTS amd;
-CREATE SCHEMA IF NOT EXISTS parkinsons;
-CREATE SCHEMA IF NOT EXISTS dashboard;
-CREATE SCHEMA IF NOT EXISTS compass;
-CREATE SCHEMA IF NOT EXISTS coris_registry;
-CREATE SCHEMA IF NOT EXISTS amd_epidemiology;
+CREATE SCHEMA IF NOT EXISTS source;
 ```
 
 #### Source data (SOURCE)
@@ -82,32 +27,6 @@ Notes:
     - programmatically created sql to create tables and import data
 
 
-### Axispacs Viewer Database (from Snowflake in Azure)
-To Do...
 
-
-### Forum Images Scanned
-To Do...
-
-### Hyex Images Scanned
-To Do...
-
-
-## Appendix:
-Some useful tid bits:
-```sql
--- Alter database owner
-ALTER DATABASE coris_db owner to ophuser;
-
-/* Misc server side edits and commands
--- edited: sudo vim /etc/postgresql/15/main/pg_hba.conf to add ophuser to coris_db on line 93.
--- ran: sudo service postgresql restart
--- login
-psql -U ophuser coris_db
-/*
--- ALTER SCHEMA ehr RENAME TO compass;
--- DROP SCHEMA IF EXISTS glaucoma;
----- ALTER TABLE public.OphthalmologyDiagnosesDm SET SCHEMA compass;
-```
 
 
