@@ -1,9 +1,9 @@
 -- Bulk Insert
-\copy axispacs_snowflake.devices FROM '/data/Snowflake_AxisPACS/devices.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
-\copy axispacs_snowflake.exams FROM '/data/Snowflake_AxisPACS/exams.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
-\copy axispacs_snowflake.files FROM '/data/Snowflake_AxisPACS/files.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
-\copy axispacs_snowflake.patients FROM '/data/Snowflake_AxisPACS/patients.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
-\copy axispacs_snowflake.store FROM '/data/Snowflake_AxisPACS/store.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_snowflake.devices FROM '/scratch90/QTIM/Active/23-0284/EHR/SNOWFLAKE/devices.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_snowflake.exams FROM '/scratch90/QTIM/Active/23-0284/EHR/SNOWFLAKE/exams.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_snowflake.files FROM '/scratch90/QTIM/Active/23-0284/EHR/SNOWFLAKE/files.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_snowflake.patients FROM '/scratch90/QTIM/Active/23-0284/EHR/SNOWFLAKE/patients.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs_snowflake.store FROM '/scratch90/QTIM/Active/23-0284/EHR/SNOWFLAKE/store.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
 
 -- Delete

@@ -1,4 +1,4 @@
--- DELETE TABLE axispacs_snowflake.devices
+DROP TABLE IF EXISTS axispacs_snowflake.devices;
 CREATE TABLE IF NOT EXISTS axispacs_snowflake.devices (
     DEVSRNO NUMERIC(38,0),
     DEVTYPE VARCHAR(50),
@@ -17,6 +17,7 @@ CREATE TABLE IF NOT EXISTS axispacs_snowflake.devices (
     DEVGUID VARCHAR(1000)
 );
 
+DROP TABLE IF EXISTS axispacs_snowflake.exams;
 CREATE TABLE IF NOT EXISTS axispacs_snowflake.exams (
     EXSRNO NUMERIC(38,0),
     EXID VARCHAR(64),
@@ -49,6 +50,8 @@ CREATE TABLE IF NOT EXISTS axispacs_snowflake.exams (
     DICOMSTUDYDATETIME TIMESTAMPTZ(9)
 );
 
+
+DROP TABLE IF EXISTS axispacs_snowflake.files;
 CREATE TABLE IF NOT EXISTS axispacs_snowflake.files (
     FILESRNO NUMERIC(38,0),
     EXSRNO NUMERIC(38,0),
@@ -86,6 +89,7 @@ CREATE TABLE IF NOT EXISTS axispacs_snowflake.files (
     DICOMIMAGETYPE VARCHAR(1024)
 );
 
+DROP TABLE IF EXISTS axispacs_snowflake.patients;
 CREATE TABLE IF NOT EXISTS axispacs_snowflake.patients (
     PTSRNO NUMERIC(38,0),
     PTID VARCHAR(50),
@@ -114,6 +118,7 @@ CREATE TABLE IF NOT EXISTS axispacs_snowflake.patients (
     DICOMPATIENTNAME VARCHAR(64)
 );
 
+DROP TABLE IF EXISTS axispacs_snowflake.store;
 CREATE TABLE IF NOT EXISTS axispacs_snowflake.store (
     SRNO NUMERIC(38,0),
     PATH VARCHAR(100),
