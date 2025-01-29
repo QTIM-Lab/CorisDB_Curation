@@ -13,15 +13,27 @@ from axispacs_snowflake.files as f limit 1000000
 -- from axispacs_snowflake.files as f
 -- limit 1000;
 
-DROP MATERIALIZED VIEW IF EXISTS axispacs_snowflake.file_paths_and_meta
-CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
 
+/* Materialized View Version of File Paths and Meta */
+-- Materialized view can auto update and might be nice for when data and coming in at a faster pace.
+-- Table is likely...all we need
+-- Justification:
+--   If others are querying a table (potential materialized view) as part their work flows and the view
+--   relies on other tables that are being updated in a way that makes updating the table annoying, 
+--   you can make it a materialized view to automate the updates.
+/* Materialized View Version of File Paths and Meta */
+
+
+DROP TABLE IF EXISTS axispacs_snowflake.file_paths_and_meta; -- Table Version
+CREATE TABLE axispacs_snowflake.file_paths_and_meta AS -- Table Version
+-- DROP MATERIALIZED VIEW IF EXISTS axispacs_snowflake.file_paths_and_meta; -- Materialized View
+-- CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS -- Materialized View
     select
     case
         when f.filenamenew like '%.dcm%'
-        then '/data/PACS/DICOM/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
+        then '/persist/PACS/DICOM/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
         when f.filenamenew like '%.j2k%'
-        then '/data/PACS/VisupacImages/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
+        then '/persist/PACS/VisupacImages/' || p.ptsrno || '/' || e.exsrno || '/' || f.filenamenew
     end as file_path_coris
     ,f.dicomstudyuid
     ,f.dicomseriesuid
@@ -55,4 +67,5 @@ CREATE MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta AS
     on d.devsrno = e.exdevtype
     -- limit 10;
 
-REFRESH MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta;
+-- REFRESH MATERIALIZED VIEW axispacs_snowflake.file_paths_and_meta; -- Materialized View
+

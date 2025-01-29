@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS axispacs_dscan.dicom_headers (
 
 /* Login */
 psql -U ophuser coris_db;
-OOOppphhhP4$$
 
 /* Import */
 \copy axispacs_dscan.dicom_headers FROM '/projects/coris_db/axispacs_dir_scan/axispacs_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
