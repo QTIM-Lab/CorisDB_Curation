@@ -177,10 +177,11 @@ Look into the `CorisDB_Curation/Schemas` folder to find scripts related to speci
 * **coris_registry** - Latest and greatest from Google Big Query 
 * **source (empty)** - Older EHR data 
 * **axispacs_snowflake** - As it sounds. Axispacs has ehr like tabular data and accompanying images. This is the database that links to those images. 
-* **axispacs_dscan** - We used couchdb and pydicom to strip important DICOM tags for axispacs DICOMS and stored them in tabular format. `dscan` stands for directory scan.
+* **axispacs** - We used couchdb and pydicom to strip important DICOM tags for axispacs DICOMS and stored them in tabular format. `dscan` stands for directory scan.
 * **coris_db** - Original source db. At the time we put all the datasource ideas as Schemas. This is probably sub-optimal. Therefore we are  
-* **forum_dscan** - We had no database for these images. All we have are the images which are DICOM. However we scanned the headers and extracted the  details into csvs which we imported to have something to grab onto. `dscan` stands for directory scan.
-* **heyex** - "..." from forum description. Not available yet 
+* **forum** - We had no database for these images. All we have are the images which are DICOM. However we scanned the headers and extracted the  details into csvs which we imported to have something to grab onto. `dscan` stands for directory scan.
+* **heyex** - Same as forum_dscan for folder /persist/PACS/RMLEI-Hyex-Spectralis-data 
+* **imagepools** - Same as forum_dscan for folder /persist/PACS/imagepools
 * **template0** - This comes with postgres and we don't need to worry about and should not touch  
 * **template1** - This comes with postgres and we don't need to worry about and should not touch  
 * **postgres** - This comes with postgres and we don't need to worry about and should not touch  
