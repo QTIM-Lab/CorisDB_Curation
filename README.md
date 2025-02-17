@@ -25,10 +25,9 @@ We have an assortment of sources of electronic health records (EHR) and tabular 
     - files - specific file level information  
     - patients - patient info  
     - store - location on Windows drives where info was stored and may still be  as we have a copy of that data(I think)  
-* **COUCHDB** - Not too important right now but is a noSQL database and we were using it to store png renders of DICOMs with pixel data as well as the DICOM header in json queryable format.
-* **ORTHANC** - A Medical DICOM PACS for serving DICOMs and comes with some handy viewers.
 * **FORUM** - Datastore holding lots of Humphrey Visual Field scanner data. Holds Cirrus and IOL (Itraocular lense) surgery images (I believe). Most of these images were converted to j2ks or pdfs.
 * **HEYEX** - Another repository of images like FORUM. 
+* **IMAGEPOOLS** - Another repository of images like FORUM. 
 
 ### Schemas
 * public:

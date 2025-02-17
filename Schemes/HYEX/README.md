@@ -2,5 +2,5 @@
 
 ## SCHEMA
 ```sql
-CREATE SCHEMA IF NOT EXISTS hyex_dscan;
+CREATE SCHEMA IF NOT EXISTS hyex;
 ```
