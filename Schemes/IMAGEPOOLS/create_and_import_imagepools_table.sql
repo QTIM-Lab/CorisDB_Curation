@@ -1,15 +1,15 @@
 /* Create */
 
--- DROP TABLE forum_dscan.dicom_headers;
--- CREATE TABLE IF NOT EXISTS forum_dscan.cdr (
-CREATE TABLE IF NOT EXISTS forum_dscan.dicom_headers (
-    FILENAMEPATH VARCHAR(100),
+DROP TABLE imagepools.dicom_headers;
+CREATE TABLE IF NOT EXISTS imagepools.dicom_headers (
+    FILENAMEPATH VARCHAR(200),
     PATIENTMRN VARCHAR(50),
     SOPINSTANCEUID VARCHAR(100),
     SERIESINSTANCEUID VARCHAR(100),
     STUDYINSTANCEUID VARCHAR(100),
     ACQUISITIONDATETIME VARCHAR(50),
     SOPCLASSUID VARCHAR(100),
+    SOPCLASSUIDDESCRIPTION VARCHAR(100),
     MODALITY VARCHAR(50),
     MODALITYLUTSEQUENCE VARCHAR(50),
     IMAGETYPE VARCHAR(100),
@@ -35,17 +35,24 @@ CREATE TABLE IF NOT EXISTS forum_dscan.dicom_headers (
 );
 
 /* Login */
-psql -U ophuser coris_db;
-OOOppphhhP4$$
+psql -U coris_admin coris_db;
 
 /* Import */
-\copy forum_dscan.dicom_headers FROM '/projects/coris_db/forum_dir_scan/forum_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy imagepools.dicom_headers FROM '/scratch90/QTIM/Active/23-0284/EHR/IMAGEPOOLS/imagepools_sample_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy imagepools.dicom_headers FROM '/scratch90/QTIM/Active/23-0284/EHR/IMAGEPOOLS/imagepools_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
-vim /projects/coris_db/forum_dir_scan/forum_dicom_headers_parsed.csv
+-- vim /scratch90/QTIM/Active/23-0284/EHR/IMAGEPOOLS/imagepools_sample_dicom_headers_parsed.csv
 
 /* Delete */
-delete from forum_dscan.dicom_headers;
+delete from imagepools.dicom_headers;
 
 /* Counts */
-select count(*) from  forum_dscan.dicom_headers;
+select count(*) from  imagepools.dicom_headers;
 
+/* Explore */
+select * from imagepools.dicom_headers
+-- where laterality != 'Tag not found'
+-- where bitsallocated != 'Tag not found'
+-- where pixelspacing != 'Tag not found'
+where imagetype != 'Tag not found'
+limit 10;

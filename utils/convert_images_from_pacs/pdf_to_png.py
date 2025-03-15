@@ -14,7 +14,6 @@ def pdf_to_png(pdf_path, output_folder, key_fields, FONT_DIR =  os.path.join( os
         pixmap = page.get_pixmap()
         print(page.get_text())
         image = Image.frombytes("RGB", [pixmap.width, pixmap.height], pixmap.samples)
-        
         # # Draw key_fields
         # draw = ImageDraw.Draw(image) # Initialize the drawing context
         # # Choose a font and size

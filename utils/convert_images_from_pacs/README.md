@@ -1,12 +1,22 @@
 # Convert PACS images to PNG or other human readable format
+
+## DICOMParser (New)
 ```bash
 pyenv activate corisdb_curation
+# poetry install
 cd utils/convert_images_from_pacs
+git clone https://github.com/msaifee786/hvf_extraction_script.git
+pip install hvf_extraction_script
+
+python opvs.py
 ```
 
+
+## Preview (old)
+
 ```bash
-IN=/data/CorisDB_Curation/10_15_2024_finding_glaucoma/Data/92996_images/raw
-OUT=/data/CorisDB_Curation/10_15_2024_finding_glaucoma/Data/92996_images/pngs_or_other
+IN=
+OUT=
 python preview.py $IN $OUT
 ```
 

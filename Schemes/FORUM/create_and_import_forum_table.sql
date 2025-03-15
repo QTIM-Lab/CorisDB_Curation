@@ -1,15 +1,15 @@
 /* Create */
 
--- DROP TABLE IF EXISTS axispacs_dscan.dicom_headers;
--- CREATE TABLE IF NOT EXISTS axispacs_dscan.cdr (
-CREATE TABLE IF NOT EXISTS axispacs_dscan.dicom_headers (
-    FILENAMEPATH VARCHAR(150),
+DROP TABLE forum.dicom_headers;
+CREATE TABLE IF NOT EXISTS forum.dicom_headers (
+    FILENAMEPATH VARCHAR(200),
     PATIENTMRN VARCHAR(50),
     SOPINSTANCEUID VARCHAR(100),
     SERIESINSTANCEUID VARCHAR(100),
     STUDYINSTANCEUID VARCHAR(100),
     ACQUISITIONDATETIME VARCHAR(50),
     SOPCLASSUID VARCHAR(100),
+    SOPCLASSUIDDESCRIPTION VARCHAR(100),
     MODALITY VARCHAR(50),
     MODALITYLUTSEQUENCE VARCHAR(50),
     IMAGETYPE VARCHAR(100),
@@ -35,21 +35,22 @@ CREATE TABLE IF NOT EXISTS axispacs_dscan.dicom_headers (
 );
 
 /* Login */
-psql -U ophuser coris_db;
+psql -U coris_admin coris_db;
 
 /* Import */
-\copy axispacs_dscan.dicom_headers FROM '/projects/coris_db/axispacs_dir_scan/axispacs_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy forum.dicom_headers FROM '/scratch90/QTIM/Active/23-0284/EHR/FORUM/forum_sample_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy forum.dicom_headers FROM '/scratch90/QTIM/Active/23-0284/EHR/FORUM/forum_dicom_headers_parsed.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
-vim /projects/coris_db/axispacs_dir_scan/axispacs_dscan_dicom_headers_parsed.csv
+-- vim /scratch90/QTIM/Active/23-0284/EHR/FORUM/forum_sample_dicom_headers_parsed.csv
 
 /* Delete */
-delete from axispacs_dscan.dicom_headers;
+delete from forum.dicom_headers;
 
 /* Counts */
-select count(*) from  axispacs_dscan.dicom_headers;
+select count(*) from  forum.dicom_headers;
 
 /* Explore */
-select * from axispacs_dscan.dicom_headers
+select * from forum.dicom_headers
 -- where laterality != 'Tag not found'
 -- where bitsallocated != 'Tag not found'
 -- where pixelspacing != 'Tag not found'
