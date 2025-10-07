@@ -1,0 +1,1 @@
+\copy coris_registry.C3304_T22_CUMedBillingCode_20250923 FROM '/scratch90/QTIM/Active/23-0284/EHR/CORIS_REGISTRY_GBQ/live/tmp_for_import/C3304_T22_CU_MedBillingCode.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;

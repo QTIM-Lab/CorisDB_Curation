@@ -1,0 +1,13 @@
+DROP TABLE IF EXISTS coris_registry.C3304_T19_MYC_Messages_20250429;
+CREATE TABLE coris_registry.C3304_T19_MYC_Messages_20250429
+(
+  Arb_Person_Id BIGINT,
+  Arb_Encounter_Id BIGINT,
+  CREAT_TIME TIMESTAMP,
+  PROVIDER TEXT,
+  MessageType TEXT,
+  MSG_ID BIGINT,
+  MSG_TXT TEXT,
+  NoteLine BIGINT
+);
+

@@ -100,6 +100,7 @@ files_df_100.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None)
 # files_df_1_100.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None)
 # files_df_101_200.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, mode='a', header=None) # append to previous file
 
+# Note the mode="a" for all but first write
 files_df_1_1000000.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None)
 files_df_1000001_2000000.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, mode='a', header=None)
 files_df_2000001_3000000.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, mode='a', header=None)
@@ -112,6 +113,7 @@ files_df_8000001_9000000.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, 
 files_df_9000001_10000000.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, mode='a', header=None)
 files_df_10000001_.to_csv(os.path.join(DATA_DIR,"files.csv"), index=None, mode='a', header=None)
 
+# split out files
 files_df_1_1000000.to_csv(os.path.join(DATA_DIR,"files_1_1000000.csv"), index=None)
 files_df_1000001_2000000.to_csv(os.path.join(DATA_DIR,"files_1000001_2000000.csv"), index=None, header=None)
 files_df_2000001_3000000.to_csv(os.path.join(DATA_DIR,"files_2000001_3000000.csv"), index=None, header=None)

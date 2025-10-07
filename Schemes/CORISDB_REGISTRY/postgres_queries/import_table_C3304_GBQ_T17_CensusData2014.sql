@@ -1,1 +1,0 @@
-\copy coris_registry.C3304_GBQ_T17_CensusData2014 FROM '/scratch90/QTIM/Active/23-0284/EHR/CORIS_REGISTRY_GBQ/tmp_for_import/C3304_GBQ_T17_CensusData2014.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;

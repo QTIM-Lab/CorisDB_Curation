@@ -99,7 +99,6 @@ class Table:
 
             # For each where block, make the query and append to file
             for i, where in enumerate(self.where_statements):
-                # pdb.set_trace()
                 print(f"On range: {where} (~{100*(i+1)/pieces}%) and total row count is: {self.rows}")
                 q = f"{query} {where}"; query_job = Table.client.query(q)
                 # Fetch results
@@ -119,36 +118,52 @@ class Table:
         # We need the Table Scheme
         scheme = self.get_scheme()
         type_key = {
-            "INT64": "int", 
+            "INT64": "Int64", 
             "STRING": "str",
             "TIME": "object", 
             "DATETIME": "object",  
             "TIMESTAMP": "object",  
             "DATE": "object",  
             "FLOAT64": "float",  
-            "NUMERIC": "float"  
+            "NUMERIC": "float",
+            "INTEGER": "Int64"
         }
         scheme['Type_pandas'] = scheme['data_type'].apply(lambda x: type_key[x])
         new_types = dict(zip(scheme['column_name'], scheme['Type_pandas']))
+        
         tmp = pd.read_csv(os.path.join(self.tmp_working_area, f"{self.table_name}.csv"), quotechar='"', dtype=object)
         
         # Convert datetime columns separately
         for col, dtype in new_types.items():
             if dtype == 'object' and col in tmp.columns:
                 if scheme[scheme['column_name'] == col]['data_type'].iloc[0] in ['DATETIME', 'TIMESTAMP', 'DATE']:
-                    # pdb.set_trace()
-                    tmp[col] = pd.to_datetime(tmp[col], format='%Y-%m-%d %H:%M:%S%z', errors='coerce')
-            elif dtype == 'Int64' or dtype == 'numeric':
+                    if scheme[scheme['column_name'] == col]['data_type'].iloc[0] == 'DATE':
+                        # Convert DATE fields (YYYY-MM-DD format)
+                        tmp[col] = pd.to_datetime(tmp[col], format='%Y-%m-%d', errors='coerce').dt.date
+                    elif scheme[scheme['column_name'] == col]['data_type'].iloc[0] == 'TIME':
+                        # Convert DATETIME fields (HH:MM:SS format)
+                        tmp[col] = pd.to_datetime(tmp[col], format='%H:%M:%S', errors='coerce')
+                    elif scheme[scheme['column_name'] == col]['data_type'].iloc[0] == 'DATETIME':
+                        # Convert DATETIME fields (YYYY-MM-DD HH:MM:SS format)
+                        tmp[col] = pd.to_datetime(tmp[col], format='%Y-%m-%d %H:%M:%S', errors='coerce')
+                    elif scheme[scheme['column_name'] == col]['data_type'].iloc[0] == 'TIMESTAMP':
+                        # Convert TIMESTAMP fields (with time zone)
+                        tmp[col] = pd.to_datetime(tmp[col], format='%Y-%m-%d %H:%M:%S%z', errors='coerce')
+                        
+            elif dtype in ['Int64', 'float']:
+                #tmp[col] = tmp[col].fillna(0)
                 tmp[col] = pd.to_numeric(tmp[col], errors='coerce')
                 tmp[col] = tmp[col].astype(dtype)
+
             else:
-                # pdb.set_trace()
                 tmp[col] = tmp[col].astype(dtype)
 
-        if not os.path.exists(os.path.join(self.tmp_working_area,"tmp_for_import")):
-            os.mkdir(os.path.join(self.tmp_working_area,"tmp_for_import"))
-        tmp.to_csv(os.path.join(self.tmp_working_area,"tmp_for_import", f"{self.table_name}.csv"), na_rep='', index=None, quotechar='"', lineterminator="\n")
-
+        # Save the modified CSV for PostgreSQL import
+        if not os.path.exists(os.path.join(self.tmp_working_area, "tmp_for_import")):
+            os.mkdir(os.path.join(self.tmp_working_area, "tmp_for_import"))
+            
+        tmp.to_csv(os.path.join(self.tmp_working_area, "tmp_for_import", f"{self.table_name}.csv"), 
+                na_rep='', index=None, quotechar='"', lineterminator="\n")
 
 
     def get_create_table_statement(self, postgres_types=False):
@@ -158,7 +173,6 @@ class Table:
         """
         if postgres_types:
             postgres_types_df = pd.read_csv(os.path.join("postgres_types", f"{self.table_name}.csv"))
-            # pdb.set_trace()
             with open(os.path.join("postgres_queries", f"create_table_{self.table_name}.sql"), mode='w') as file:
                 file.write(f"DROP TABLE IF EXISTS {Table.server}.{self.gbq_table_name};\n")
                 create_table_statement = f"CREATE TABLE IF NOT EXISTS {Table.server}.{self.gbq_table_name} (\n"
@@ -208,12 +222,12 @@ class Table:
                 r = r.replace('DATE\n', 'DATE\n')
                 file.write(f"DROP TABLE IF EXISTS {Table.server}.{results[0]['table_name']};\n")
                 file.write(r)
-                file.write("\n\n")      
+                file.write("\n\n") 
+
 
     def get_create_insert_statement(self):
         with open(os.path.join("postgres_queries", f"import_table_{self.table_name}.sql"), mode='w') as file:
             insert_query = f"""\copy {Table.server}.{self.gbq_table_name} FROM '{self.tmp_working_area}/tmp_for_import/{self.table_name}.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;"""
-            # pdb.set_trace()
             file.write(f"{insert_query}\n")
 
     
