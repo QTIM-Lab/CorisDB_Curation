@@ -7,7 +7,7 @@ from tqdm import tqdm
 # Enable tqdm for pandas
 tqdm.pandas()
 
-axispacs_all = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_files.csv")
+axispacs_all = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_files_classified.csv")
 
 # axispacs_all.head()
 # axispacs_all.columns
@@ -46,7 +46,8 @@ axispacs_all = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_file
 
 ### Generate sample
 # AFTER ADDING QTIM_Modality Column to axispacs_dicom_counts.csv below
-axispacs_dicoms = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/axispacs_image_types_dicom_manually_curated.csv")
+axispacs_dicoms = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/axispacs_image_types_dicom_manually_curated.csv")
+axispacs_dicoms_copy = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/axispacs_image_types_dicom_manually_curated copy.csv")
 
 # laser in 
 # dicom_group = axispacs_dicoms[
@@ -70,6 +71,7 @@ axispacs_dicoms = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_c
 # Example of returning multiple rows in an apply function
 def match_or_na(col, val):
     return (pd.isna(val) & pd.isna(col)) | (col.eq(val))
+
 
 def expand_rows(row, n=3):
     filtered_df = axispacs_all[
@@ -95,7 +97,8 @@ do_these = do_these[do_these['SOPClassDescription'] == 'Ophthalmic Tomography Im
 
 # Apply the function and concatenate the results
 # expanded_df = pd.concat(do_these.postgres_apply(expand_rows, n=2, axis=1).tolist(), ignore_index=True)
-expanded_df = pd.concat(do_these.apply(expand_rows, n=1, axis=1).tolist(), ignore_index=True)
+# expanded_df = pd.concat(do_these.apply(expand_rows, n=1, axis=1).tolist(), ignore_index=True)
+expanded_df = pd.concat(axispacs_dicoms_copy.apply(expand_rows, n=3, axis=1).tolist(), ignore_index=True)
 
 expanded_df_w_qtim_modality = pd.merge(expanded_df, axispacs_dicoms, how='inner', on=[
     'SOPClassDescription',

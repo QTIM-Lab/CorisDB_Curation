@@ -31,7 +31,11 @@ CREATE TABLE forum.all_dicoms (
     OpticDiskArea_mm_squared NUMERIC,
     RimArea_mm_squared NUMERIC,
     AvgCDR NUMERIC,
-    VerticalCD NUMERIC
+    VerticalCD NUMERIC,
+    basename TEXT,
+    -- after classification
+    QTIM_Modality_pred VARCHAR(50),
+    is_unknown_combo BOOLEAN DEFAULT FALSE
 );
 
 

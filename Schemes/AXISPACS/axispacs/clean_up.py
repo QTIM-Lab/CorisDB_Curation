@@ -2,6 +2,10 @@ import os
 import pandas as pd
 import pdb
 from tqdm import tqdm
+tqdm.pandas()
+
+pd.set_option('display.max_colwidth', None)
+
 
 AXISPACS_DIR='/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/'
 
@@ -9,12 +13,17 @@ AXISPACS_DIR='/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/'
 
 VisupacImages_dicoms = pd.read_csv(os.path.join(AXISPACS_DIR, 'parsed', 'VisupacImages_parse_dicom_for_postgres.csv'))
 VisupacImages_dicoms['basename'] = VisupacImages_dicoms['file_path'].apply(lambda row: os.path.basename(row).lower().split('.dcm')[0])
+VisupacImages_dicoms['folder'] = VisupacImages_dicoms['file_path'].apply(lambda row: os.path.dirname(row))
 VisupacImages_dicoms.shape # 5,353
 DICOM_dicoms = pd.read_csv(os.path.join(AXISPACS_DIR, 'parsed', 'DICOM_parse_dicom_for_postgres.csv'))
 DICOM_dicoms['basename'] = DICOM_dicoms['file_path'].apply(lambda row: os.path.basename(row).lower().split('.dcm')[0])
+DICOM_dicoms['folder'] = DICOM_dicoms['file_path'].apply(lambda row: os.path.dirname(row))
 DICOM_dicoms.shape # 1,214,811
 
 all_dicoms = pd.concat([VisupacImages_dicoms, DICOM_dicoms], axis=0)
+# duplicates_dicom = all_dicoms[all_dicoms.duplicated(subset=['file_path'], keep=False)]
+
+
 # all_dicoms.to_csv(os.path.join(AXISPACS_DIR, 'all_dicoms.csv'), index=None)
 all_dicoms.shape # 1,220,164
 all_dicoms.columns
@@ -26,19 +35,21 @@ all_dicoms.columns
 #        'PhotometricInterpretation', 'PixelSpacing', 'StationName',
 #        'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness',
 #        'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared',
-#        'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
+#        'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename', 'folder']
 all_dicoms.rename(columns={'PatientID':'mrn'},inplace=True)
-all_dicoms['StudyDate'] = pd.to_datetime(all_dicoms['StudyDate'].astype("Int64").astype(str), format="%Y%m%d", errors="coerce")
+# all_dicoms['StudyDate'] = pd.to_datetime(all_dicoms['StudyDate'].astype("Int64").astype(str), format="%Y%m%d", errors="coerce")
 
 
 # all_xmls
 
-all_xmls = pd.read_csv(os.path.join(AXISPACS_DIR, 'parsed', 'VisupacImages_XMLs_int_pids.csv')) # 14,014,399 ! not same as total xml count as some pids were corrupt and we filtered out
+# all_xmls = pd.read_csv(os.path.join(AXISPACS_DIR, 'parsed', 'VisupacImages_XMLs_int_pids.csv')) # 14,014,399 ! not same as total xml count as some pids were corrupt and we filtered out
 all_xmls = pd.read_csv(os.path.join(AXISPACS_DIR, 'parsed', 'VisupacImages_XMLs.csv')) # 14,407,580! if using all
 all_xmls.shape
 all_xmls.columns
 all_xmls.rename(columns={'PID':'mrn'}, inplace=True )
+# duplicates_xmls = all_xmls[all_xmls.duplicated(subset=['file_path'], keep=False)]
 
+# all_xmls[['file_path_j2k_maybe', 'file_path']]
 header_xmls = ['file_path', 'mrn', 'FirstName', 'LastName', 'DOB', 'Gender',
 'ExamDate', 'Laterality', 'DeviceID', 'DataFile', 'ImageWidth',
 'ImageType', 'ImageNumber', 'ImageHeight', 'ImageGroup', 'ImageFile',
@@ -48,6 +59,7 @@ header_xmls = ['file_path', 'mrn', 'FirstName', 'LastName', 'DOB', 'Gender',
 'TimeStamp_TotalSeconds', 'basename']
 
 all_xmls['basename'] = all_xmls['file_path'].apply(lambda row: os.path.basename(row).lower().split('.xml')[0])
+all_xmls['folder'] = all_xmls['file_path'].apply(lambda row: os.path.dirname(row))
 # all_xmls[header_xmls].to_csv(os.path.join(AXISPACS_DIR, 'all_xmls.csv'), index=None)
 
 
@@ -55,12 +67,18 @@ all_xmls['basename'] = all_xmls['file_path'].apply(lambda row: os.path.basename(
 
 DICOM_j2k_files = pd.read_csv(os.path.join(AXISPACS_DIR, 'raw_files_lists', 'DICOM_j2k_files.csv'))
 DICOM_j2k_files['basename'] = DICOM_j2k_files['file_path'].apply(lambda row: os.path.basename(row).lower().split('.j2k')[0].split('-')[0])
-DICOM_j2k_files['basename'][0]
+DICOM_j2k_files['folder'] = DICOM_j2k_files['file_path'].apply(lambda row: os.path.dirname(row))
 DICOM_j2k_files.shape # 884,945
+# duplicates_DICOM_j2k_files = DICOM_j2k_files[DICOM_j2k_files.duplicated(subset=['file_path'], keep=False)]
+DICOM_j2k_files[DICOM_j2k_files['basename'] == 'axis01_7925_408544_20210226095615583ddc3aefae830b501']
 
 VisupacImages_j2k_files = pd.read_csv(os.path.join(AXISPACS_DIR, 'raw_files_lists', 'VisupacImages_j2k_files.csv'))
 VisupacImages_j2k_files['basename'] = VisupacImages_j2k_files['file_path'].apply(lambda row: os.path.basename(row).lower().split('.j2k')[0])
+VisupacImages_j2k_files['folder'] = VisupacImages_j2k_files['file_path'].apply(lambda row: os.path.dirname(row))
 VisupacImages_j2k_files.shape # 14,474,611
+VisupacImages_j2k_files.columns
+# duplicates_VisupacImages_j2k_files = VisupacImages_j2k_files[VisupacImages_j2k_files.duplicated(subset=['file_path'], keep=False)]
+DICOM_j2k_files[DICOM_j2k_files['basename'] == 'axis01_7925_408544_20210226095615583ddc3aefae830b501']
 
 ## Question: Are the j2ks related between the DICOM dir and VisupacImages dir?
 ##  - since no j2ks in common by basename of file we can separate parsing by DICOM and VisupacImages below...
@@ -70,127 +88,108 @@ j2ks_in_common = set(VisupacImages_j2k_files['basename']).intersection(set(DICOM
 
 
 ## /persist/PACS/VisupacImages: xmls with their likely j2k pairs
-def find_j2k_xml(row):
-    # pdb.set_trace()
-    xml_rows = all_xmls[all_xmls['basename'] == row['basename']]
-    if xml_rows.shape[0] > 1:
-        pdb.set_trace()
-    elif xml_rows.shape[0] == 0:
-        return pd.Series({col: pd.NA for col in all_xmls.columns if col != "basename"})
-    return xml_rows.iloc[0]
+# def find_j2k_xml(rows):
+#     pdb.set_trace()
+#     rows['folder']
+#     rows['file_path_j2k']
+#     rows['file_path_xml']
 
 
-### DATA EXPLORATION
-# j2ks_in_common = set(VisupacImages_j2k_files['basename']).intersection(set(all_xmls['basename'])); len(j2ks_in_common) # 14,206,594 | 13,887,946 (no corrupt pids) ! basenames not j2k_files
-# j2ks_not_in_common = set(VisupacImages_j2k_files['basename']) - set(all_xmls['basename']); len(j2ks_not_in_common) # 66,715 | 385,363 (no corrupt pids) ! basenames not j2k_files
-# j2ks_not_in_common = set(all_xmls['basename']) - set(VisupacImages_j2k_files['basename']); len(j2ks_not_in_common) # 0
-# all_xmls[all_xmls['basename'].isin(j2ks_in_common)]
-# all_xmls[all_xmls['basename'].isin(j2ks_not_in_common)]
-### looks good; deeper analysis pending later...
-# j2ks_xmls_in_common_files_preview = VisupacImages_j2k_files[VisupacImages_j2k_files['basename'].isin(j2ks_in_common)] # 14,407,586 | XX (no corrupt pids)
-# j2ks_xmls_not_in_common_files_preview = VisupacImages_j2k_files[VisupacImages_j2k_files['basename'].isin(j2ks_not_in_common)] # 67,025 | 460,100 (no corrupt pids)
-# xmls_j2ks_in_common_files_preview = all_xmls[all_xmls['basename'].isin(j2ks_in_common)]
-# len(j2ks_xmls_in_common_files_preview['j2k_path'].unique()) # 14,014,511
-# len(j2ks_xmls_not_in_common_files_preview['j2k_path'].unique()) # 460,100
-# len(xmls_j2ks_in_common_files_preview['file_path'].unique()) #  14,014,399; all accounted for
-# j2ks_xmls_in_common_files_preview.sort_values('basename')
-# grouped_j2ks_by_basename = j2ks_xmls_in_common_files_preview.groupby('basename').count().reset_index()
-# grouped_j2ks_by_basename.head()
-# by spot check the qbelow duplicates are identical. More code needed to say with certainty
-# xmsl_with_multiple_j2ks_or_duplicate_files = xmls_j2ks_in_common_files_preview[xmls_j2ks_in_common_files_preview['basename'].isin(grouped_j2ks_by_basename[grouped_j2ks_by_basename['j2k_path'] >2]['basename'])]
-# xmsl_with_multiple_j2ks_or_duplicate_files.sort_values('basename', inplace=True)
-# xmsl_with_multiple_j2ks_or_duplicate_files.shape
-# xmsl_with_multiple_j2ks_or_duplicate_files.to_csv(os.path.join(AXISPACS_DIR, 'xmsl_with_multiple_j2ks_or_duplicate_files.csv'), index=None)
 
-# j2ks_xml_join = pd.merge(VisupacImages_j2k_files, all_xmls[['file_path', 'file_path_j2k_maybe']], how='left', left_on='j2k_path', right_on='file_path_j2k_maybe')
-j2ks_xml_join = pd.merge(VisupacImages_j2k_files, all_xmls, how='left', left_on='file_path', right_on='file_path_j2k_maybe')
+# j2ks_xml_join.shape[0] # 14,474,611
+j2ks_xml_join = pd.merge(VisupacImages_j2k_files, all_xmls, how='left', on=['folder', 'basename'])
+# j2ks_xml_join.drop_duplicates(inplace=True)
+
+
+j2ks_xml_join.shape[0] # 14,474,611
 j2ks_xml_join.rename(columns={'file_path_x':'file_path_j2k'}, inplace=True)
 j2ks_xml_join.rename(columns={'file_path_y':'file_path_xml'}, inplace=True)
-# j2ks_xml_join.columns
-# j2ks_xml_join.iloc[0]['file_path_j2k']
-# j2ks_xml_join.iloc[0]['file_path_xml']
-
-j2ks_xml_join.rename(columns={'basename_x':'basename'}, inplace=True )
-j2ks_xml_join.drop(columns=['basename_y'], inplace=True)
-# j2ks_xml_join.head()
-# j2ks_xml_join[pd.isna(j2ks_xml_join['file_path_j2k_maybe'])].shape # 67,059 | 460,222 (no corrupt pids)
-# j2ks_xml_join[~pd.isna(j2ks_xml_join['file_path_j2k_maybe'])].shape # 14,407,552 | 14,014,389 (no corrupt pids)
+# duplicates_j2ks_xml_join = j2ks_xml_join[j2ks_xml_join.duplicated(subset=['file_path_j2k'], keep=False)]
 
 
-j2ks_without_xml_data = j2ks_xml_join[pd.isna(j2ks_xml_join['file_path_j2k_maybe'])][0:10].copy() # also these might be useless
-# j2ks_without_xml_data = j2ks_xml_join[pd.isna(j2ks_xml_join['file_path_j2k_maybe'])].copy() # If we really want: will take a looooooooong time
-# j2ks_without_xml_data.to_csv(os.path.join(AXISPACS_DIR, 'parsed', 'j2ks_without_xml_data.csv'), index=None)
-# only process non joined data to be somewhat efficient as this is a slow apply func
-tqdm.pandas()
-xml_info_for_non_intuitive_paths = j2ks_without_xml_data.progress_apply(lambda row: find_j2k_xml(row), axis=1)
-# keep only columns that don't already exist in the destination DF
-xml_info_for_non_intuitive_paths = xml_info_for_non_intuitive_paths.loc[:, ~xml_info_for_non_intuitive_paths.columns.isin(j2ks_without_xml_data.columns)]
-# add them without touching existing columns
-j2ks_without_xml_data = j2ks_without_xml_data.join(xml_info_for_non_intuitive_paths)
-# set(all_xmls.columns) - set(j2ks_without_xml_data.columns)
-set(j2ks_without_xml_data.columns) - set(all_xmls.columns)
-
-j2ks_with_xml_data = j2ks_xml_join[~pd.isna(j2ks_xml_join['file_path_j2k_maybe'])]
-j2ks_with_xml_data.drop(columns=['file_path_j2k_maybe'], inplace=True)
+j2ks_without_xml_data = j2ks_xml_join[pd.isna(j2ks_xml_join['file_path_xml'])]
 j2ks_without_xml_data.drop(columns=['file_path_j2k_maybe'], inplace=True)
+# duplicates_j2ks_without_xml_data = j2ks_without_xml_data[j2ks_without_xml_data.duplicated(subset=['file_path_j2k'], keep=False)]
 
-# set(j2ks_with_xml_data.columns) - set(j2ks_without_xml_data.columns)
-# set(j2ks_without_xml_data.columns) - set(j2ks_with_xml_data.columns)
+j2ks_with_xml_data = j2ks_xml_join[~pd.isna(j2ks_xml_join['file_path_xml'])]
+j2ks_with_xml_data.drop(columns=['file_path_j2k_maybe'], inplace=True)
+# duplicates_j2ks_with_xml_data = j2ks_with_xml_data[j2ks_with_xml_data.duplicated(subset=['file_path_j2k'], keep=False)]
+
 
 ### milestone variable to be merged with DICOM j2k scan situation
 VisupacImages_j2ks_with_xml_metadata = pd.concat([j2ks_with_xml_data, j2ks_without_xml_data], axis=0)
 VisupacImages_j2ks_with_xml_metadata.shape
+# duplicates_VisupacImages_j2ks_with_xml_metadata = VisupacImages_j2ks_with_xml_metadata[VisupacImages_j2ks_with_xml_metadata.duplicated(subset=['file_path_j2k'], keep=False)]
+# duplicates_VisupacImages_j2ks_with_xml_metadata.sort_values('file_path_j2k', inplace=True)
+VisupacImages_j2ks_with_xml_metadata[VisupacImages_j2ks_with_xml_metadata['basename'] == 'axis01_7925_408544_20210226095615583ddc3aefae830b501'].to_csv(os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/uveitis_check_for_chris', 'VisupacImages_j2ks_with_xml_metadata_axis01_7925_408544_20210226095615583ddc3aefae830b501.csv'), index=None)
+
+
 ### milestone variable to be merged with DICOM j2k scan situation
-# .to_csv(os.path.join(AXISPACS_DIR, '.csv'), index=None)
-
-# all_xmls[all_xmls['file_path'] == '/persist/PACS/VisupacImages/1000/489331/axis01_1000_489331_20220214140205254b0a97dbcee344da8.xml']
-# all_xmls[all_xmls['basename'] == 'axis01_10022_253232_20181115142249518f07f6c118beb52df_001']
-# all_xmls[all_xmls['file_path'].str.contains('_10022_253232_20181115142249518f07f6c118beb52')]
-# Example of performing a "like" string match on a column
-# Here, we filter rows where the 'basename' column contains the substring 'axis01'
-
-# like_match = all_xmls[all_xmls['basename'].str.contains('axis01', case=False, na=False)]
-# like_match.head()
 
 
 
 ## /persist/PACS/DICOM: dicoms with their likely j2k pairs
-### DATA EXPLORATION
-# j2ks_in_common = set(all_dicoms['basename']).intersection(set(DICOM_j2k_files['basename'])); len(j2ks_in_common) # 589,075 ! this is count of basenames not files!
-# j2ks_in_common = set(DICOM_dicoms['basename']).intersection(set(DICOM_j2k_files['basename'])); len(j2ks_in_common) # 589,075 ! this is count of basenames not files!
-# no_j2ks_in_common = set(DICOM_dicoms['basename']) - (set(DICOM_j2k_files['basename'])); len(no_j2ks_in_common) # 620,688 ! this is count of basenames not files!
-# no_j2ks_in_common = set(DICOM_j2k_files['basename']) - (set(DICOM_dicoms['basename'])); len(no_j2ks_in_common) # 0
-
-# pd.set_option('display.max_colwidth', None)  # Set column width to display full file paths
-# dicoms_j2ks_in_common_preview = DICOM_dicoms[DICOM_dicoms['basename'].isin(j2ks_in_common)]
-# dicoms_no_j2ks_in_common_preview = DICOM_dicoms[DICOM_dicoms['basename'].isin(no_j2ks_in_common)]
-# len(dicoms_j2ks_in_common_preview['file_path'].unique()) # 590,549; Sample of 10 were all pdfs leading me to believe all j2k overlap is for pdfs based DICOMs
-# len(dicoms_no_j2ks_in_common_preview['file_path'].unique()) # 624,262 ; I can open these and I see images. So I believe ~600,000 are fully contained dicoms
-
-# j2ks_dicoms_in_common_preview = DICOM_j2k_files[DICOM_j2k_files['basename'].isin(j2ks_in_common)] # 884,945; all j2ks in /persist/PACS/DICOM have a corresponding dicom
-# j2ks_no_dicoms_in_common_preview = DICOM_j2k_files[DICOM_j2k_files['basename'].isin(no_j2ks_in_common)] # 0
-# len(j2ks_dicoms_in_common_preview['j2k_path'].unique()) # 884,945
-# len(j2ks_no_dicoms_in_common_preview['j2k_path'].unique()) # 0
-
 
 ### get dicom metadata for j2k previews
-DICOM_j2ks_join = pd.merge(DICOM_dicoms,DICOM_j2k_files, on='basename', how='outer')
+DICOM_j2ks_join = pd.merge(DICOM_dicoms,DICOM_j2k_files, on=['folder', 'basename'], how='outer')
 DICOM_j2ks_join.rename(columns={'file_path_x':'file_path_dcm'}, inplace=True)
 DICOM_j2ks_join.rename(columns={'file_path_y':'file_path_j2k'}, inplace=True)
+DICOM_j2ks_join[DICOM_j2ks_join['basename'] == 'axis01_7925_408544_20210226095615583ddc3aefae830b501']
+duplicates_DICOM_j2ks_join = DICOM_j2ks_join[DICOM_j2ks_join.duplicated(subset=['file_path_dcm'], keep=False)]
+# duplicates_DICOM_j2ks_join.sort_values('file_path_dcm', inplace=True)
+duplicates_DICOM_j2ks_join = DICOM_j2ks_join[DICOM_j2ks_join.duplicated(subset=['file_path_j2k'], keep=False)]
+# duplicates_DICOM_j2ks_join.sort_values('file_path_j2k', inplace=True)
+duplicates_DICOM_j2ks_join.sort_values(['basename', 'file_path_j2k'], inplace=True)
+duplicates_DICOM_j2ks_join.sort_values(['basename', 'file_path_dcm'], inplace=True)
+duplicates_DICOM_j2ks_join[['file_path_dcm','file_path_j2k']].to_csv(os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/uveitis_check_for_chris', 'duplicates_DICOM_j2ks_join.csv'), index=None)
 
-DICOM_j2ks_join.shape # 1,513,931 ! over total for either so let's break it down
+# QA
+DICOM_j2ks_join[pd.isna(DICOM_j2ks_join['file_path_dcm'])]
+DICOM_j2ks_join[pd.isna(DICOM_j2ks_join['file_path_j2k'])]
 
-# DICOM_j2ks_join[pd.isna(DICOM_j2ks_join['j2k_path'])] # 624,262
-# DICOM_j2ks_join[pd.isna(DICOM_j2ks_join['file_path'])] # 0 - no instance of j2k unique to itself with no dicom pair
-# DICOM_j2ks_join[~pd.isna(DICOM_j2ks_join['file_path'])] # 1,513,931 - every dicom accounted for
-# DICOM_j2ks_join[~pd.isna(DICOM_j2ks_join['j2k_path'])] # 889,669
-# DICOM_j2ks_join.columns
-# !!!!!!!!!!!delete DICOM_j2ks_join.rename(columns={'file_path':'dcm_path'}, inplace=True)
-# specific_order = ['file_path_j2k', 'file_path_dcm', 'PatientID', 'StudyInstanceUID', 'SeriesInstanceUID', 
-#                   'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber', 'basename']
+# DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114'][['file_path', 'basename']]
+# DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117'][['file_path', 'basename']]
+# DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118'][['file_path', 'basename']]
+# DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119'][['file_path', 'basename']]
+# DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018'][['file_path', 'basename']]
+
+# DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114', na=False),['file_path_dcm', 'basename','file_path_j2k']]
+# DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117', na=False),['file_path_dcm', 'basename','file_path_j2k']]
+# DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118', na=False),['file_path_dcm', 'basename','file_path_j2k']]
+# DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119', na=False),['file_path_dcm', 'basename','file_path_j2k']]
+# DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/49557/458020/1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018', na=False),['file_path_dcm', 'basename','file_path_j2k']]
+
+
+# MANUAL OVERRIDES for missing metadata in DICOM_j2ks_join from DICOM_dicoms | The folder was different so the merge didn't pick it up
+dicom_metadata_header = ['PatientID', 'StudyInstanceUID', 'SeriesInstanceUID',
+'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber',
+'InstanceNumber', 'AcquisitionDateTime', 'SOPClassUID', 'ImageType',
+'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 'Manufacturer',
+'ManufacturerModelName', 'Laterality', 'BitsAllocated',
+'PhotometricInterpretation', 'PixelSpacing', 'StationName',
+'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness',
+'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared',
+'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR']
+
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114', na=False),dicom_metadata_header] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114'][dicom_metadata_header]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117', na=False),dicom_metadata_header] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117'][dicom_metadata_header]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118', na=False),dicom_metadata_header] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118'][dicom_metadata_header]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119', na=False),dicom_metadata_header] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119'][dicom_metadata_header]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/49557/458020/1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018', na=False),dicom_metadata_header] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018'][dicom_metadata_header]
+
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114', na=False),'file_path_dcm'] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207112950912.966169756395.1000114']['file_path'].iloc[0]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117', na=False),'file_path_dcm'] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113304967.966169756395.1000117']['file_path'].iloc[0]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118', na=False),'file_path_dcm'] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207113809470.966169756395.1000118']['file_path'].iloc[0]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/35223/390753/1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119', na=False),'file_path_dcm'] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.201207114459720.966169756395.1000119']['file_path'].iloc[0]
+DICOM_j2ks_join.loc[DICOM_j2ks_join['file_path_j2k'].str.contains('/persist/PACS/DICOM/49557/458020/1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018', na=False),'file_path_dcm'] = DICOM_dicoms[DICOM_dicoms['basename']=='1.2.276.0.75.2.1.11.1.3.210924133430647.966169756395.1000018']['file_path'].iloc[0]
+
+
+
+DICOM_j2ks_join.shape # 1,509,212 ! over total for either so let's break it down
+
 specific_order = ['file_path_j2k', 'file_path_dcm', 'PatientID', 'StudyInstanceUID', 'SeriesInstanceUID',
                   'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber', 
-                  'AcquisitionDateTime', 'SOPClassUID', 'SOPClassDescription', 'ImageType', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 
+                  'AcquisitionDateTime', 'SOPClassUID', 'ImageType', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 
                   'Manufacturer',  'ManufacturerModelName', 'Laterality', 'BitsAllocated', 'PhotometricInterpretation', 
                   'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness', 
                   'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
@@ -220,21 +219,25 @@ header_vis = ['file_path_j2k', 'mrn', 'basename', 'file_path_xml', 'FirstName', 
 ]
 
 # header_dicom = ['file_path_j2k', 'mrn', 'basename', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber']
-header_dicom = ['file_path_j2k', 'mrn', 'basename', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber',  'AcquisitionDateTime', 'SOPClassUID', 'SOPClassDescription', 'ImageType', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName',  'Manufacturer',  'ManufacturerModelName', 'Laterality', 'BitsAllocated', 'PhotometricInterpretation',  'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness',  'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR']
+# header_dicom = ['file_path_j2k', 'mrn', 'basename', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber',  'AcquisitionDateTime', 'SOPClassUID', 'SOPClassDescription', 'ImageType', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName',  'Manufacturer',  'ManufacturerModelName', 'Laterality', 'BitsAllocated', 'PhotometricInterpretation',  'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness',  'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR']
+header_dicom = ['file_path_j2k', 'mrn', 'basename', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber',  'AcquisitionDateTime', 'SOPClassUID', 'ImageType', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName',  'Manufacturer',  'ManufacturerModelName', 'Laterality', 'BitsAllocated', 'PhotometricInterpretation',  'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness',  'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR']
 
 ### superset for both table's columns
 all_j2ks = pd.concat([VisupacImages_j2ks_with_xml_metadata[header_vis], DICOM_j2ks_with_dicom_metadata[header_dicom]], ignore_index=True, sort=False)
+# duplicates_all_j2ks = all_j2ks[all_j2ks.duplicated(subset=['file_path_dcm'], keep=False)] # you get a lot of rows but it's because it is treating file_path_dcm NA's as duplicates
+# duplicates_all_j2ks[~pd.isna(duplicates_all_j2ks['file_path_dcm'])]
+# duplicates_all_j2ks[~pd.isna(duplicates_all_j2ks['file_path_dcm'])][['file_path_j2k','file_path_dcm']].to_csv(os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/uveitis_check_for_chris', 'duplicates_all_j2ks.csv'), index=None)
+# duplicates_all_j2ks = all_j2ks[all_j2ks.duplicated(subset=['file_path_j2k'], keep=False)] # 0, which is to be expected
+
 all_j2ks.rename(columns={'file_path_j2k':'file_path'}, inplace=True)
 # all_j2ks.shape # 15,297,231
 # all_j2ks.columns
-all_j2ks_header = ['file_path', 'file_path_xml', 'mrn', 'FirstName', 'LastName', 'DOB', 'Gender', 'ExamDate', 'Laterality', 'DeviceID', 'DataFile', 'ImageWidth', 'ImageNumber', 'ImageHeight', 'ImageGroup', 'ImageFile', 'AttendingPhysician', 'ReportType', 'Pathology', 'Procedure', 'Layer_Name', 'Start_X', 'Start_Y', 'End_X', 'End_Y', 'SizeX', 'SizeZ', 'ScanPattern', 'Scale_X', 'Scale_Y', 'Scale_Z', 'XSlo', 'YSlo', 'TimeStamp_TotalSeconds', 'ImageType', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber', 'AcquisitionDateTime', 'SOPClassUID', 'SOPClassDescription', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 'Manufacturer', 'ManufacturerModelName', 'BitsAllocated', 'PhotometricInterpretation', 'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness', 'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
-all_j2ks['StudyDate'] = pd.to_datetime(all_j2ks['StudyDate'].astype("Int64").astype(str), format="%Y%m%d", errors="coerce")
+# all_j2ks_header = ['file_path', 'file_path_xml', 'mrn', 'FirstName', 'LastName', 'DOB', 'Gender', 'ExamDate', 'Laterality', 'DeviceID', 'DataFile', 'ImageWidth', 'ImageNumber', 'ImageHeight', 'ImageGroup', 'ImageFile', 'AttendingPhysician', 'ReportType', 'Pathology', 'Procedure', 'Layer_Name', 'Start_X', 'Start_Y', 'End_X', 'End_Y', 'SizeX', 'SizeZ', 'ScanPattern', 'Scale_X', 'Scale_Y', 'Scale_Z', 'XSlo', 'YSlo', 'TimeStamp_TotalSeconds', 'ImageType', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber', 'AcquisitionDateTime', 'SOPClassUID', 'SOPClassDescription', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 'Manufacturer', 'ManufacturerModelName', 'BitsAllocated', 'PhotometricInterpretation', 'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness', 'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
+all_j2ks_header = ['file_path', 'file_path_xml', 'mrn', 'FirstName', 'LastName', 'DOB', 'Gender', 'ExamDate', 'Laterality', 'DeviceID', 'DataFile', 'ImageWidth', 'ImageNumber', 'ImageHeight', 'ImageGroup', 'ImageFile', 'AttendingPhysician', 'ReportType', 'Pathology', 'Procedure', 'Layer_Name', 'Start_X', 'Start_Y', 'End_X', 'End_Y', 'SizeX', 'SizeZ', 'ScanPattern', 'Scale_X', 'Scale_Y', 'Scale_Z', 'XSlo', 'YSlo', 'TimeStamp_TotalSeconds', 'ImageType', 'file_path_dcm', 'StudyInstanceUID', 'SeriesInstanceUID', 'SOPInstanceUID', 'Modality', 'StudyDate', 'SeriesNumber', 'InstanceNumber', 'AcquisitionDateTime', 'SOPClassUID', 'MIMETypeOfEncapsulatedDocument', 'InstitutionName', 'Manufacturer', 'ManufacturerModelName', 'BitsAllocated', 'PhotometricInterpretation', 'PixelSpacing', 'StationName', 'SeriesDescription', 'StudyTime', 'DocType', 'AverageRNFLThickness', 'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared', 'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
+# all_j2ks['StudyDate'] = pd.to_datetime(all_j2ks['StudyDate'].astype("Int64").astype(str), format="%Y%m%d", errors="coerce")
 
 
 # all_j2ks[all_j2ks_header].to_csv(os.path.join(AXISPACS_DIR, 'all_j2ks.csv'), index=None)
-
-
-
 
 
 # all_files
@@ -268,8 +271,10 @@ all_dicoms.columns
 #        'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared',
 #        'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
 all_files = pd.concat([all_j2ks, all_dicoms], ignore_index=True, sort=False)
+duplicates_all_files = all_files[all_files.duplicated(subset=['file_path'], keep=False)]
+duplicates_all_files
 
-all_files.shape # 16517395
+all_files.shape # 16579720
 all_files.columns
 all_files.head()
 all_files_header = ['file_path', 'file_path_xml', 'mrn', 'FirstName',

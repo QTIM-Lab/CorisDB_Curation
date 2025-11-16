@@ -61,3 +61,22 @@ python CorisDB_Curation/Schemes/parse_dicom_for_postgres_parallel.py \
     --out $OUT/parsed/forum_parse_dicom_for_postgres.csv # \
     # --range 100000
     # --series \
+```
+
+## Final Clean Up and Consolidation
+
+What we need:
+* raw files lists:
+  - forum_preview_dcm_files.csv
+* parsed:
+  - DICOMs:
+    * forum_parse_dicom_for_postgres.csv
+* curated tables:
+  - `all_dicoms` = *forum_parse_dicom_for_postgres.csv*
+
+
+Count of images by critical feature columns
+* `/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/FORUM/row_counts_by_column_types_for_dicom.py`
+
+After prioritizing images with higher occurence we manually opened and classified them to create a key. Using this key we create key map tables for the critical features.
+* `/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/FORUM/create_classification_categories.py`

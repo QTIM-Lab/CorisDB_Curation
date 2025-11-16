@@ -200,31 +200,31 @@ def create_image_presentation(csv_df, output_pptx):
                     image_stream_3.seek(0)  # Reset stream position to the beginning
                     slide.shapes.add_picture(image_stream_3, left_3, top_3, img_width, img_height)
             except:
-                pdb.set_trace()
+                # pdb.set_trace()
                 try:
                     if 'png_pages' in parsed_1:
-                        parsed_1['png_pages']['page_PIL']['page_1'].save(image_stream_1, format='PNG')  # Save the PIL image to a BytesIO stream
+                        parsed_1['png_pages']['page_1']['page_PIL'].save(image_stream_1, format='PNG')  # Save the PIL image to a BytesIO stream
                     else:
                         parsed_1['bscan_images']['bscan1'].save(image_stream_1, format='PNG')  # Save the PIL image to a BytesIO stream
                     image_stream_1.seek(0)  # Reset stream position to the beginning
                     slide.shapes.add_picture(image_stream_1, left_1, top_1, img_width, img_height)
-                    pdb.set_trace()
+                    # pdb.set_trace()
                     if two is not None:
                         if 'png_pages' in parsed_2:
-                            parsed_2['png_pages']['page_PIL']['page_1'].save(image_stream_2, format='PNG')  # Save the PIL image to a BytesIO stream
+                            parsed_2['png_pages']['page_1']['page_PIL'].save(image_stream_2, format='PNG')  # Save the PIL image to a BytesIO stream
                         else:
                             parsed_2['bscan_images']['bscan1'].save(image_stream_2, format='PNG')  # Save the PIL image to a BytesIO stream
                         image_stream_2.seek(0)  # Reset stream position to the beginning
                         slide.shapes.add_picture(image_stream_2, left_2, top_2, img_width, img_height)
-                    pdb.set_trace()
+                    # pdb.set_trace()
                     if three is not None:
                         if 'png_pages' in parsed_3:
-                            parsed_3['png_pages']['page_PIL']['page_1']['page_PIL'].save(image_stream_3, format='PNG')  # Save the PIL image to a BytesIO stream
+                            parsed_3['png_pages']['page_1']['page_PIL'].save(image_stream_3, format='PNG')  # Save the PIL image to a BytesIO stream
                         else:
                             parsed_3['bscan_images']['bscan1']['page_PIL'].save(image_stream_3, format='PNG')  # Save the PIL image to a BytesIO stream
                         image_stream_3.seek(0)  # Reset stream position to the beginning
                         slide.shapes.add_picture(image_stream_3, left_3, top_3, img_width, img_height)
-                    pdb.set_trace()
+                    # pdb.set_trace()
                 except:
                     # Format the error text
                     # --- Error box 1 ---
@@ -258,24 +258,26 @@ def create_image_presentation(csv_df, output_pptx):
                                 run.font.size = Pt(8)
         except Exception as e:
             pdb.set_trace()
-            print(f"Error adding {one['file_path']}: {e} or\n")
-            print(f"Error adding {two['file_path']}: {e} or\n")
-            print(f"Error adding {three['file_path']}: {e}")
             # Add error text instead
+            print(f"Error adding {one['file_path']}: {e} or\n")
             error_box_1 = slide.shapes.add_textbox(left_1, top_1, img_width, img_height)
             error_frame_1 = error_box_1.text_frame
             error_frame_1.text = f"Could not load image:\n{one['file_path']}"
             error_frame_1.paragraphs[0].alignment = PP_ALIGN.CENTER
             # Add error text instead
-            error_box_2 = slide.shapes.add_textbox(left_2, top_2, img_width, img_height)
-            error_frame_2 = error_box_2.text_frame
-            error_frame_2.text = f"Could not load image:\n{two['file_path']}"
-            error_frame_2.paragraphs[0].alignment = PP_ALIGN.CENTER
+            if two is not None:
+                print(f"Error adding {two['file_path']}: {e} or\n")
+                error_box_2 = slide.shapes.add_textbox(left_2, top_2, img_width, img_height)
+                error_frame_2 = error_box_2.text_frame
+                error_frame_2.text = f"Could not load image:\n{two['file_path']}"
+                error_frame_2.paragraphs[0].alignment = PP_ALIGN.CENTER
             # Add error text instead
-            error_box_3 = slide.shapes.add_textbox(left_3, top_3, img_width, img_height)
-            error_frame_3 = error_box_3.text_frame
-            error_frame_3.text = f"Could not load image:\n{three['file_path']}"
-            error_frame_3.paragraphs[0].alignment = PP_ALIGN.CENTER
+            if three is not None:
+                print(f"Error adding {three['file_path']}: {e}")
+                error_box_3 = slide.shapes.add_textbox(left_3, top_3, img_width, img_height)
+                error_frame_3 = error_box_3.text_frame
+                error_frame_3.text = f"Could not load image:\n{three['file_path']}"
+                error_frame_3.paragraphs[0].alignment = PP_ALIGN.CENTER
     # Save presentation
     prs.save(os.path.join(output_pptx))
     print(f"Presentation saved as {os.path.join(output_pptx)}")
@@ -284,7 +286,9 @@ def create_image_presentation(csv_df, output_pptx):
 
 # Usage example
 if __name__ == "__main__":
-    csv = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.csv"
-    output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.pptx"
+    # csv = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.csv"
+    # output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.pptx"
+    csv = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.csv"
+    output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.pptx"
     csv_df = pd.read_csv(csv)
     create_image_presentation(csv_df, output_pptx)

@@ -29,6 +29,8 @@ ipykernel = "^6.29.4"
 pymupdf = "^1.24.11"
 bpython = "^0.25"
 python-pptx = "^1.0.2"
+seaborn = "^0.13.2"
+scikit-learn = "^1.7.2"
 
 
 [build-system]

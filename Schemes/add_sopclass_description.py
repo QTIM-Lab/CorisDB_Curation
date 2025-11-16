@@ -101,9 +101,9 @@ axispacs_all_files_header = ['file_path', 'file_path_xml', 'mrn', 'FirstName', '
        'OpticCupVolume_mm_squared', 'OpticDiskArea_mm_squared',
        'RimArea_mm_squared', 'AvgCDR', 'VerticalCDR', 'basename']
 
-axispacs_all[axispacs_all_files_header].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_files_.csv", index=False)
-axispacs_j2ks[header_j2k].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_j2ks_.csv", index=False)
-axispacs_dicoms[header].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_dicoms_.csv", index=False)
+axispacs_all[axispacs_all_files_header].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_files_w_sop_desc.csv", index=False)
+axispacs_j2ks[header_j2k].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_j2ks_w_sop_desc.csv", index=False)
+axispacs_dicoms[header].to_csv("/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_dicoms_w_sop_desc.csv", index=False)
 forum_dicoms[header[:-1]].to_csv("/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed/forum_parse_dicom_for_postgres_.csv", index=False)
 forum_all_dicoms[header[:-1]].to_csv("/scratch90/QTIM/Active/23-0284/EHR/FORUM_ALL/parsed/forum_all_parse_dicom_for_postgres_.csv", index=False)
 imagepools_all_dicoms[header[:-1]].to_csv("/scratch90/QTIM/Active/23-0284/EHR/IMAGEPOOLS/parsed/imagepools_parse_dicom_for_postgres_.csv", index=False)

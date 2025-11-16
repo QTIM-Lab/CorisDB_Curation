@@ -41,7 +41,7 @@ CREATE TABLE axispacs.all_dicoms (
 -- psql -U coris_admin coris_db;
 
 /* Import */
-\copy axispacs.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_dicoms_classified.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy axispacs.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/all_dicom_classified.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
 
 /* Delete */

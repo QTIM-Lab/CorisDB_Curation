@@ -135,6 +135,12 @@ What we need:
 Use this script like a jupyter notebook (not to be run all at once but methodically line by line):
 `/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/AXISPACS/clean_up.py`
 
+## SOClassUID Description
+Add this as it is not in the dicoms themselves:
+`/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/add_sopclass_description.py`
+
+We need to do this for dicom files so that we aren't dealing with things like `1.2.840.10008.5.1.4.1.1.77.1.5.1` but rather `Ophthalmic Photography 8 Bit Image Storage`
+
 
 ## Image Classifications
 > `/scratch90/QTIM/Active/23-0284/EHR/AXISPACS`
@@ -151,7 +157,4 @@ Count of images by critical feature columns
 
 After prioritizing images with higher occurence we manually opened and classified them to create a key. Using this key we create key map tables for the critical features.
 * `/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/AXISPACS/axispacs/create_classification_categories.py`
-
-Map all images:
-* `/scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/AXISPACS/axispacs/classify_images.py`
 

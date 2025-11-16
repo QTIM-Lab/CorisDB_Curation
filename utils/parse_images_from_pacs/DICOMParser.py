@@ -1222,8 +1222,8 @@ class FORUMGlaucomaWorkplaceParser(DICOMParser):
             hvf_obj = Hvf_Object.get_hvf_object_from_dicom(hvf_dicom);
             metadata['HVF Object'] = hvf_obj.serialize_to_json()
 
-
         elif metadata['SOP Class'] == '1.2.840.10008.5.1.4.1.1.104.1':            
+            # pdb.set_trace()
             metadata['png_pages'] = self._parse_pdf_pages()
         
         # Series Description
@@ -2349,13 +2349,7 @@ class P200TxE(DICOMParser):
             except Exception as e:
                 print("pixel array issue")
                 print(repr(e))
-            arr = pixel_array.astype(np.float32)
-
-            arr[..., 0] = arr[..., 0] + 1.402 * (arr[..., 2] - 128)
-            arr[..., 1] = arr[..., 0] - 0.344136 * (arr[..., 1] - 128) - 0.714136 * (arr[..., 2] - 128)
-            arr[..., 2] = arr[..., 0] + 1.772 * (arr[..., 1] - 128)
-            arr = np.clip(arr, 0, 255).astype(np.uint8)
-            image = Image.fromarray(arr)
+            image = Image.fromarray(pixel_array)
             metadata['image_PIL'] = image
             # Bits Allocated
             metadata["Bits Allocated"] = self.ds.get("BitsAllocated", "Unknown")
@@ -2494,13 +2488,7 @@ class P200DTx(DICOMParser):
             except Exception as e:
                 print("pixel array issue")
                 print(repr(e))
-            arr = pixel_array.astype(np.float32)
-
-            arr[..., 0] = arr[..., 0] + 1.402 * (arr[..., 2] - 128)
-            arr[..., 1] = arr[..., 0] - 0.344136 * (arr[..., 1] - 128) - 0.714136 * (arr[..., 2] - 128)
-            arr[..., 2] = arr[..., 0] + 1.772 * (arr[..., 1] - 128)
-            arr = np.clip(arr, 0, 255).astype(np.uint8)
-            image = Image.fromarray(arr)
+            image = Image.fromarray(pixel_array)
             metadata['image_PIL'] = image
             # Bits Allocated
             metadata["Bits Allocated"] = self.ds.get("BitsAllocated", "Unknown")
@@ -2513,12 +2501,6 @@ class P200DTx(DICOMParser):
             except Exception as e:
                 print("pixel array issue")
                 print(repr(e))
-            # arr = pixel_array.astype(np.float32)
-            # arr[..., 0] = arr[..., 0] + 1.402 * (arr[..., 2] - 128)
-            # arr[..., 1] = arr[..., 0] - 0.344136 * (arr[..., 1] - 128) - 0.714136 * (arr[..., 2] - 128)
-            # arr[..., 2] = arr[..., 0] + 1.772 * (arr[..., 1] - 128)
-            # arr = np.clip(arr, 0, 255).astype(np.uint8)
-            # image = Image.fromarray(arr)
             image = Image.fromarray(pixel_array)
             metadata['image_PIL'] = image
             # Bits Allocated
@@ -2835,9 +2817,9 @@ class NIL_Screenshot(DICOMParser):
     """Parser for {
         'manufacturer': 'NIL Screenshot',
         'manufacturermodelname': '',
-        'modality': 'MR',
+        'modality': 'OT',
 
-        'sopclassuiddescription': 'MR Image Storage', 
+        'sopclassuiddescription': 'Secondary Capture Image Storage', 
                                   
         }
     """
@@ -2845,7 +2827,7 @@ class NIL_Screenshot(DICOMParser):
     def parse(self):
         metadata = self.extract_common_metadata()
         if metadata['SOP Class'] == '1.2.840.10008.5.1.4.1.1.7':
-            # 'MR Image Storage'
+            # 'Secondary Capture Image Storage'
             try:
                 pixel_array = self.ds.pixel_array
             except Exception as e:
@@ -2865,7 +2847,7 @@ class NIL_Screenshot(DICOMParser):
             self._write_detailed_dicom_header_to_file(output_path)
         metadata = self.parse()
         if metadata['SOP Class'] == '1.2.840.10008.5.1.4.1.1.7':
-            # 'MR Image Storage'
+            # 'Secondary Capture Image Storage'
             sop_path = os.path.join(output_path, f"{metadata['SOP Instance']}")
             metadata['image_PIL'].save(os.path.join(output_path, sop_path+".png")) # To save the image to a file (e.g., PNG format)
 
