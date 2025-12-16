@@ -39,7 +39,7 @@ To take a quick anonymous survey, run:
 ```
 
 ```bash
-gcloud auth login benjamin.bearce@hdcuser.org # worked 09/25/2024
+gcloud auth login benjamin.bearce@hdcuser.org # worked 12/16/2025
 ```
 Ex:
 ```bash
@@ -92,6 +92,9 @@ table = Table(table_name="C3304_T11_Notes", gbq_table_name="C3304_T11_Notes_2025
 table = Table(table_name="C3304_T18_OphthamologyExams", gbq_table_name="C3304_T18_OphthamologyExams_20250923", tmp_working_area=tmp_working_area)
 table = Table(table_name="C3304_T22_CU_MedBillingCode", gbq_table_name="C3304_T22_CUMedBillingCode_20250923", tmp_working_area=tmp_working_area)
 table = Table(table_name="C3304_T20_BillingCode", gbq_table_name="C3304_T20_BillingCode_20250925", tmp_working_area=tmp_working_area)
+# Deleted first 3 rows which were corrupted. ID field was text.
+table = Table(table_name="C3304_T24_SmartphraseTemplates", gbq_table_name="C3304_T24_SmartphraseTemplates", tmp_working_area=tmp_working_area)
+
 
 # work with table here
 table.get_table() # Will be in tmp_working_dir
