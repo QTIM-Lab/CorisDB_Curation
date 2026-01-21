@@ -65,6 +65,7 @@ forum_dicoms = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/
 def match_or_na(col, val):
     return (pd.isna(val) & pd.isna(col)) | (col.eq(val))
 
+
 def expand_rows(row, n=3):
     filtered_df = forum_all[
         forum_all['file_path'].str.contains('.dcm', na=False) &
@@ -79,15 +80,63 @@ def expand_rows(row, n=3):
     filtered_df = filtered_df.sample(n=n, random_state=42)
     return filtered_df
 
-do_these = forum_dicoms[(forum_dicoms['count'] >= 71685)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 28850) & (forum_dicoms['count'] < 71685)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 9866) & (forum_dicoms['count'] < 28850)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 1807) & (forum_dicoms['count'] < 9866)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 94) & (forum_dicoms['count'] < 1807)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 25) & (forum_dicoms['count'] < 94)]
-do_these = forum_dicoms[(forum_dicoms['count'] >= 3) & (forum_dicoms['count'] < 25)]
-do_these = forum_dicoms[(forum_dicoms['count'] == 2)]
-do_these = forum_dicoms[(forum_dicoms['count'] == 1)]
+
+
+
+do_these = forum_dicoms[
+             (forum_dicoms['count'] == 71685) | # 1
+             (forum_dicoms['count'] == 71676) |  # 2
+             (forum_dicoms['count'] == 25705) | # 3
+             (forum_dicoms['count'] == 25120) | # 4
+             ((forum_dicoms['count'] == 18832) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 128')) | # 5
+             ((forum_dicoms['count'] == 18832) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 6
+             ((forum_dicoms['count'] == 16004) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 21')) | # 7
+             ((forum_dicoms['count'] == 16004) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 8
+             ((forum_dicoms['count'] == 9560) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 5')) | # 9
+             ((forum_dicoms['count'] == 9560) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 10
+             ((forum_dicoms['count'] == 3698) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 5')) | # 11
+             ((forum_dicoms['count'] == 3698) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 12
+             (forum_dicoms['count'] == 3377) | # 13
+             (forum_dicoms['count'] == 3376) | # 14
+             ((forum_dicoms['count'] == 2962) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 5')) | # 15
+             ((forum_dicoms['count'] == 2962) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 16
+             ((forum_dicoms['count'] == 391) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 17
+             ((forum_dicoms['count'] == 390) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 128')) | # 18
+             ((forum_dicoms['count'] == 337) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 19
+             ((forum_dicoms['count'] == 337) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 5')) | # 20
+             ((forum_dicoms['count'] == 118) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol 21')) | # 21
+             ((forum_dicoms['count'] == 118) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 22
+             ((forum_dicoms['count'] == 47) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol')) | # 23
+             ((forum_dicoms['count'] == 47) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 24
+             ((forum_dicoms['count'] == 34) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 25
+             ((forum_dicoms['count'] == 34) & (forum_dicoms['QTIM_Modality'] == 'OCT')) | # 26
+             ((forum_dicoms['count'] == 29) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Single')) | # 27 
+             ((forum_dicoms['count'] == 29) & (forum_dicoms['QTIM_Modality'] == 'OCT IR En Face')) | # 28
+             ((forum_dicoms['count'] == 24) & (forum_dicoms['QTIM_Modality'] == 'IR En Face')) | # 29
+             ((forum_dicoms['count'] == 24) & (forum_dicoms['QTIM_Modality'] == 'OCT')) | # 30
+             ((forum_dicoms['count'] == 12) & (forum_dicoms['QTIM_Modality'] == 'OCT Vol')) | # 31
+             ((forum_dicoms['count'] == 12) & (forum_dicoms['QTIM_Modality'] == 'En Face')) | # 32
+             ((forum_dicoms['count'] == 9) & (forum_dicoms['QTIM_Modality'] == 'OCT Bscan Vol')) | # 33
+             ((forum_dicoms['count'] == 9) & (forum_dicoms['QTIM_Modality'] == 'En Face')) | # 34
+             ((forum_dicoms['count'] == 7) & (forum_dicoms['QTIM_Modality'] == 'En Face')) | # 
+             ((forum_dicoms['count'] == 7) & (forum_dicoms['QTIM_Modality'] == 'OCT')) | # 
+             ((forum_dicoms['count'] == 3) & (forum_dicoms['QTIM_Modality'] == 'OCT')) | # 
+             ((forum_dicoms['count'] == 3) & (forum_dicoms['QTIM_Modality'] == 'En Face')) # 38
+            #  ((forum_dicoms['count'] == 1) & (forum_dicoms['QTIM_Modality'] == 'En Face')) | # 
+            #  ((forum_dicoms['count'] == 1) & (forum_dicoms['QTIM_Modality'] == 'OCT')) # 40
+] # [['Misc', 'count']]
+do_these.shape
+
+
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 71685)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 28850) & (forum_dicoms['count'] < 71685)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 9866) & (forum_dicoms['count'] < 28850)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 1807) & (forum_dicoms['count'] < 9866)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 94) & (forum_dicoms['count'] < 1807)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 25) & (forum_dicoms['count'] < 94)]
+# do_these = forum_dicoms[(forum_dicoms['count'] >= 3) & (forum_dicoms['count'] < 25)]
+# do_these = forum_dicoms[(forum_dicoms['count'] == 2)]
+# do_these = forum_dicoms[(forum_dicoms['count'] == 1)]
 
 
 # Apply the function and concatenate the results

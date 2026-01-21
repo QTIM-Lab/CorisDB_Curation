@@ -5,7 +5,7 @@
 pyenv deactivate
 pyenv activate corisdb_curation
 # poetry install
-cd utils/convert_images_from_pacs
+cd utils/parse_images_from_pacs
 git clone https://github.com/msaifee786/hvf_extraction_script.git
 pip install hvf_extraction_script
 
@@ -42,7 +42,9 @@ for IN in all_files_preview['file_path']:
 import os, pandas as pd, pdb                                                                                                                                                  
 from DICOMParser import DICOMParser                                                                                                                                                                                                                                                                                                                     
 
-base_path = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.csv"                                                                                       
+# base_path = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.csv"                                                                                       
+
+base_path = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.csv"                                                                                       
                                                                                                                                                                                 
 df = pd.read_csv(os.path.join(base_path))                                                                                                                                     
 df.columns    

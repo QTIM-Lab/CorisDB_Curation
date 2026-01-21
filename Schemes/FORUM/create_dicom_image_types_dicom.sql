@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS forum.dicom_image_types;
+DROP TABLE IF EXISTS forum.dicom_image_types CASCADE;
 CREATE TABLE forum.dicom_image_types (
     QTIM_Modality varchar(100),
     SOPClassDescription varchar(200),
