@@ -75,6 +75,31 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON SEQUENCES TO coris_admin;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT ALL ON FUNCTIONS TO coris_admin;
 ```
 
+Schema axispacs:
+```sql
+-- Do as coris_admin
+psql -U coris_admin coris_db
+```
+
+```sql
+-- DROP SCHEMA IF EXISTS axispacs CASCADE;
+CREATE SCHEMA IF NOT EXISTS axispacs AUTHORIZATION coris_admin;
+ALTER SCHEMA axispacs OWNER TO coris_admin;
+-- current
+GRANT USAGE ON SCHEMA axispacs TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA axispacs TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA axispacs TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA axispacs TO coris_admin;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT ALL ON TABLES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT ALL ON SEQUENCES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT ALL ON FUNCTIONS TO coris_admin;
+
+-- (Subtle but apparently key) Ensure future tables created by coris_admin grant SELECT to coris_user
+ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA axispacs 
+GRANT SELECT ON TABLES TO coris_user;
+```
+
 Schema coris_registry:
 ```sql
 -- Do as coris_admin
@@ -124,6 +149,109 @@ ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA axispacs_snowflake
 GRANT SELECT ON TABLES TO coris_user;
 ```
 
+Schema forum:
+```sql
+-- Do as coris_admin
+psql -U coris_admin coris_db
+```
+
+```sql
+-- DROP SCHEMA IF EXISTS forum CASCADE;
+CREATE SCHEMA IF NOT EXISTS forum AUTHORIZATION coris_admin;
+ALTER SCHEMA forum OWNER TO coris_admin;
+-- current
+GRANT USAGE ON SCHEMA forum TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA forum TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA forum TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA forum TO coris_admin;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT ALL ON TABLES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT ALL ON SEQUENCES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT ALL ON FUNCTIONS TO coris_admin;
+
+-- (Subtle but apparently key) Ensure future tables created by coris_admin grant SELECT to coris_user
+ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA forum 
+GRANT SELECT ON TABLES TO coris_user;
+```
+
+Schema forum_all:
+```sql
+-- Do as coris_admin
+psql -U coris_admin coris_db
+```
+
+```sql
+-- DROP SCHEMA IF EXISTS forum_all CASCADE;
+CREATE SCHEMA IF NOT EXISTS forum_all AUTHORIZATION coris_admin;
+ALTER SCHEMA forum_all OWNER TO coris_admin;
+-- current
+GRANT USAGE ON SCHEMA forum_all TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA forum_all TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA forum_all TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA forum_all TO coris_admin;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT ALL ON TABLES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT ALL ON SEQUENCES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT ALL ON FUNCTIONS TO coris_admin;
+
+-- (Subtle but apparently key) Ensure future tables created by coris_admin grant SELECT to coris_user
+ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA forum_all 
+GRANT SELECT ON TABLES TO coris_user;
+```
+
+
+Schema imagepools:
+```sql
+-- Do as coris_admin
+psql -U coris_admin coris_db
+```
+
+```sql
+-- DROP SCHEMA IF EXISTS imagepools CASCADE;
+CREATE SCHEMA IF NOT EXISTS imagepools AUTHORIZATION coris_admin;
+ALTER SCHEMA imagepools OWNER TO coris_admin;
+-- current
+GRANT USAGE ON SCHEMA imagepools TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA imagepools TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA imagepools TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA imagepools TO coris_admin;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT ALL ON TABLES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT ALL ON SEQUENCES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT ALL ON FUNCTIONS TO coris_admin;
+
+-- (Subtle but apparently key) Ensure future tables created by coris_admin grant SELECT to coris_user
+ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA imagepools 
+GRANT SELECT ON TABLES TO coris_user;
+```
+
+
+Schema topcon_oculomics:
+```sql
+-- Do as coris_admin
+psql -U coris_admin coris_db
+```
+
+```sql
+-- DROP SCHEMA IF EXISTS topcon_oculomics CASCADE;
+CREATE SCHEMA IF NOT EXISTS topcon_oculomics AUTHORIZATION coris_admin;
+ALTER SCHEMA topcon_oculomics OWNER TO coris_admin;
+-- current
+GRANT USAGE ON SCHEMA topcon_oculomics TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA topcon_oculomics TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA topcon_oculomics TO coris_admin;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA topcon_oculomics TO coris_admin;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT ALL ON TABLES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT ALL ON SEQUENCES TO coris_admin;
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT ALL ON FUNCTIONS TO coris_admin;
+
+-- (Subtle but apparently key) Ensure future tables created by coris_admin grant SELECT to coris_user
+ALTER DEFAULT PRIVILEGES FOR USER coris_admin IN SCHEMA topcon_oculomics 
+GRANT SELECT ON TABLES TO coris_user;
+```
+
+
 #### Regular User Settings
 Schema public:
 ```sql
@@ -134,6 +262,19 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO coris_use
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO coris_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT EXECUTE ON FUNCTIONS TO coris_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
+```
+
+Schema axispacs:
+```sql
+-- current
+GRANT USAGE ON SCHEMA axispacs TO coris_user;
+REVOKE CREATE ON SCHEMA axispacs FROM coris_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA axispacs TO coris_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA axispacs TO coris_user;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT SELECT ON TABLES TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT EXECUTE ON FUNCTIONS TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
 ```
 
 Schema coris_registry:
@@ -160,6 +301,57 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs_snowflake GRANT SELECT ON TABLES TO 
 ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs_snowflake GRANT EXECUTE ON FUNCTIONS TO coris_user;
 ALTER DEFAULT PRIVILEGES IN SCHEMA axispacs_snowflake GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
 ```
+
+Schema forum:
+```sql
+-- current
+GRANT USAGE ON SCHEMA forum TO coris_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA forum TO coris_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA forum TO coris_user;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT SELECT ON TABLES TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT EXECUTE ON FUNCTIONS TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
+```
+
+
+Schema forum_all:
+```sql
+-- current
+GRANT USAGE ON SCHEMA forum_all TO coris_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA forum_all TO coris_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA forum_all TO coris_user;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT SELECT ON TABLES TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT EXECUTE ON FUNCTIONS TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA forum_all GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
+```
+
+Schema imagepools:
+```sql
+-- current
+GRANT USAGE ON SCHEMA imagepools TO coris_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA imagepools TO coris_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA imagepools TO coris_user;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT SELECT ON TABLES TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT EXECUTE ON FUNCTIONS TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA imagepools GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
+```
+
+Schema topcon_oculomics:
+```sql
+-- current
+GRANT USAGE ON SCHEMA topcon_oculomics TO coris_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA topcon_oculomics TO coris_user;
+GRANT SELECT ON ALL SEQUENCES IN SCHEMA topcon_oculomics TO coris_user;
+-- future
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT SELECT ON TABLES TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT EXECUTE ON FUNCTIONS TO coris_user;
+ALTER DEFAULT PRIVILEGES IN SCHEMA topcon_oculomics GRANT USAGE, SELECT ON SEQUENCES TO coris_user;
+```
+
+
 
 Delete user:
 ```sql
