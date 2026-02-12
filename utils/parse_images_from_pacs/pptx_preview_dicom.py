@@ -288,7 +288,9 @@ def create_image_presentation(csv_df, output_pptx):
 if __name__ == "__main__":
     # csv = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.csv"
     # output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/col_counts/dicoms_preview.pptx"
-    csv = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.csv"
-    output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.pptx"
+    # csv = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.csv"
+    # output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/FORUM/col_counts/dicoms_preview.pptx"
+    csv = "/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/col_counts/dicoms_preview.csv"
+    output_pptx = "/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/col_counts/dicoms_preview.pptx"
     csv_df = pd.read_csv(csv)
     create_image_presentation(csv_df, output_pptx)

@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from typing import Iterable
 
-FORUM_DIR='/scratch90/QTIM/Active/23-0284/EHR/FORUM/'
+TOPCON_OCULOMICS_DIR='/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/'
 
 # Columns used to define the combination
 
@@ -31,7 +31,7 @@ def make_key_df(df: pd.DataFrame, cols: Iterable[str]) -> pd.Series:
 
 
 # --- 1) Build the mapping dict from your labeled CSV ---
-labels_dicom = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/FORUM/forum_image_types_dicom_manually_curated.csv")  # your table
+labels_dicom = pd.read_csv("/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/col_counts/topcon_image_types_dicom_manually_curated.csv")  # your table
 labels_dicom["key"] = make_key_df(labels_dicom, KEY_COLS_DICOMS)
 
 
@@ -71,10 +71,10 @@ def classify_dataframe(df_new: pd.DataFrame, KEY_COLS: Iterable[str], lookup: di
 
 
 #
-all_dicoms = pd.read_csv(os.path.join(FORUM_DIR, 'parsed', 'forum_parse_dicom_for_postgres.csv')) # , nrows=1000)
+all_dicoms = pd.read_csv(os.path.join(TOPCON_OCULOMICS_DIR, 'parsed', 'topcon_oculomics_parse_dicom_for_postgres.csv')) # , nrows=1000)
 
 all_dicom_classified = classify_dataframe(all_dicoms, KEY_COLS_DICOMS, lookup_dicom)
-all_dicom_classified.to_csv(os.path.join(FORUM_DIR, 'parsed', 'forum_parse_dicom_for_postgres_classified.csv'), index=False)
+all_dicom_classified.to_csv(os.path.join(TOPCON_OCULOMICS_DIR, 'parsed', 'topcon_oculomics_parse_dicom_for_postgres_classified.csv'), index=False)
 
 del(all_dicoms) # free memory
 del(all_dicom_classified) # free memory

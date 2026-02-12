@@ -1,3 +1,4 @@
+import json
 import argparse
 import os, sys, pdb
 import pandas as pd
@@ -86,6 +87,32 @@ def parse_dicom_for_postgres(dicom_path):
         # ds.get((0x0409, 0x10E7), 'NULL').value if ds.get((0x0409, 0x10E7), 'NULL') != 'NULL' else 'NULL' # RimArea_mm_squared
         # ds.get((0x0409, 0x10E8), 'NULL').value if ds.get((0x0409, 0x10E8), 'NULL') != 'NULL' else 'NULL' # AvgCDR
         # ds.get((0x0409, 0x10E9), 'NULL').value if ds.get((0x0409, 0x10E9), 'NULL') != 'NULL' else 'NULL' # VerticalCDR
+
+        SOP_CLASS_DESCRIPTION = OPHTHALMOLOGY_SOP_CLASSES[getattr(ds, 'SOPClassUID', 'NULL')]
+        json_PerFrameFunctionalGroupsSequence = 'NULL'
+        PixelSpacing = getattr(ds, 'PixelSpacing', 'NULL')
+        # pdb.set_trace()
+        if getattr(ds, 'Modality', 'NULL') == 'OPT' and  \
+            SOP_CLASS_DESCRIPTION != 'Multi-frame True Color Secondary Capture Image Storage' and \
+            getattr(ds, 'PerFrameFunctionalGroupsSequence', 'NULL') != 'NULL':
+            # Begin Block
+            if PixelSpacing == 'NULL':
+                PixelSpacing = getattr(ds, 'SharedFunctionalGroupsSequence', 'NULL')[0]['PixelMeasuresSequence'][0]['PixelSpacing'].value
+            
+            ReferencedSOPInstanceUID = getattr(ds, 'SharedFunctionalGroupsSequence', 'NULL')[0]['ReferencedImageSequence'][0]['ReferencedSOPInstanceUID'].value
+            dict_PerFrameFunctionalGroupsSequence = {"ReferencedSOPInstanceUID": ReferencedSOPInstanceUID, "ReferenceCoordinates": {}}
+            PerFrameFunctionalGroupsSequence = getattr(ds, 'PerFrameFunctionalGroupsSequence', 'NULL')
+            # pdb.set_trace()
+            for frame in PerFrameFunctionalGroupsSequence:
+                # frame = PerFrameFunctionalGroupsSequence[0]
+                InStackPositionNumber = frame['FrameContentSequence'][0]['InStackPositionNumber'].value
+                # ReferencedSOPInstanceUID = str(frame['OphthalmicFrameLocationSequence'][0]['ReferencedSOPInstanceUID'].value)
+                ReferenceCoordinates = frame['OphthalmicFrameLocationSequence'][0]['ReferenceCoordinates'].value
+                # pdb.set_trace()
+                dict_PerFrameFunctionalGroupsSequence["ReferenceCoordinates"][InStackPositionNumber] = ReferenceCoordinates
+            json_PerFrameFunctionalGroupsSequence = json.dumps(dict_PerFrameFunctionalGroupsSequence)
+
+
         metadata = {
             'file_path': dicom_path,
             'mrn': getattr(ds, 'PatientID', 'NULL'),
@@ -105,9 +132,10 @@ def parse_dicom_for_postgres(dicom_path):
             'Manufacturer': getattr(ds, 'Manufacturer', 'NULL'),
             'ManufacturerModelName': getattr(ds, 'ManufacturerModelName', 'NULL'),
             'Laterality': getattr(ds, 'Laterality', 'NULL'),
+            'PerFrameFunctionalGroupsSequence': json_PerFrameFunctionalGroupsSequence, # JSON
             'BitsAllocated': getattr(ds, 'BitsAllocated', 'NULL'),
             'PhotometricInterpretation': getattr(ds, 'PhotometricInterpretation', 'NULL'),
-            'PixelSpacing': getattr(ds, 'PixelSpacing', 'NULL'),
+            'PixelSpacing': PixelSpacing,
             'StationName': getattr(ds, 'StationName', 'NULL'),
             'SeriesDescription': getattr(ds, 'SeriesDescription', 'NULL'),
             'StudyTime': getattr(ds, 'StudyTime', 'NULL'),
@@ -127,8 +155,12 @@ def parse_dicom_for_postgres(dicom_path):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='List root directories and process DCMs in parallel.')
     # Optional arguments
-    parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/raw_files_lists/DICOM_dcm_files.csv")
-    parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS', 'parse_dicom_for_postgres.csv'))
+    # parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/raw_files_lists/DICOM_dcm_files.csv")
+    # parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS', 'parse_dicom_for_postgres.csv'))
+    parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/FORUM/raw_files_lists/forum_preview_dcm_files.csv")
+    parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed', 'forum_parse_dicom_for_postgres.csv'))
+    # parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/FORUM/raw_files_lists/cirrus_forum_preview_dcm_files.csv")
+    # parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/FORUM', 'cirrus_parse_dicom_for_postgres.csv'))
     parser.add_argument('-s', '--series', action='store_true', help="Don't process in parallel (default true)")
     parser.add_argument('--range', help="Number of XML files to parse", type=int, default=-1)
 
@@ -146,7 +178,9 @@ if __name__ == "__main__":
 
     # Set nrows to None to read the entire file
     nrows = args.range if args.range > 0 else None
-    dcms = pd.read_csv(args.dicom_in, nrows=nrows)
+    dcms = pd.read_csv(args.dicom_in, nrows=nrows) # .iloc[:2]
+    # dcms
+    # pdb.set_trace()
     # Standard For Loop
     if args.series:
         # Parse dcms #

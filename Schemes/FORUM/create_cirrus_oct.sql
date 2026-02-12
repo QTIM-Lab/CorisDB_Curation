@@ -1,3 +1,4 @@
+DROP VIEW IF EXISTS forum.cirrus_oct;
 CREATE OR REPLACE VIEW forum.cirrus_oct AS
     -- SELECT *
     -- SELECT count(*)
@@ -21,6 +22,7 @@ CREATE OR REPLACE VIEW forum.cirrus_oct AS
     a.manufacturer,
     a.manufacturermodelname,
     a.laterality,
+    a.perframefunctionalgroupssequence,
     a.bitsallocated,
     a.photometricinterpretation,
     a.pixelspacing,
@@ -34,6 +36,7 @@ CREATE OR REPLACE VIEW forum.cirrus_oct AS
     a.rimarea_mm_squared,
     a.avgcdr,
     a.verticalcd
+    -- FROM forum.all_dicoms as a inner join forum.dicom_image_types as t on
     FROM forum.all_dicoms as a inner join forum.dicom_image_types as t on
     a.sopdescription = t.sopclassdescription AND 
     a.modality = t.modality AND 
@@ -87,3 +90,10 @@ CREATE OR REPLACE VIEW forum.cirrus_oct AS
 -- where qtim_modality like 'OCT%' and qtim_modality not like 'OCT Bscan Vol 128'
 -- order by qtim_modality
 -- limit 1000;
+
+-- select * from forum.cirrus_oct
+-- where file_path like '%1.2.276.0.75.2.2.42.50122019542.20210715081507559.2676572530.2.dcm%'
+-- limit 1000;
+
+
+-- select file_path from forum.cirrus_oct;

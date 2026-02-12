@@ -19,6 +19,7 @@ CREATE TABLE topcon_oculomics.all_dicoms (
     Manufacturer varchar(50),
     ManufacturerModelName varchar(50),
     Laterality varchar(50),
+    PerFrameFunctionalGroupsSequence JSONB,
     BitsAllocated varchar(50),
     PhotometricInterpretation varchar(50),
     PixelSpacing varchar(50),
@@ -31,15 +32,19 @@ CREATE TABLE topcon_oculomics.all_dicoms (
     OpticDiskArea_mm_squared NUMERIC,
     RimArea_mm_squared NUMERIC,
     AvgCDR NUMERIC,
-    VerticalCD NUMERIC
+    VerticalCD NUMERIC, --,
+    -- basename TEXT, -- do we need anymore (was more useful in AXISPACS to join j2ks\xmls\dicoms together by file basename)
+    
+    --# after classification #--
+    QTIM_Modality_pred VARCHAR(50),
+    is_unknown_combo BOOLEAN DEFAULT FALSE
 );
-
 
 /* Login */
 -- psql -U coris_admin coris_db;
 
 /* Import */
-\copy topcon_oculomics.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/parsed/topcon_oculomics_parse_dicom_for_postgres.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy topcon_oculomics.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/parsed/topcon_oculomics_parse_dicom_for_postgres_classified.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
 
 /* Delete */

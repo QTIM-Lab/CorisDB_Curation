@@ -19,6 +19,7 @@ CREATE TABLE forum.all_dicoms (
     Manufacturer varchar(50),
     ManufacturerModelName varchar(50),
     Laterality varchar(50),
+    PerFrameFunctionalGroupsSequence JSONB,
     BitsAllocated varchar(50),
     PhotometricInterpretation varchar(50),
     PixelSpacing varchar(50),
@@ -31,9 +32,10 @@ CREATE TABLE forum.all_dicoms (
     OpticDiskArea_mm_squared NUMERIC,
     RimArea_mm_squared NUMERIC,
     AvgCDR NUMERIC,
-    VerticalCD NUMERIC,
-    basename TEXT,
-    -- after classification
+    VerticalCD NUMERIC, --,
+    -- basename TEXT, -- do we need anymore (was more useful in AXISPACS to join j2ks\xmls\dicoms together by file basename)
+    
+    --# after classification #--
     QTIM_Modality_pred VARCHAR(50),
     is_unknown_combo BOOLEAN DEFAULT FALSE
 );
@@ -43,7 +45,7 @@ CREATE TABLE forum.all_dicoms (
 -- psql -U coris_admin coris_db;
 
 /* Import */
-\copy forum.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed/forum_parse_dicom_for_postgres_.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
+\copy forum.all_dicoms FROM '/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed/forum_parse_dicom_for_postgres_classified.csv' DELIMITERS ',' CSV QUOTE '"' HEADER;
 
 
 /* Delete */
@@ -53,5 +55,5 @@ delete from forum.all_dicoms;
 select count(*) from  forum.all_dicoms; -- 
 
 /* Explore */
-select * from forum.all_dicoms
-limit 10;
+-- select * from forum.all_dicoms
+-- limit 10;
