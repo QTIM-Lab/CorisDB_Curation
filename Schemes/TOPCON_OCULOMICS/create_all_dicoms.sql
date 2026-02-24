@@ -15,6 +15,7 @@ CREATE TABLE topcon_oculomics.all_dicoms (
     SOPDescription varchar(100),
     ImageType varchar(100),
     MIMETypeOfEncapsulateDocument varchar(50),
+    DocumentTitle varchar(50),
     InstitutionName varchar(50),
     Manufacturer varchar(50),
     ManufacturerModelName varchar(50),
