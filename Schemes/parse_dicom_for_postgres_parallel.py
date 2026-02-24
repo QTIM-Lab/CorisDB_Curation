@@ -91,7 +91,6 @@ def parse_dicom_for_postgres(dicom_path):
         SOP_CLASS_DESCRIPTION = OPHTHALMOLOGY_SOP_CLASSES[getattr(ds, 'SOPClassUID', 'NULL')]
         json_PerFrameFunctionalGroupsSequence = 'NULL'
         PixelSpacing = getattr(ds, 'PixelSpacing', 'NULL')
-        # pdb.set_trace()
         if getattr(ds, 'Modality', 'NULL') == 'OPT' and  \
             SOP_CLASS_DESCRIPTION != 'Multi-frame True Color Secondary Capture Image Storage' and \
             getattr(ds, 'PerFrameFunctionalGroupsSequence', 'NULL') != 'NULL':
@@ -112,7 +111,7 @@ def parse_dicom_for_postgres(dicom_path):
                 dict_PerFrameFunctionalGroupsSequence["ReferenceCoordinates"][InStackPositionNumber] = ReferenceCoordinates
             json_PerFrameFunctionalGroupsSequence = json.dumps(dict_PerFrameFunctionalGroupsSequence)
 
-
+        # pdb.set_trace()
         metadata = {
             'file_path': dicom_path,
             'mrn': getattr(ds, 'PatientID', 'NULL'),
@@ -128,6 +127,7 @@ def parse_dicom_for_postgres(dicom_path):
             'SOPClassDescription':OPHTHALMOLOGY_SOP_CLASSES[getattr(ds, 'SOPClassUID', 'NULL')],
             'ImageType': getattr(ds, 'ImageType', 'NULL'),
             'MIMETypeOfEncapsulatedDocument': getattr(ds, 'MIMETypeOfEncapsulatedDocument', 'NULL'),
+            'DocumentTitle': getattr(ds, 'DocumentTitle', 'NULL'),
             'InstitutionName': getattr(ds, 'InstitutionName', 'NULL'),
             'Manufacturer': getattr(ds, 'Manufacturer', 'NULL'),
             'ManufacturerModelName': getattr(ds, 'ManufacturerModelName', 'NULL'),
@@ -157,10 +157,12 @@ if __name__ == "__main__":
     # Optional arguments
     # parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/AXISPACS/raw_files_lists/DICOM_dcm_files.csv")
     # parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/AXISPACS', 'parse_dicom_for_postgres.csv'))
-    parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/FORUM/raw_files_lists/forum_preview_dcm_files.csv")
-    parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed', 'forum_parse_dicom_for_postgres.csv'))
+    # parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/FORUM/raw_files_lists/forum_preview_dcm_files.csv")
+    # parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/FORUM/parsed', 'forum_parse_dicom_for_postgres.csv'))
     # parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/FORUM/raw_files_lists/cirrus_forum_preview_dcm_files.csv")
     # parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/FORUM', 'cirrus_parse_dicom_for_postgres.csv'))
+    parser.add_argument('-d', '--dicom_in', help="Dicom file list input csv", default="/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/raw_files_lists/topcon_oculomics_preview_dcm_files.csv")
+    parser.add_argument('-o', '--out', help="Out csv", default=os.path.join('/scratch90/QTIM/Active/23-0284/EHR/TOPCON_OCULOMICS/parsed/', 'topcon_oculomics_parse_dicom_for_postgres.csv'))
     parser.add_argument('-s', '--series', action='store_true', help="Don't process in parallel (default true)")
     parser.add_argument('--range', help="Number of XML files to parse", type=int, default=-1)
 
@@ -207,8 +209,8 @@ if __name__ == "__main__":
         with multiprocessing.Pool(int(multiprocessing.cpu_count() * 0.85)) as pool:
             values_array = pool.map(parse_dicom_for_postgres, dcms['file_path'])
         finish_time = time.perf_counter()
-        values_df = pd.DataFrame(values_array)
         # pdb.set_trace()
+        values_df = pd.DataFrame(values_array)
         # Replace 'NULL' strings and empty strings with NaN
         values_df = values_df.replace(['NULL', ''], np.nan)
         # Or using regex to catch variations

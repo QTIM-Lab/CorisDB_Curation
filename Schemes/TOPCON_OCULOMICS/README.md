@@ -63,6 +63,27 @@ python CorisDB_Curation/Schemes/parse_dicom_for_postgres_parallel.py \
     # --series \
 ```
 
+Counts by key columns:
+```bash
+python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/row_counts_by_column_types_for_dicom.py
+```
+
+Step to make uncurated dicom image types csv to be filled in manually:
+```bash
+python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/make_manually_curated_csv.py
+```
+
+Generate Samples
+```bash
+python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/generate_samples.py
+```
+
+
+Classify images
+```bash
+python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/create_classification_categories.py
+```
+
 ## Bulk Insert SQL Data
 ```bash
 psql -U coris_admin -d coris_db -f /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/create_all_dicoms.sql

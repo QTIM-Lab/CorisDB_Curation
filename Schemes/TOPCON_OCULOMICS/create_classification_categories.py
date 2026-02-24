@@ -14,6 +14,7 @@ KEY_COLS_DICOMS = [
     "ManufacturerModelName",
     "PhotometricInterpretation",
     "SeriesDescription",
+    "DocumentTitle"
 ]
 
 def _norm(x):
