@@ -131,7 +131,7 @@ def parse_dicom_for_postgres(dicom_path):
             'InstitutionName': getattr(ds, 'InstitutionName', 'NULL'),
             'Manufacturer': getattr(ds, 'Manufacturer', 'NULL'),
             'ManufacturerModelName': getattr(ds, 'ManufacturerModelName', 'NULL'),
-            'Laterality': getattr(ds, 'Laterality', 'NULL'),
+            'Laterality': getattr(ds, 'ImageLaterality', 'NULL'),
             'PerFrameFunctionalGroupsSequence': json_PerFrameFunctionalGroupsSequence, # JSON
             'BitsAllocated': getattr(ds, 'BitsAllocated', 'NULL'),
             'PhotometricInterpretation': getattr(ds, 'PhotometricInterpretation', 'NULL'),

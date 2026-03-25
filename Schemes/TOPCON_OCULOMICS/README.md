@@ -55,7 +55,7 @@ find $IN -iname "*.png" >> $OUT/raw_files_lists/topcon_oculomics_preview_png_fil
 Scans dicom headers
 > Should adjust to read csv file like xml parser below
 ```bash
-mkdir $OUT/parsed
+mkdir -p $OUT/parsed
 python CorisDB_Curation/Schemes/parse_dicom_for_postgres_parallel.py \
     --dicom_in $OUT/raw_files_lists/topcon_oculomics_preview_dcm_files.csv \
     --out $OUT/parsed/topcon_oculomics_parse_dicom_for_postgres.csv # \
@@ -78,11 +78,13 @@ Generate Samples
 python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/generate_samples.py
 ```
 
-
 Classify images
 ```bash
 python /scratch90/QTIM/Active/23-0284/EHR/CorisDB_Curation/Schemes/TOPCON_OCULOMICS/create_classification_categories.py
 ```
+
+
+
 
 ## Bulk Insert SQL Data
 ```bash

@@ -95,6 +95,7 @@ table = Table(table_name="C3304_T20_BillingCode", gbq_table_name="C3304_T20_Bill
 # Deleted first 3 rows which were corrupted. ID field was text.
 table = Table(table_name="C3304_T24_SmartphraseTemplates", gbq_table_name="C3304_T24_SmartphraseTemplates", tmp_working_area=tmp_working_area)
 table = Table(table_name="C3304_T25_MAR_injections", gbq_table_name="C3304_T25_MAR_injections_20260210", tmp_working_area=tmp_working_area)
+table = Table(table_name="C3304_GBQ_T7_Medication", gbq_table_name="C3304_T7_Medication_20260316", tmp_working_area=tmp_working_area)
 
 
 # work with table here
